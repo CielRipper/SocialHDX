@@ -36,7 +36,7 @@ Individual with check-ins from the Team Organization person.
 
 2. Decision-making policy (by consensus? by majority vote?): 
 
-Consesus
+Consensus
 
 3. Who is the team Recorder/Documentation Manager/Maintainer of all required turn-ins?  
 
@@ -55,36 +55,58 @@ B. Team Procedures:
 
 1. Method for setting and following meeting agendas (Who will set each agenda? When? How will team members be notified/reminded? Who will be responsible for the team following the agenda during a team meeting?):
 
+Communal agreement on when to meet and a reminder sent from the team organization manager. If team organization manager is absent at the meeting, the client communication manager will fill in his roles.
+
 
 
 2. Method of record keeping (Who will be responsible for recording and disseminating minutes? How and when will the minutes be disseminated? Where will all agendas and minutes be stored?):  
 
 
+.txt file saved to the repository 
 
-3. Procedures in the absence of a team member: (will the team meet with one member absent, or must  all members be present?):  
+
+3. Procedures in the absence of a team member: (will the team meet with one member absent, or must all members be present?):  
+
+Will meet with one member absent, will send meeting notes to the person who is absent.
 
 
 C. Team Participation: 
 
 6. Strategies to ensure cooperation and equal distribution of tasks:  
 
-7. Strategies for encouraging/including ideas from all team members (team maintenance):  8. Strategies for keeping on task (task maintenance):  
+Team meetings, check-ins and reassessments of workloads.
+
+7. Strategies for encouraging/including ideas from all team members (team maintenance):  
+
+Keeping a document of ideas and working through them with all of the team members.
+
+8. Strategies for keeping on task (task maintenance):  
+
+Self accountability and keeping the other team members accountable as well.
 
 
 D. Personal Accountability: 
 
 1. Expected individual attendance, punctuality, and participation at all team meetings:  
 
+Expected to meet in class everyday and meet after class on Friday.
+
 2. Expected level of responsibility for fulfilling team assignments, timelines, and deadlines:
+
+Fulfilling each assignment by the deadline unless there are extenuating circumstances. If there are extenuating circumstances, please notify another team member. We do not mind if you need the workload altered but please keep in contact, as well as not trying to get rid of the entirety of your workload.
 
 3. Expected level of communication with other team members:  
 
+Messaging to confirm meeting times, messaging with any updates to the project, messaging when you are/will be absent from a meeting/class, etc.
+
 4. Expected level of commitment to team decisions and tasks.  
+
+Full commitment to team decisions and tasks.
 
 
 E. Consequences of breach of contract: 
 
-What procedures and penalties do you wish to implement in the case of "slackers" or team members who  deviate from your Team Contract? You basically have two options here: 1.) No Peer Evaluation or 2.)  Peer Evaluation. Either option is acceptable to me, but I strongly advise you implement Peer  Evaluation so that you have a mechanism in place if problems arise.  
+What procedures and penalties do you wish to implement in the case of "slackers" or team members who deviate from your Team Contract? You basically have two options here: 1.) No Peer Evaluation or 2.)  Peer Evaluation. Either option is acceptable to me, but I strongly advise you implement Peer Evaluation so that you have a mechanism in place if problems arise.  
 
 1. No Peer Evaluation: Your group may decide that you do not want any form of peer evaluation  and that you will trust each other to pull their weight throughout the entire semester. If that is your  decision, in this section of your contract, simply specify the following statement: All group  members will receive the same grade on every aspect of the project regardless of their  contribution and regardless of any problems that may arise throughout the semester.  
 
@@ -94,8 +116,13 @@ What procedures and penalties do you wish to implement in the case of "slackers"
 • If your project has a mid-semester benchmark or group presentation, in addition to a final project,  consider whether or not you want peer evaluation for these aspects as well as the final project. If  your team is doing peer evaluations throughout the semester, in addition to the date your project  is due, include such due dates on your contract.  
 • I will provide notification via e-mail to any student whose grade may be lowered as a result of the  peer evaluation.  
 
-1. Policies for handling infractions of any of the obligations of this team contract:  2. Policies for handling persistent infractions: 
+1. Policies for handling infractions of any of the obligations of this team contract:  
 
+Talking to the person to hold them accountable and let them know what they should do differently.
+
+2. Policies for handling persistent infractions: 
+
+Let the professor know and decide based on the severity of the infractions/number of infractions.
 
 F. Certification by team members: 
 
@@ -107,15 +134,11 @@ c) You understand that you will be subject to the consequences specified above a
 
 Printed name:
 
-
-
-
-
+Connor Estabrooks
 
 Signature: 
 
-
-Date:
+Date: 3.30.2026
 
 
 Printed  
