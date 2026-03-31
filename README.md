@@ -2,7 +2,7 @@
 
 # Jaxon Treadwell
 # - treadwellja@hendrix.edu
-# - (901) 498-9010
+# - (901) 498-9012
 
 # Eoin McLean
 # - mcleanee@hendrix.edu
