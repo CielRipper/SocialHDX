@@ -1,0 +1,61 @@
+Address loneliness epidemic 
+
+Events
+
+Legitimizing socialization 
+
+Importance of getting out of the house
+
+Prescriber Platform
+
+Training faculty and staff to be social prescribers
+
+Prescriber Portal
+
+Messaging system
+
+Interface with Hendrix Today
+
+Pull event info from Hendrix Today
+
+Possible check offs on the Hendrix Today app
+
+Reviews for events
+
+Link/Folder about the patient
+
+Logs about prescription 
+
+Meeting times
+
+Calendar
+
+Check offs for calendar
+
+Reminders before events
+
+Notes about the patient in app
+
+Add new “case”
+
+Make notes about why “case” was added
+
+Details about prescription 
+
+Some way to notify the prescriber
+
+Email “case”
+
+Possible way to pull activity names straight from the master calendar (class="ext-cal-mv-mtg-title" from the master calendar (https://www.aaiscloud.com/HendrixC/Calendars/GuestCalendar.aspx))
+
+Patient check in on the portal
+
+Specifics for tags (arts, culture, sports, etc.)
+
+See what patients are most interested in (tags)
+
+Check out copyright law
+
+https://www.socialrx.com/
+
+https://www.nytimes.com/2024/04/17/well/mind/social-prescription-health-medication-art.html?unlocked_article_code=1.XFA.U6RT._MZG-6YRWe8P&smid=url-share
