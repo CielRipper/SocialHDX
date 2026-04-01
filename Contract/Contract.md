@@ -10,3 +10,7 @@ I, Eoin Mclean, am responsible for the development and implementation of the fro
 I will work on integrating APIs if needed, handling asynchronous data requests, and ensuring that the website remains efficient, intuitive, and user-friendly. In addition, I will contribute to the overall front-end design, supporting layout structure, styling, and usability to deliver a polished and accessible user experience.
 
 Beyond my primary responsibilities, I will collaborate closely with the rest of the team, assisting in other areas where needed to ensure the project progresses smoothly and meets all client requirements.
+
+I, Jaxon Treadwell, am responsible for the design and implementation of the SQL schema as well as overseeing the framework setup and deployment of our project. My role involves structuring the database in a way that ensures efficiency, scalability, and reliability, while also making sure it aligns with the needs and goals of our client.
+I will be working on defining relationships between data, optimizing queries, and ensuring that the database integrates smoothly with the rest of the application. In addition, I am responsible for setting up the overall framework and handling deployment, making sure the project runs properly in a live environment and is accessible as intended.
+Beyond my primary responsibilities, I will collaborate with my teammates to support development across both the front-end and back-end when needed, ensuring that all components of the project work together seamlessly and meet the client’s expectations.
