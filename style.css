@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
+
+:root {
+    --hendrix-orange: #f47c20;
+    --hendrix-dark: #222222;
+    --hendrix-light: #f8f8f8;
+}
+
+/* Base */
+body {
+    background-color: var(--hendrix-light);
+    color: var(--hendrix-dark);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Typography (shared across pages) */
+.portal-heading,
+.section-label,
+.calendar-title,
+.filter-title,
+.form-label {
+    font-family: 'Oswald', sans-serif;
+    color: #111;
+}
+
+.portal-heading {
+    font-size: 2.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.portal-subtext {
+    max-width: 800px;
+    margin-bottom: 0;
+}
+
+.section-label,
+.calendar-title,
+.filter-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-size: 1.6rem;
+    margin-bottom: 0.35rem;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #d96a1a;
+}
+
+.navbar .nav-link,
+.navbar-brand {
+    color: white !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--hendrix-orange);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #d96a1a;
+}
+
+.btn-submit-prescription {
+    background-color: var(--hendrix-orange);
+    border: none;
+    color: white;
+    font-weight: 700;
+    width: 100%;
+    padding: 0.95rem 1.2rem;
+    border-radius: 12px;
+}
+
+.btn-submit-prescription:hover {
+    opacity: 0.92;
+}
+
+/* Cards (Bootstrap + custom panels unified look) */
+.card,
+.prescriber-card,
+.calendar-panel,
+.filter-panel,
+.submit-panel {
+    border-radius: 14px;
+    border: 2px solid #1a1a1a;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+}
+
+.prescriber-card,
+.calendar-panel {
+    padding: 1.5rem;
+}
+
+.filter-panel,
+.submit-panel {
+    padding: 1.25rem 1.5rem;
+    min-height: 120px;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    border: 2px solid #222;
+    border-radius: 12px;
+    padding: 0.75rem 0.95rem;
+}
+
+textarea.form-control {
+    min-height: 240px;
+    resize: vertical;
+}
+
+/* Calendar placeholder */
+.calendar-box {
+    min-height: 500px;
+    border: 2px dashed #666;
+    border-radius: 12px;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.calendar-box p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    line-height: 1.4;
+    margin-bottom: 0;
+    color: #111;
+}
+
+/* Filter chips */
+.filter-chip {
+    border: 2px solid #111;
+    background-color: #fff;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    margin: 0.25rem 0.4rem 0.25rem 0;
+}
+
+.filter-chip:hover {
+    opacity: 0.92;
+}
+
+/* Responsive tweaks */
+@media (max-width: 991px) {
+    .calendar-box p {
+        font-size: 1.5rem;
+    }
+}

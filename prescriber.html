@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Prescribing Portal | Prescriptions</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font to match your bold condensed look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Shared custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+
+            <!-- Logo / Title -->
+            <a class="navbar-brand" href="index.html">Social Hx</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Tabs -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="mainPage.html">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Events</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="prescriber.html">Prescriptions</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Dashboard</a>
+                    </li>
+
+                </ul>
+
+                <!-- Sign In Button (Top Right) -->
+                <button class="btn btn-primary">Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE INTRO -->
+    <div class="container mt-4">
+        <div class="p-4 p-md-5 mb-4 bg-light rounded-3 border">
+            <div class="container-fluid py-2">
+                <h1 class="portal-heading">Prescriber Portal</h1>
+                <p class="portal-subtext fs-5">
+                    Enter student information, review events on the calendar, apply filters, and submit a social prescription.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container mb-4">
+        <div class="row g-4 align-items-start">
+
+            <!-- LEFT COLUMN -->
+            <div class="col-lg-4">
+                <div class="prescriber-card h-100">
+                    <h2 class="section-label">Student Information</h2>
+
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Enter last name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="student@hendrix.edu">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="studentId" class="form-label">Student ID</label>
+                        <input type="text" class="form-control" id="studentId" placeholder="Enter student ID">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" placeholder="Add notes, goals, or event recommendations here..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="col-lg-8">
+                <div class="calendar-panel mb-4">
+                    <h2 class="calendar-title">Calendar</h2>
+                    <div class="calendar-box">
+                        <p>
+                            This section would be a more<br>
+                            zoomed in version of the<br>
+                            calendar on the main page.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <div class="filter-panel h-100">
+                            <h3 class="filter-title">Filter Options</h3>
+                            <div>
+                                <button class="filter-chip">Academic</button>
+                                <button class="filter-chip">Social</button>
+                                <button class="filter-chip">Wellness</button>
+                                <button class="filter-chip">Club Events</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="submit-panel h-100 d-flex align-items-center">
+                            <button class="btn-submit-prescription">Submit Button</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-light text-center text-lg-start mt-4">
+        <div class="text-center p-3">
+            © 2026 Campus Connect | Social Prescribing Initiative
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
