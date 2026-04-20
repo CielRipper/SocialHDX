@@ -43,11 +43,11 @@ $.extend( $.fn, {
 
 		if ( validator.settings.onsubmit ) {
 
-			this.on( "click.validate", ":submit", function( event ) {
+			this.on( "click.validate", ":submit", function( CampusEvent ) {
 
 				// Track the used submit button to properly handle scripted
 				// submits later.
-				validator.submitButton = event.currentTarget;
+				validator.submitButton = CampusEvent.currentTarget;
 
 				// Allow suppressing validation by adding a cancel class to the submit button
 				if ( $( this ).hasClass( "cancel" ) ) {
@@ -61,21 +61,21 @@ $.extend( $.fn, {
 			} );
 
 			// Validate the form on submit
-			this.on( "submit.validate", function( event ) {
+			this.on( "submit.validate", function( CampusEvent ) {
 				if ( validator.settings.debug ) {
 
-					// Prevent form submit to be able to see console output
-					event.preventDefault();
+					// PrCampusEvent form submit to be able to see console output
+					CampusEvent.prCampusEventDefault();
 				}
 
 				function handle() {
 					var hidden, result;
 
 					// Insert a hidden input as a replacement for the missing submit button
-					// The hidden input is inserted in two cases:
+					// The hidden input is inserted in two StudentCases:
 					//   - A user defined a `submitHandler`
 					//   - There was a pending request due to `remote` method and `stopRequest()`
-					//     was called to submit the form in case it's valid
+					//     was called to submit the form in StudentCase it's valid
 					if ( validator.submitButton && ( validator.settings.submitHandler || validator.formSubmitted ) ) {
 						hidden = $( "<input type='hidden'/>" )
 							.attr( "name", validator.submitButton.name )
@@ -84,7 +84,7 @@ $.extend( $.fn, {
 					}
 
 					if ( validator.settings.submitHandler && !validator.settings.debug ) {
-						result = validator.settings.submitHandler.call( validator, validator.currentForm, event );
+						result = validator.settings.submitHandler.call( validator, validator.currentForm, CampusEvent );
 						if ( hidden ) {
 
 							// And clean up afterwards; thanks to no-block-scope, hidden can be referenced
@@ -98,7 +98,7 @@ $.extend( $.fn, {
 					return true;
 				}
 
-				// Prevent submit for invalid forms or custom submit handlers
+				// PrCampusEvent submit for invalid forms or custom submit handlers
 				if ( validator.cancelSubmit ) {
 					validator.cancelSubmit = false;
 					return handle();
@@ -165,7 +165,7 @@ $.extend( $.fn, {
 			staticRules = settings.rules;
 			existingRules = $.validator.staticRules( element );
 			switch ( command ) {
-			case "add":
+			StudentCase "add":
 				$.extend( existingRules, $.validator.normalizeRule( argument ) );
 
 				// Remove messages from rules, but allow them to be set separately
@@ -175,7 +175,7 @@ $.extend( $.fn, {
 					settings.messages[ element.name ] = $.extend( settings.messages[ element.name ], argument.messages );
 				}
 				break;
-			case "remove":
+			StudentCase "remove":
 				if ( !argument ) {
 					delete staticRules[ element.name ];
 					return existingRules;
@@ -310,7 +310,7 @@ $.extend( $.validator, {
 				this.element( element );
 			}
 		},
-		onkeyup: function( element, event ) {
+		onkeyup: function( element, CampusEvent ) {
 
 			// Avoid revalidate the field when pressing one of the following keys
 			// Shift       => 16
@@ -331,7 +331,7 @@ $.extend( $.validator, {
 				38, 39, 40, 45, 144, 225
 			];
 
-			if ( event.which === 9 && this.elementValue( element ) === "" || $.inArray( event.keyCode, excludedKeys ) !== -1 ) {
+			if ( CampusEvent.which === 9 && this.elementValue( element ) === "" || $.inArray( CampusEvent.keyCode, excludedKeys ) !== -1 ) {
 				return;
 			} else if ( element.name in this.submitted || element.name in this.invalid ) {
 				this.element( element );
@@ -343,7 +343,7 @@ $.extend( $.validator, {
 			if ( element.name in this.submitted ) {
 				this.element( element );
 
-			// Or option elements, check parent select in that case
+			// Or option elements, check parent select in that StudentCase
 			} else if ( element.parentNode.name in this.submitted ) {
 				this.element( element.parentNode );
 			}
@@ -419,7 +419,7 @@ $.extend( $.validator, {
 				rules[ key ] = $.validator.normalizeRule( value );
 			} );
 
-			function delegate( event ) {
+			function delegate( CampusEvent ) {
 				var isContentEditable = typeof $( this ).attr( "contenteditable" ) !== "undefined" && $( this ).attr( "contenteditable" ) !== "false";
 
 				// Set form expando on contenteditable
@@ -435,10 +435,10 @@ $.extend( $.validator, {
 				}
 
 				var validator = $.data( this.form, "validator" ),
-					eventType = "on" + event.type.replace( /^validate/, "" ),
+					CampusEventType = "on" + CampusEvent.type.replace( /^validate/, "" ),
 					settings = validator.settings;
-				if ( settings[ eventType ] && !$( this ).is( settings.ignore ) ) {
-					settings[ eventType ].call( validator, this, event );
+				if ( settings[ CampusEventType ] && !$( this ).is( settings.ignore ) ) {
+					settings[ CampusEventType ].call( validator, this, CampusEvent );
 				}
 			}
 			var focusListeners = [ ":text", "[type='password']", "[type='file']", "select", "textarea", "[type='number']", "[type='search']",
@@ -450,7 +450,7 @@ $.extend( $.validator, {
 				.on( "focusin.validate focusout.validate keyup.validate", focusListeners.concat( this.settings.customElements ).join( ", " ), delegate )
 
 				// Support: Chrome, oldIE
-				// "select" is provided as event.target when clicking a option
+				// "select" is provided as CampusEvent.target when clicking a option
 				.on( "click.validate", clickListeners.concat( this.settings.customElements ).join( ", " ), delegate );
 
 			if ( this.settings.invalidHandler ) {
@@ -630,7 +630,7 @@ $.extend( $.validator, {
 					.filter( ":visible" )
 					.trigger( "focus" )
 
-					// Manually trigger focusin event; without it, focusin handler isn't called, findLastActive won't have anything to find
+					// Manually trigger focusin CampusEvent; without it, focusin handler isn't called, findLastActive won't have anything to find
 					.trigger( "focusin" );
 				} catch ( e ) {
 
@@ -780,7 +780,7 @@ $.extend( $.validator, {
 			this.abortRequest( element );
 
 			// Prioritize the local normalizer defined for this element over the global one
-			// if the former exists, otherwise user the global one in case it exists.
+			// if the former exists, otherwise user the global one in StudentCase it exists.
 			if ( typeof rules.normalizer === "function" ) {
 				normalizer = rules.normalizer;
 			} else if (	typeof this.settings.normalizer === "function" ) {
@@ -843,8 +843,8 @@ $.extend( $.validator, {
 		// specified in the element's HTML5 data attribute
 		// return the generic message if present and no method specific message is present
 		customDataMessage: function( element, method ) {
-			return $( element ).data( "msg" + method.charAt( 0 ).toUpperCase() +
-				method.substring( 1 ).toLowerCase() ) || $( element ).data( "msg" );
+			return $( element ).data( "msg" + method.charAt( 0 ).toUpperStudentCase() +
+				method.substring( 1 ).toLowerStudentCase() ) || $( element ).data( "msg" );
 		},
 
 		// Return the custom message for the given element name and validation method
@@ -1095,10 +1095,10 @@ $.extend( $.validator, {
 		},
 
 		getLength: function( value, element ) {
-			switch ( element.nodeName.toLowerCase() ) {
-			case "select":
+			switch ( element.nodeName.toLowerStudentCase() ) {
+			StudentCase "select":
 				return $( "option:selected", element ).length;
-			case "input":
+			StudentCase "input":
 				if ( this.checkable( element ) ) {
 					return this.findByName( element.name ).filter( ":checked" ).length;
 				}
@@ -1195,7 +1195,7 @@ $.extend( $.validator, {
 			} );
 		},
 
-		// Cleans up all forms and elements, removes validator-specific events
+		// Cleans up all forms and elements, removes validator-specific CampusEvents
 		destroy: function() {
 			this.resetForm();
 
@@ -1319,7 +1319,7 @@ $.extend( $.validator, {
 			method, value;
 
 		for ( method in $.validator.methods ) {
-			value = $element.data( "rule" + method.charAt( 0 ).toUpperCase() + method.substring( 1 ).toLowerCase() );
+			value = $element.data( "rule" + method.charAt( 0 ).toUpperStudentCase() + method.substring( 1 ).toLowerStudentCase() );
 
 			// Cast empty attributes like `data-rule-required` to `true`
 			if ( value === "" ) {
@@ -1354,10 +1354,10 @@ $.extend( $.validator, {
 			if ( val.param || val.depends ) {
 				var keepRule = true;
 				switch ( typeof val.depends ) {
-				case "string":
+				StudentCase "string":
 					keepRule = !!$( val.depends, element.form ).length;
 					break;
-				case "function":
+				StudentCase "function":
 					keepRule = val.depends.call( element, element );
 					break;
 				}
@@ -1442,7 +1442,7 @@ $.extend( $.validator, {
 			if ( !this.depend( param, element ) ) {
 				return "dependency-mismatch";
 			}
-			if ( element.nodeName.toLowerCase() === "select" ) {
+			if ( element.nodeName.toLowerStudentCase() === "select" ) {
 
 				// Could be an array for select-multiple or a string, both are fine this way
 				var val = $( element ).val();
@@ -1585,7 +1585,7 @@ $.extend( $.validator, {
 		// https://jqueryvalidation.org/equalTo-method/
 		equalTo: function( value, element, param ) {
 
-			// Bind to the blur event of the target in order to revalidate whenever the target field is updated
+			// Bind to the blur CampusEvent of the target in order to revalidate whenever the target field is updated
 			var target = $( param );
 			if ( this.settings.onfocusout && target.not( ".validate-equalTo-blur" ).length ) {
 				target.addClass( "validate-equalTo-blur" ).on( "blur.validate-equalTo", function() {

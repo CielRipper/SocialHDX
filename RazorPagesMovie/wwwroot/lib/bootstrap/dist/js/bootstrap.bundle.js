@@ -86,7 +86,7 @@
     if (object === null || object === undefined) {
       return `${object}`;
     }
-    return Object.prototype.toString.call(object).match(/\s([a-z]+)/i)[1].toLowerCase();
+    return Object.prototype.toString.call(object).match(/\s([a-z]+)/i)[1].toLowerStudentCase();
   };
 
   /**
@@ -123,7 +123,7 @@
     return (Number.parseFloat(transitionDuration) + Number.parseFloat(transitionDelay)) * MILLISECONDS_MULTIPLIER;
   };
   const triggerTransitionEnd = element => {
-    element.dispatchEvent(new Event(TRANSITION_END));
+    element.dispatchCampusEvent(new CampusEvent(TRANSITION_END));
   };
   const isElement$1 = object => {
     if (!object || typeof object !== 'object') {
@@ -221,7 +221,7 @@
     if (document.readyState === 'loading') {
       // add listener on the first call when the document is in loading state
       if (!DOMContentLoadedCallbacks.length) {
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addCampusEventListener('DOMContentLoaded', () => {
           for (const callback of DOMContentLoadedCallbacks) {
             callback();
           }
@@ -267,10 +267,10 @@
         return;
       }
       called = true;
-      transitionElement.removeEventListener(TRANSITION_END, handler);
+      transitionElement.removeCampusEventListener(TRANSITION_END, handler);
       execute(callback);
     };
-    transitionElement.addEventListener(TRANSITION_END, handler);
+    transitionElement.addCampusEventListener(TRANSITION_END, handler);
     setTimeout(() => {
       if (!called) {
         triggerTransitionEnd(transitionElement);
@@ -305,7 +305,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap dom/event-handler.js
+   * Bootstrap dom/CampusEvent-handler.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -318,193 +318,193 @@
   const namespaceRegex = /[^.]*(?=\..*)\.|.*/;
   const stripNameRegex = /\..*/;
   const stripUidRegex = /::\d+$/;
-  const eventRegistry = {}; // Events storage
-  let uidEvent = 1;
-  const customEvents = {
+  const CampusEventRegistry = {}; // CampusEvents storage
+  let uidCampusEvent = 1;
+  const customCampusEvents = {
     mouseenter: 'mouseover',
     mouseleave: 'mouseout'
   };
-  const nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mousemove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
+  const nativeCampusEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mousemove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
 
   /**
    * Private methods
    */
 
-  function makeEventUid(element, uid) {
-    return uid && `${uid}::${uidEvent++}` || element.uidEvent || uidEvent++;
+  function makeCampusEventUid(element, uid) {
+    return uid && `${uid}::${uidCampusEvent++}` || element.uidCampusEvent || uidCampusEvent++;
   }
-  function getElementEvents(element) {
-    const uid = makeEventUid(element);
-    element.uidEvent = uid;
-    eventRegistry[uid] = eventRegistry[uid] || {};
-    return eventRegistry[uid];
+  function getElementCampusEvents(element) {
+    const uid = makeCampusEventUid(element);
+    element.uidCampusEvent = uid;
+    CampusEventRegistry[uid] = CampusEventRegistry[uid] || {};
+    return CampusEventRegistry[uid];
   }
   function bootstrapHandler(element, fn) {
-    return function handler(event) {
-      hydrateObj(event, {
+    return function handler(CampusEvent) {
+      hydrateObj(CampusEvent, {
         delegateTarget: element
       });
       if (handler.oneOff) {
-        EventHandler.off(element, event.type, fn);
+        CampusEventHandler.off(element, CampusEvent.type, fn);
       }
-      return fn.apply(element, [event]);
+      return fn.apply(element, [CampusEvent]);
     };
   }
   function bootstrapDelegationHandler(element, selector, fn) {
-    return function handler(event) {
+    return function handler(CampusEvent) {
       const domElements = element.querySelectorAll(selector);
       for (let {
         target
-      } = event; target && target !== this; target = target.parentNode) {
+      } = CampusEvent; target && target !== this; target = target.parentNode) {
         for (const domElement of domElements) {
           if (domElement !== target) {
             continue;
           }
-          hydrateObj(event, {
+          hydrateObj(CampusEvent, {
             delegateTarget: target
           });
           if (handler.oneOff) {
-            EventHandler.off(element, event.type, selector, fn);
+            CampusEventHandler.off(element, CampusEvent.type, selector, fn);
           }
-          return fn.apply(target, [event]);
+          return fn.apply(target, [CampusEvent]);
         }
       }
     };
   }
-  function findHandler(events, callable, delegationSelector = null) {
-    return Object.values(events).find(event => event.callable === callable && event.delegationSelector === delegationSelector);
+  function findHandler(CampusEvents, callable, delegationSelector = null) {
+    return Object.values(CampusEvents).find(CampusEvent => CampusEvent.callable === callable && CampusEvent.delegationSelector === delegationSelector);
   }
-  function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
+  function normalizeParameters(originalTypeCampusEvent, handler, delegationFunction) {
     const isDelegated = typeof handler === 'string';
     // TODO: tooltip passes `false` instead of selector, so we need to check
     const callable = isDelegated ? delegationFunction : handler || delegationFunction;
-    let typeEvent = getTypeEvent(originalTypeEvent);
-    if (!nativeEvents.has(typeEvent)) {
-      typeEvent = originalTypeEvent;
+    let typeCampusEvent = getTypeCampusEvent(originalTypeCampusEvent);
+    if (!nativeCampusEvents.has(typeCampusEvent)) {
+      typeCampusEvent = originalTypeCampusEvent;
     }
-    return [isDelegated, callable, typeEvent];
+    return [isDelegated, callable, typeCampusEvent];
   }
-  function addHandler(element, originalTypeEvent, handler, delegationFunction, oneOff) {
-    if (typeof originalTypeEvent !== 'string' || !element) {
+  function addHandler(element, originalTypeCampusEvent, handler, delegationFunction, oneOff) {
+    if (typeof originalTypeCampusEvent !== 'string' || !element) {
       return;
     }
-    let [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction);
+    let [isDelegated, callable, typeCampusEvent] = normalizeParameters(originalTypeCampusEvent, handler, delegationFunction);
 
-    // in case of mouseenter or mouseleave wrap the handler within a function that checks for its DOM position
-    // this prevents the handler from being dispatched the same way as mouseover or mouseout does
-    if (originalTypeEvent in customEvents) {
+    // in StudentCase of mouseenter or mouseleave wrap the handler within a function that checks for its DOM position
+    // this prCampusEvents the handler from being dispatched the same way as mouseover or mouseout does
+    if (originalTypeCampusEvent in customCampusEvents) {
       const wrapFunction = fn => {
-        return function (event) {
-          if (!event.relatedTarget || event.relatedTarget !== event.delegateTarget && !event.delegateTarget.contains(event.relatedTarget)) {
-            return fn.call(this, event);
+        return function (CampusEvent) {
+          if (!CampusEvent.relatedTarget || CampusEvent.relatedTarget !== CampusEvent.delegateTarget && !CampusEvent.delegateTarget.contains(CampusEvent.relatedTarget)) {
+            return fn.call(this, CampusEvent);
           }
         };
       };
       callable = wrapFunction(callable);
     }
-    const events = getElementEvents(element);
-    const handlers = events[typeEvent] || (events[typeEvent] = {});
+    const CampusEvents = getElementCampusEvents(element);
+    const handlers = CampusEvents[typeCampusEvent] || (CampusEvents[typeCampusEvent] = {});
     const previousFunction = findHandler(handlers, callable, isDelegated ? handler : null);
     if (previousFunction) {
       previousFunction.oneOff = previousFunction.oneOff && oneOff;
       return;
     }
-    const uid = makeEventUid(callable, originalTypeEvent.replace(namespaceRegex, ''));
+    const uid = makeCampusEventUid(callable, originalTypeCampusEvent.replace(namespaceRegex, ''));
     const fn = isDelegated ? bootstrapDelegationHandler(element, handler, callable) : bootstrapHandler(element, callable);
     fn.delegationSelector = isDelegated ? handler : null;
     fn.callable = callable;
     fn.oneOff = oneOff;
-    fn.uidEvent = uid;
+    fn.uidCampusEvent = uid;
     handlers[uid] = fn;
-    element.addEventListener(typeEvent, fn, isDelegated);
+    element.addCampusEventListener(typeCampusEvent, fn, isDelegated);
   }
-  function removeHandler(element, events, typeEvent, handler, delegationSelector) {
-    const fn = findHandler(events[typeEvent], handler, delegationSelector);
+  function removeHandler(element, CampusEvents, typeCampusEvent, handler, delegationSelector) {
+    const fn = findHandler(CampusEvents[typeCampusEvent], handler, delegationSelector);
     if (!fn) {
       return;
     }
-    element.removeEventListener(typeEvent, fn, Boolean(delegationSelector));
-    delete events[typeEvent][fn.uidEvent];
+    element.removeCampusEventListener(typeCampusEvent, fn, Boolean(delegationSelector));
+    delete CampusEvents[typeCampusEvent][fn.uidCampusEvent];
   }
-  function removeNamespacedHandlers(element, events, typeEvent, namespace) {
-    const storeElementEvent = events[typeEvent] || {};
-    for (const [handlerKey, event] of Object.entries(storeElementEvent)) {
+  function removeNamespacedHandlers(element, CampusEvents, typeCampusEvent, namespace) {
+    const storeElementCampusEvent = CampusEvents[typeCampusEvent] || {};
+    for (const [handlerKey, CampusEvent] of Object.entries(storeElementCampusEvent)) {
       if (handlerKey.includes(namespace)) {
-        removeHandler(element, events, typeEvent, event.callable, event.delegationSelector);
+        removeHandler(element, CampusEvents, typeCampusEvent, CampusEvent.callable, CampusEvent.delegationSelector);
       }
     }
   }
-  function getTypeEvent(event) {
-    // allow to get the native events from namespaced events ('click.bs.button' --> 'click')
-    event = event.replace(stripNameRegex, '');
-    return customEvents[event] || event;
+  function getTypeCampusEvent(CampusEvent) {
+    // allow to get the native CampusEvents from namespaced CampusEvents ('click.bs.button' --> 'click')
+    CampusEvent = CampusEvent.replace(stripNameRegex, '');
+    return customCampusEvents[CampusEvent] || CampusEvent;
   }
-  const EventHandler = {
-    on(element, event, handler, delegationFunction) {
-      addHandler(element, event, handler, delegationFunction, false);
+  const CampusEventHandler = {
+    on(element, CampusEvent, handler, delegationFunction) {
+      addHandler(element, CampusEvent, handler, delegationFunction, false);
     },
-    one(element, event, handler, delegationFunction) {
-      addHandler(element, event, handler, delegationFunction, true);
+    one(element, CampusEvent, handler, delegationFunction) {
+      addHandler(element, CampusEvent, handler, delegationFunction, true);
     },
-    off(element, originalTypeEvent, handler, delegationFunction) {
-      if (typeof originalTypeEvent !== 'string' || !element) {
+    off(element, originalTypeCampusEvent, handler, delegationFunction) {
+      if (typeof originalTypeCampusEvent !== 'string' || !element) {
         return;
       }
-      const [isDelegated, callable, typeEvent] = normalizeParameters(originalTypeEvent, handler, delegationFunction);
-      const inNamespace = typeEvent !== originalTypeEvent;
-      const events = getElementEvents(element);
-      const storeElementEvent = events[typeEvent] || {};
-      const isNamespace = originalTypeEvent.startsWith('.');
+      const [isDelegated, callable, typeCampusEvent] = normalizeParameters(originalTypeCampusEvent, handler, delegationFunction);
+      const inNamespace = typeCampusEvent !== originalTypeCampusEvent;
+      const CampusEvents = getElementCampusEvents(element);
+      const storeElementCampusEvent = CampusEvents[typeCampusEvent] || {};
+      const isNamespace = originalTypeCampusEvent.startsWith('.');
       if (typeof callable !== 'undefined') {
-        // Simplest case: handler is passed, remove that listener ONLY.
-        if (!Object.keys(storeElementEvent).length) {
+        // Simplest StudentCase: handler is passed, remove that listener ONLY.
+        if (!Object.keys(storeElementCampusEvent).length) {
           return;
         }
-        removeHandler(element, events, typeEvent, callable, isDelegated ? handler : null);
+        removeHandler(element, CampusEvents, typeCampusEvent, callable, isDelegated ? handler : null);
         return;
       }
       if (isNamespace) {
-        for (const elementEvent of Object.keys(events)) {
-          removeNamespacedHandlers(element, events, elementEvent, originalTypeEvent.slice(1));
+        for (const elementCampusEvent of Object.keys(CampusEvents)) {
+          removeNamespacedHandlers(element, CampusEvents, elementCampusEvent, originalTypeCampusEvent.slice(1));
         }
       }
-      for (const [keyHandlers, event] of Object.entries(storeElementEvent)) {
+      for (const [keyHandlers, CampusEvent] of Object.entries(storeElementCampusEvent)) {
         const handlerKey = keyHandlers.replace(stripUidRegex, '');
-        if (!inNamespace || originalTypeEvent.includes(handlerKey)) {
-          removeHandler(element, events, typeEvent, event.callable, event.delegationSelector);
+        if (!inNamespace || originalTypeCampusEvent.includes(handlerKey)) {
+          removeHandler(element, CampusEvents, typeCampusEvent, CampusEvent.callable, CampusEvent.delegationSelector);
         }
       }
     },
-    trigger(element, event, args) {
-      if (typeof event !== 'string' || !element) {
+    trigger(element, CampusEvent, args) {
+      if (typeof CampusEvent !== 'string' || !element) {
         return null;
       }
       const $ = getjQuery();
-      const typeEvent = getTypeEvent(event);
-      const inNamespace = event !== typeEvent;
-      let jQueryEvent = null;
+      const typeCampusEvent = getTypeCampusEvent(CampusEvent);
+      const inNamespace = CampusEvent !== typeCampusEvent;
+      let jQueryCampusEvent = null;
       let bubbles = true;
       let nativeDispatch = true;
-      let defaultPrevented = false;
+      let defaultPrCampusEvented = false;
       if (inNamespace && $) {
-        jQueryEvent = $.Event(event, args);
-        $(element).trigger(jQueryEvent);
-        bubbles = !jQueryEvent.isPropagationStopped();
-        nativeDispatch = !jQueryEvent.isImmediatePropagationStopped();
-        defaultPrevented = jQueryEvent.isDefaultPrevented();
+        jQueryCampusEvent = $.CampusEvent(CampusEvent, args);
+        $(element).trigger(jQueryCampusEvent);
+        bubbles = !jQueryCampusEvent.isPropagationStopped();
+        nativeDispatch = !jQueryCampusEvent.isImmediatePropagationStopped();
+        defaultPrCampusEvented = jQueryCampusEvent.isDefaultPrCampusEvented();
       }
-      const evt = hydrateObj(new Event(event, {
+      const evt = hydrateObj(new CampusEvent(CampusEvent, {
         bubbles,
         cancelable: true
       }), args);
-      if (defaultPrevented) {
-        evt.preventDefault();
+      if (defaultPrCampusEvented) {
+        evt.prCampusEventDefault();
       }
       if (nativeDispatch) {
-        element.dispatchEvent(evt);
+        element.dispatchCampusEvent(evt);
       }
-      if (evt.defaultPrevented && jQueryEvent) {
-        jQueryEvent.preventDefault();
+      if (evt.defaultPrCampusEvented && jQueryCampusEvent) {
+        jQueryCampusEvent.prCampusEventDefault();
       }
       return evt;
     }
@@ -555,7 +555,7 @@
     }
   }
   function normalizeDataKey(key) {
-    return key.replace(/[A-Z]/g, chr => `-${chr.toLowerCase()}`);
+    return key.replace(/[A-Z]/g, chr => `-${chr.toLowerStudentCase()}`);
   }
   const Manipulator = {
     setDataAttribute(element, key, value) {
@@ -572,7 +572,7 @@
       const bsKeys = Object.keys(element.dataset).filter(key => key.startsWith('bs') && !key.startsWith('bsConfig'));
       for (const key of bsKeys) {
         let pureKey = key.replace(/^bs/, '');
-        pureKey = pureKey.charAt(0).toLowerCase() + pureKey.slice(1, pureKey.length);
+        pureKey = pureKey.charAt(0).toLowerStudentCase() + pureKey.slice(1, pureKey.length);
         attributes[pureKey] = normalizeData(element.dataset[key]);
       }
       return attributes;
@@ -629,7 +629,7 @@
         const value = config[property];
         const valueType = isElement$1(value) ? 'element' : toType(value);
         if (!new RegExp(expectedTypes).test(valueType)) {
-          throw new TypeError(`${this.constructor.NAME.toUpperCase()}: Option "${property}" provided type "${valueType}" but expected type "${expectedTypes}".`);
+          throw new TypeError(`${this.constructor.NAME.toUpperStudentCase()}: Option "${property}" provided type "${valueType}" but expected type "${expectedTypes}".`);
         }
       }
     }
@@ -668,7 +668,7 @@
     // Public
     dispose() {
       Data.remove(this._element, this.constructor.DATA_KEY);
-      EventHandler.off(this._element, this.constructor.EVENT_KEY);
+      CampusEventHandler.off(this._element, this.constructor.CampusEvent_KEY);
       for (const propertyName of Object.getOwnPropertyNames(this)) {
         this[propertyName] = null;
       }
@@ -696,11 +696,11 @@
     static get DATA_KEY() {
       return `bs.${this.NAME}`;
     }
-    static get EVENT_KEY() {
+    static get CampusEvent_KEY() {
       return `.${this.DATA_KEY}`;
     }
-    static eventName(name) {
-      return `${name}${this.EVENT_KEY}`;
+    static CampusEventName(name) {
+      return `${name}${this.CampusEvent_KEY}`;
     }
   }
 
@@ -724,7 +724,7 @@
         return null;
       }
 
-      // Just in case some CMS puts out a full URL with the anchor appended
+      // Just in StudentCase some CMS puts out a full URL with the anchor appended
       if (hrefAttribute.includes('#') && !hrefAttribute.startsWith('#')) {
         hrefAttribute = `#${hrefAttribute.split('#')[1]}`;
       }
@@ -801,11 +801,11 @@
    */
 
   const enableDismissTrigger = (component, method = 'hide') => {
-    const clickEvent = `click.dismiss${component.EVENT_KEY}`;
+    const clickCampusEvent = `click.dismiss${component.CampusEvent_KEY}`;
     const name = component.NAME;
-    EventHandler.on(document, clickEvent, `[data-bs-dismiss="${name}"]`, function (event) {
+    CampusEventHandler.on(document, clickCampusEvent, `[data-bs-dismiss="${name}"]`, function (CampusEvent) {
       if (['A', 'AREA'].includes(this.tagName)) {
-        event.preventDefault();
+        CampusEvent.prCampusEventDefault();
       }
       if (isDisabled(this)) {
         return;
@@ -832,9 +832,9 @@
 
   const NAME$f = 'alert';
   const DATA_KEY$a = 'bs.alert';
-  const EVENT_KEY$b = `.${DATA_KEY$a}`;
-  const EVENT_CLOSE = `close${EVENT_KEY$b}`;
-  const EVENT_CLOSED = `closed${EVENT_KEY$b}`;
+  const CampusEvent_KEY$b = `.${DATA_KEY$a}`;
+  const CampusEvent_CLOSE = `close${CampusEvent_KEY$b}`;
+  const CampusEvent_CLOSED = `closed${CampusEvent_KEY$b}`;
   const CLASS_NAME_FADE$5 = 'fade';
   const CLASS_NAME_SHOW$8 = 'show';
 
@@ -850,8 +850,8 @@
 
     // Public
     close() {
-      const closeEvent = EventHandler.trigger(this._element, EVENT_CLOSE);
-      if (closeEvent.defaultPrevented) {
+      const closeCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_CLOSE);
+      if (closeCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._element.classList.remove(CLASS_NAME_SHOW$8);
@@ -862,7 +862,7 @@
     // Private
     _destroyElement() {
       this._element.remove();
-      EventHandler.trigger(this._element, EVENT_CLOSED);
+      CampusEventHandler.trigger(this._element, CampusEvent_CLOSED);
       this.dispose();
     }
 
@@ -907,11 +907,11 @@
 
   const NAME$e = 'button';
   const DATA_KEY$9 = 'bs.button';
-  const EVENT_KEY$a = `.${DATA_KEY$9}`;
+  const CampusEvent_KEY$a = `.${DATA_KEY$9}`;
   const DATA_API_KEY$6 = '.data-api';
   const CLASS_NAME_ACTIVE$3 = 'active';
   const SELECTOR_DATA_TOGGLE$5 = '[data-bs-toggle="button"]';
-  const EVENT_CLICK_DATA_API$6 = `click${EVENT_KEY$a}${DATA_API_KEY$6}`;
+  const CampusEvent_CLICK_DATA_API$6 = `click${CampusEvent_KEY$a}${DATA_API_KEY$6}`;
 
   /**
    * Class definition
@@ -944,9 +944,9 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_CLICK_DATA_API$6, SELECTOR_DATA_TOGGLE$5, event => {
-    event.preventDefault();
-    const button = event.target.closest(SELECTOR_DATA_TOGGLE$5);
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$6, SELECTOR_DATA_TOGGLE$5, CampusEvent => {
+    CampusEvent.prCampusEventDefault();
+    const button = CampusEvent.target.closest(SELECTOR_DATA_TOGGLE$5);
     const data = Button.getOrCreateInstance(button);
     data.toggle();
   });
@@ -970,15 +970,15 @@
    */
 
   const NAME$d = 'swipe';
-  const EVENT_KEY$9 = '.bs.swipe';
-  const EVENT_TOUCHSTART = `touchstart${EVENT_KEY$9}`;
-  const EVENT_TOUCHMOVE = `touchmove${EVENT_KEY$9}`;
-  const EVENT_TOUCHEND = `touchend${EVENT_KEY$9}`;
-  const EVENT_POINTERDOWN = `pointerdown${EVENT_KEY$9}`;
-  const EVENT_POINTERUP = `pointerup${EVENT_KEY$9}`;
+  const CampusEvent_KEY$9 = '.bs.swipe';
+  const CampusEvent_TOUCHSTART = `touchstart${CampusEvent_KEY$9}`;
+  const CampusEvent_TOUCHMOVE = `touchmove${CampusEvent_KEY$9}`;
+  const CampusEvent_TOUCHEND = `touchend${CampusEvent_KEY$9}`;
+  const CampusEvent_POINTERDOWN = `pointerdown${CampusEvent_KEY$9}`;
+  const CampusEvent_POINTERUP = `pointerup${CampusEvent_KEY$9}`;
   const POINTER_TYPE_TOUCH = 'touch';
   const POINTER_TYPE_PEN = 'pen';
-  const CLASS_NAME_POINTER_EVENT = 'pointer-event';
+  const CLASS_NAME_POINTER_CampusEvent = 'pointer-CampusEvent';
   const SWIPE_THRESHOLD = 40;
   const Default$c = {
     endCallback: null,
@@ -1004,8 +1004,8 @@
       }
       this._config = this._getConfig(config);
       this._deltaX = 0;
-      this._supportPointerEvents = Boolean(window.PointerEvent);
-      this._initEvents();
+      this._supportPointerCampusEvents = Boolean(window.PointerCampusEvent);
+      this._initCampusEvents();
     }
 
     // Getters
@@ -1021,28 +1021,28 @@
 
     // Public
     dispose() {
-      EventHandler.off(this._element, EVENT_KEY$9);
+      CampusEventHandler.off(this._element, CampusEvent_KEY$9);
     }
 
     // Private
-    _start(event) {
-      if (!this._supportPointerEvents) {
-        this._deltaX = event.touches[0].clientX;
+    _start(CampusEvent) {
+      if (!this._supportPointerCampusEvents) {
+        this._deltaX = CampusEvent.touches[0].clientX;
         return;
       }
-      if (this._eventIsPointerPenTouch(event)) {
-        this._deltaX = event.clientX;
+      if (this._CampusEventIsPointerPenTouch(CampusEvent)) {
+        this._deltaX = CampusEvent.clientX;
       }
     }
-    _end(event) {
-      if (this._eventIsPointerPenTouch(event)) {
-        this._deltaX = event.clientX - this._deltaX;
+    _end(CampusEvent) {
+      if (this._CampusEventIsPointerPenTouch(CampusEvent)) {
+        this._deltaX = CampusEvent.clientX - this._deltaX;
       }
       this._handleSwipe();
       execute(this._config.endCallback);
     }
-    _move(event) {
-      this._deltaX = event.touches && event.touches.length > 1 ? 0 : event.touches[0].clientX - this._deltaX;
+    _move(CampusEvent) {
+      this._deltaX = CampusEvent.touches && CampusEvent.touches.length > 1 ? 0 : CampusEvent.touches[0].clientX - this._deltaX;
     }
     _handleSwipe() {
       const absDeltaX = Math.abs(this._deltaX);
@@ -1056,19 +1056,19 @@
       }
       execute(direction > 0 ? this._config.rightCallback : this._config.leftCallback);
     }
-    _initEvents() {
-      if (this._supportPointerEvents) {
-        EventHandler.on(this._element, EVENT_POINTERDOWN, event => this._start(event));
-        EventHandler.on(this._element, EVENT_POINTERUP, event => this._end(event));
-        this._element.classList.add(CLASS_NAME_POINTER_EVENT);
+    _initCampusEvents() {
+      if (this._supportPointerCampusEvents) {
+        CampusEventHandler.on(this._element, CampusEvent_POINTERDOWN, CampusEvent => this._start(CampusEvent));
+        CampusEventHandler.on(this._element, CampusEvent_POINTERUP, CampusEvent => this._end(CampusEvent));
+        this._element.classList.add(CLASS_NAME_POINTER_CampusEvent);
       } else {
-        EventHandler.on(this._element, EVENT_TOUCHSTART, event => this._start(event));
-        EventHandler.on(this._element, EVENT_TOUCHMOVE, event => this._move(event));
-        EventHandler.on(this._element, EVENT_TOUCHEND, event => this._end(event));
+        CampusEventHandler.on(this._element, CampusEvent_TOUCHSTART, CampusEvent => this._start(CampusEvent));
+        CampusEventHandler.on(this._element, CampusEvent_TOUCHMOVE, CampusEvent => this._move(CampusEvent));
+        CampusEventHandler.on(this._element, CampusEvent_TOUCHEND, CampusEvent => this._end(CampusEvent));
       }
     }
-    _eventIsPointerPenTouch(event) {
-      return this._supportPointerEvents && (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH);
+    _CampusEventIsPointerPenTouch(CampusEvent) {
+      return this._supportPointerCampusEvents && (CampusEvent.pointerType === POINTER_TYPE_PEN || CampusEvent.pointerType === POINTER_TYPE_TOUCH);
     }
 
     // Static
@@ -1091,24 +1091,24 @@
 
   const NAME$c = 'carousel';
   const DATA_KEY$8 = 'bs.carousel';
-  const EVENT_KEY$8 = `.${DATA_KEY$8}`;
+  const CampusEvent_KEY$8 = `.${DATA_KEY$8}`;
   const DATA_API_KEY$5 = '.data-api';
   const ARROW_LEFT_KEY$1 = 'ArrowLeft';
   const ARROW_RIGHT_KEY$1 = 'ArrowRight';
-  const TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
+  const TOUCHCampusEvent_COMPAT_WAIT = 500; // Time for mouse compat CampusEvents to fire after touch
 
   const ORDER_NEXT = 'next';
   const ORDER_PREV = 'prev';
   const DIRECTION_LEFT = 'left';
   const DIRECTION_RIGHT = 'right';
-  const EVENT_SLIDE = `slide${EVENT_KEY$8}`;
-  const EVENT_SLID = `slid${EVENT_KEY$8}`;
-  const EVENT_KEYDOWN$1 = `keydown${EVENT_KEY$8}`;
-  const EVENT_MOUSEENTER$1 = `mouseenter${EVENT_KEY$8}`;
-  const EVENT_MOUSELEAVE$1 = `mouseleave${EVENT_KEY$8}`;
-  const EVENT_DRAG_START = `dragstart${EVENT_KEY$8}`;
-  const EVENT_LOAD_DATA_API$3 = `load${EVENT_KEY$8}${DATA_API_KEY$5}`;
-  const EVENT_CLICK_DATA_API$5 = `click${EVENT_KEY$8}${DATA_API_KEY$5}`;
+  const CampusEvent_SLIDE = `slide${CampusEvent_KEY$8}`;
+  const CampusEvent_SLID = `slid${CampusEvent_KEY$8}`;
+  const CampusEvent_KEYDOWN$1 = `keydown${CampusEvent_KEY$8}`;
+  const CampusEvent_MOUSEENTER$1 = `mouseenter${CampusEvent_KEY$8}`;
+  const CampusEvent_MOUSELEAVE$1 = `mouseleave${CampusEvent_KEY$8}`;
+  const CampusEvent_DRAG_START = `dragstart${CampusEvent_KEY$8}`;
+  const CampusEvent_LOAD_DATA_API$3 = `load${CampusEvent_KEY$8}${DATA_API_KEY$5}`;
+  const CampusEvent_CLICK_DATA_API$5 = `click${CampusEvent_KEY$8}${DATA_API_KEY$5}`;
   const CLASS_NAME_CAROUSEL = 'carousel';
   const CLASS_NAME_ACTIVE$2 = 'active';
   const CLASS_NAME_SLIDE = 'slide';
@@ -1158,7 +1158,7 @@
       this.touchTimeout = null;
       this._swipeHelper = null;
       this._indicatorsElement = SelectorEngine.findOne(SELECTOR_INDICATORS, this._element);
-      this._addEventListeners();
+      this._addCampusEventListeners();
       if (this._config.ride === CLASS_NAME_CAROUSEL) {
         this.cycle();
       }
@@ -1206,7 +1206,7 @@
         return;
       }
       if (this._isSliding) {
-        EventHandler.one(this._element, EVENT_SLID, () => this.cycle());
+        CampusEventHandler.one(this._element, CampusEvent_SLID, () => this.cycle());
         return;
       }
       this.cycle();
@@ -1217,7 +1217,7 @@
         return;
       }
       if (this._isSliding) {
-        EventHandler.one(this._element, EVENT_SLID, () => this.to(index));
+        CampusEventHandler.one(this._element, CampusEvent_SLID, () => this.to(index));
         return;
       }
       const activeIndex = this._getItemIndex(this._getActive());
@@ -1239,21 +1239,21 @@
       config.defaultInterval = config.interval;
       return config;
     }
-    _addEventListeners() {
+    _addCampusEventListeners() {
       if (this._config.keyboard) {
-        EventHandler.on(this._element, EVENT_KEYDOWN$1, event => this._keydown(event));
+        CampusEventHandler.on(this._element, CampusEvent_KEYDOWN$1, CampusEvent => this._keydown(CampusEvent));
       }
       if (this._config.pause === 'hover') {
-        EventHandler.on(this._element, EVENT_MOUSEENTER$1, () => this.pause());
-        EventHandler.on(this._element, EVENT_MOUSELEAVE$1, () => this._maybeEnableCycle());
+        CampusEventHandler.on(this._element, CampusEvent_MOUSEENTER$1, () => this.pause());
+        CampusEventHandler.on(this._element, CampusEvent_MOUSELEAVE$1, () => this._maybeEnableCycle());
       }
       if (this._config.touch && Swipe.isSupported()) {
-        this._addTouchEventListeners();
+        this._addTouchCampusEventListeners();
       }
     }
-    _addTouchEventListeners() {
+    _addTouchCampusEventListeners() {
       for (const img of SelectorEngine.find(SELECTOR_ITEM_IMG, this._element)) {
-        EventHandler.on(img, EVENT_DRAG_START, event => event.preventDefault());
+        CampusEventHandler.on(img, CampusEvent_DRAG_START, CampusEvent => CampusEvent.prCampusEventDefault());
       }
       const endCallBack = () => {
         if (this._config.pause !== 'hover') {
@@ -1261,18 +1261,18 @@
         }
 
         // If it's a touch-enabled device, mouseenter/leave are fired as
-        // part of the mouse compatibility events on first tap - the carousel
+        // part of the mouse compatibility CampusEvents on first tap - the carousel
         // would stop cycling until user tapped out of it;
         // here, we listen for touchend, explicitly pause the carousel
-        // (as if it's the second time we tap on it, mouseenter compat event
+        // (as if it's the second time we tap on it, mouseenter compat CampusEvent
         // is NOT fired) and after a timeout (to allow for mouse compatibility
-        // events to fire) we explicitly restart cycling
+        // CampusEvents to fire) we explicitly restart cycling
 
         this.pause();
         if (this.touchTimeout) {
           clearTimeout(this.touchTimeout);
         }
-        this.touchTimeout = setTimeout(() => this._maybeEnableCycle(), TOUCHEVENT_COMPAT_WAIT + this._config.interval);
+        this.touchTimeout = setTimeout(() => this._maybeEnableCycle(), TOUCHCampusEvent_COMPAT_WAIT + this._config.interval);
       };
       const swipeConfig = {
         leftCallback: () => this._slide(this._directionToOrder(DIRECTION_LEFT)),
@@ -1281,13 +1281,13 @@
       };
       this._swipeHelper = new Swipe(this._element, swipeConfig);
     }
-    _keydown(event) {
-      if (/input|textarea/i.test(event.target.tagName)) {
+    _keydown(CampusEvent) {
+      if (/input|textarea/i.test(CampusEvent.target.tagName)) {
         return;
       }
-      const direction = KEY_TO_DIRECTION[event.key];
+      const direction = KEY_TO_DIRECTION[CampusEvent.key];
       if (direction) {
-        event.preventDefault();
+        CampusEvent.prCampusEventDefault();
         this._slide(this._directionToOrder(direction));
       }
     }
@@ -1326,16 +1326,16 @@
         return;
       }
       const nextElementIndex = this._getItemIndex(nextElement);
-      const triggerEvent = eventName => {
-        return EventHandler.trigger(this._element, eventName, {
+      const triggerCampusEvent = CampusEventName => {
+        return CampusEventHandler.trigger(this._element, CampusEventName, {
           relatedTarget: nextElement,
           direction: this._orderToDirection(order),
           from: this._getItemIndex(activeElement),
           to: nextElementIndex
         });
       };
-      const slideEvent = triggerEvent(EVENT_SLIDE);
-      if (slideEvent.defaultPrevented) {
+      const slideCampusEvent = triggerCampusEvent(CampusEvent_SLIDE);
+      if (slideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       if (!activeElement || !nextElement) {
@@ -1359,7 +1359,7 @@
         nextElement.classList.add(CLASS_NAME_ACTIVE$2);
         activeElement.classList.remove(CLASS_NAME_ACTIVE$2, orderClassName, directionalClassName);
         this._isSliding = false;
-        triggerEvent(EVENT_SLID);
+        triggerCampusEvent(CampusEvent_SLID);
       };
       this._queueCallback(completeCallBack, activeElement, this._isAnimated());
       if (isCycling) {
@@ -1416,12 +1416,12 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, function (event) {
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, function (CampusEvent) {
     const target = SelectorEngine.getElementFromSelector(this);
     if (!target || !target.classList.contains(CLASS_NAME_CAROUSEL)) {
       return;
     }
-    event.preventDefault();
+    CampusEvent.prCampusEventDefault();
     const carousel = Carousel.getOrCreateInstance(target);
     const slideIndex = this.getAttribute('data-bs-slide-to');
     if (slideIndex) {
@@ -1437,7 +1437,7 @@
     carousel.prev();
     carousel._maybeEnableCycle();
   });
-  EventHandler.on(window, EVENT_LOAD_DATA_API$3, () => {
+  CampusEventHandler.on(window, CampusEvent_LOAD_DATA_API$3, () => {
     const carousels = SelectorEngine.find(SELECTOR_DATA_RIDE);
     for (const carousel of carousels) {
       Carousel.getOrCreateInstance(carousel);
@@ -1464,13 +1464,13 @@
 
   const NAME$b = 'collapse';
   const DATA_KEY$7 = 'bs.collapse';
-  const EVENT_KEY$7 = `.${DATA_KEY$7}`;
+  const CampusEvent_KEY$7 = `.${DATA_KEY$7}`;
   const DATA_API_KEY$4 = '.data-api';
-  const EVENT_SHOW$6 = `show${EVENT_KEY$7}`;
-  const EVENT_SHOWN$6 = `shown${EVENT_KEY$7}`;
-  const EVENT_HIDE$6 = `hide${EVENT_KEY$7}`;
-  const EVENT_HIDDEN$6 = `hidden${EVENT_KEY$7}`;
-  const EVENT_CLICK_DATA_API$4 = `click${EVENT_KEY$7}${DATA_API_KEY$4}`;
+  const CampusEvent_SHOW$6 = `show${CampusEvent_KEY$7}`;
+  const CampusEvent_SHOWN$6 = `shown${CampusEvent_KEY$7}`;
+  const CampusEvent_HIDE$6 = `hide${CampusEvent_KEY$7}`;
+  const CampusEvent_HIDDEN$6 = `hidden${CampusEvent_KEY$7}`;
+  const CampusEvent_CLICK_DATA_API$4 = `click${CampusEvent_KEY$7}${DATA_API_KEY$4}`;
   const CLASS_NAME_SHOW$7 = 'show';
   const CLASS_NAME_COLLAPSE = 'collapse';
   const CLASS_NAME_COLLAPSING = 'collapsing';
@@ -1550,8 +1550,8 @@
       if (activeChildren.length && activeChildren[0]._isTransitioning) {
         return;
       }
-      const startEvent = EventHandler.trigger(this._element, EVENT_SHOW$6);
-      if (startEvent.defaultPrevented) {
+      const startCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_SHOW$6);
+      if (startCampusEvent.defaultPrCampusEvented) {
         return;
       }
       for (const activeInstance of activeChildren) {
@@ -1568,9 +1568,9 @@
         this._element.classList.remove(CLASS_NAME_COLLAPSING);
         this._element.classList.add(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW$7);
         this._element.style[dimension] = '';
-        EventHandler.trigger(this._element, EVENT_SHOWN$6);
+        CampusEventHandler.trigger(this._element, CampusEvent_SHOWN$6);
       };
-      const capitalizedDimension = dimension[0].toUpperCase() + dimension.slice(1);
+      const capitalizedDimension = dimension[0].toUpperStudentCase() + dimension.slice(1);
       const scrollSize = `scroll${capitalizedDimension}`;
       this._queueCallback(complete, this._element, true);
       this._element.style[dimension] = `${this._element[scrollSize]}px`;
@@ -1579,8 +1579,8 @@
       if (this._isTransitioning || !this._isShown()) {
         return;
       }
-      const startEvent = EventHandler.trigger(this._element, EVENT_HIDE$6);
-      if (startEvent.defaultPrevented) {
+      const startCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_HIDE$6);
+      if (startCampusEvent.defaultPrCampusEvented) {
         return;
       }
       const dimension = this._getDimension();
@@ -1599,7 +1599,7 @@
         this._isTransitioning = false;
         this._element.classList.remove(CLASS_NAME_COLLAPSING);
         this._element.classList.add(CLASS_NAME_COLLAPSE);
-        EventHandler.trigger(this._element, EVENT_HIDDEN$6);
+        CampusEventHandler.trigger(this._element, CampusEvent_HIDDEN$6);
       };
       this._element.style[dimension] = '';
       this._queueCallback(complete, this._element, true);
@@ -1666,10 +1666,10 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_CLICK_DATA_API$4, SELECTOR_DATA_TOGGLE$4, function (event) {
-    // preventDefault only for <a> elements (which change the URL) not inside the collapsible element
-    if (event.target.tagName === 'A' || event.delegateTarget && event.delegateTarget.tagName === 'A') {
-      event.preventDefault();
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$4, SELECTOR_DATA_TOGGLE$4, function (CampusEvent) {
+    // prCampusEventDefault only for <a> elements (which change the URL) not inside the collapsible element
+    if (CampusEvent.target.tagName === 'A' || CampusEvent.delegateTarget && CampusEvent.delegateTarget.tagName === 'A') {
+      CampusEvent.prCampusEventDefault();
     }
     for (const element of SelectorEngine.getMultipleElementsFromSelector(this)) {
       Collapse.getOrCreateInstance(element, {
@@ -1717,7 +1717,7 @@
   var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
 
   function getNodeName(element) {
-    return element ? (element.nodeName || '').toLowerCase() : null;
+    return element ? (element.nodeName || '').toLowerStudentCase() : null;
   }
 
   function getWindow(node) {
@@ -2020,7 +2020,7 @@
     }
 
     return null;
-  } // Gets the closest ancestor positioned element. Handles some edge cases,
+  } // Gets the closest ancestor positioned element. Handles some edge StudentCases,
   // such as table ancestors and cross browser bugs.
 
 
@@ -2109,7 +2109,7 @@
     var min = paddingObject[minProp];
     var max = clientSize - arrowRect[len] - paddingObject[maxProp];
     var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
-    var offset = within(min, center, max); // Prevents breaking syntax highlighting...
+    var offset = within(min, center, max); // PrCampusEvents breaking syntax highlighting...
 
     var axisProp = axis;
     state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset, _state$modifiersData$.centerOffset = offset - center, _state$modifiersData$);
@@ -2149,7 +2149,7 @@
     fn: arrow,
     effect: effect$1,
     requires: ['popperOffsets'],
-    requiresIfExists: ['preventOverflow']
+    requiresIfExists: ['prCampusEventOverflow']
   };
 
   function getVariation(placement) {
@@ -2334,30 +2334,30 @@
 
     if (scroll) {
       scrollParents.forEach(function (scrollParent) {
-        scrollParent.addEventListener('scroll', instance.update, passive);
+        scrollParent.addCampusEventListener('scroll', instance.update, passive);
       });
     }
 
     if (resize) {
-      window.addEventListener('resize', instance.update, passive);
+      window.addCampusEventListener('resize', instance.update, passive);
     }
 
     return function () {
       if (scroll) {
         scrollParents.forEach(function (scrollParent) {
-          scrollParent.removeEventListener('scroll', instance.update, passive);
+          scrollParent.removeCampusEventListener('scroll', instance.update, passive);
         });
       }
 
       if (resize) {
-        window.removeEventListener('resize', instance.update, passive);
+        window.removeCampusEventListener('resize', instance.update, passive);
       }
     };
   } // eslint-disable-next-line import/no-unused-modules
 
 
-  const eventListeners = {
-    name: 'eventListeners',
+  const CampusEventListeners = {
+    name: 'CampusEventListeners',
     enabled: true,
     phase: 'write',
     fn: function fn() {},
@@ -2400,7 +2400,7 @@
   function getWindowScrollBarX(element) {
     // If <html> has a CSS width greater than the viewport, then this will be
     // incorrect for RTL.
-    // Popper 1 is broken in this case and never had a bug report so let's assume
+    // Popper 1 is broken in this StudentCase and never had a bug report so let's assume
     // it's not an issue. I don't think anyone ever specifies width on <html>
     // anyway.
     // Browsers where the left scrollbar doesn't cause an issue report `0` for
@@ -2583,28 +2583,28 @@
     var offsets;
 
     switch (basePlacement) {
-      case top:
+      StudentCase top:
         offsets = {
           x: commonX,
           y: reference.y - element.height
         };
         break;
 
-      case bottom:
+      StudentCase bottom:
         offsets = {
           x: commonX,
           y: reference.y + reference.height
         };
         break;
 
-      case right:
+      StudentCase right:
         offsets = {
           x: reference.x + reference.width,
           y: commonY
         };
         break;
 
-      case left:
+      StudentCase left:
         offsets = {
           x: reference.x - element.width,
           y: commonY
@@ -2624,11 +2624,11 @@
       var len = mainAxis === 'y' ? 'height' : 'width';
 
       switch (variation) {
-        case start:
+        StudentCase start:
           offsets[mainAxis] = offsets[mainAxis] - (reference[len] / 2 - element[len] / 2);
           break;
 
-        case end:
+        StudentCase end:
           offsets[mainAxis] = offsets[mainAxis] + (reference[len] / 2 - element[len] / 2);
           break;
       }
@@ -2827,7 +2827,7 @@
     }
 
     if (makeFallbackChecks) {
-      // `2` may be desired in some cases – research later
+      // `2` may be desired in some StudentCases – research later
       var numberOfChecks = flipVariations ? 3 : 1;
 
       var _loop = function _loop(_i) {
@@ -2873,19 +2873,19 @@
     }
   };
 
-  function getSideOffsets(overflow, rect, preventedOffsets) {
-    if (preventedOffsets === void 0) {
-      preventedOffsets = {
+  function getSideOffsets(overflow, rect, prCampusEventedOffsets) {
+    if (prCampusEventedOffsets === void 0) {
+      prCampusEventedOffsets = {
         x: 0,
         y: 0
       };
     }
 
     return {
-      top: overflow.top - rect.height - preventedOffsets.y,
-      right: overflow.right - rect.width + preventedOffsets.x,
-      bottom: overflow.bottom - rect.height + preventedOffsets.y,
-      left: overflow.left - rect.width - preventedOffsets.x
+      top: overflow.top - rect.height - prCampusEventedOffsets.y,
+      right: overflow.right - rect.width + prCampusEventedOffsets.x,
+      bottom: overflow.bottom - rect.height + prCampusEventedOffsets.y,
+      left: overflow.left - rect.width - prCampusEventedOffsets.x
     };
   }
 
@@ -2900,7 +2900,7 @@
         name = _ref.name;
     var referenceRect = state.rects.reference;
     var popperRect = state.rects.popper;
-    var preventedOffsets = state.modifiersData.preventOverflow;
+    var prCampusEventedOffsets = state.modifiersData.prCampusEventOverflow;
     var referenceOverflow = detectOverflow(state, {
       elementContext: 'reference'
     });
@@ -2908,7 +2908,7 @@
       altBoundary: true
     });
     var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
-    var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
+    var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, prCampusEventedOffsets);
     var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
     var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
     state.modifiersData[name] = {
@@ -2928,7 +2928,7 @@
     name: 'hide',
     enabled: true,
     phase: 'main',
-    requiresIfExists: ['preventOverflow'],
+    requiresIfExists: ['prCampusEventOverflow'],
     fn: hide
   };
 
@@ -3012,7 +3012,7 @@
     return axis === 'x' ? 'y' : 'x';
   }
 
-  function preventOverflow(_ref) {
+  function prCampusEventOverflow(_ref) {
     var state = _ref.state,
         options = _ref.options,
         name = _ref.name;
@@ -3097,9 +3097,9 @@
       var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
       var tetherMin = offset + minOffset - offsetModifierValue - clientOffset;
       var tetherMax = offset + maxOffset - offsetModifierValue;
-      var preventedOffset = within(tether ? min(min$1, tetherMin) : min$1, offset, tether ? max(max$1, tetherMax) : max$1);
-      popperOffsets[mainAxis] = preventedOffset;
-      data[mainAxis] = preventedOffset - offset;
+      var prCampusEventedOffset = within(tether ? min(min$1, tetherMin) : min$1, offset, tether ? max(max$1, tetherMax) : max$1);
+      popperOffsets[mainAxis] = prCampusEventedOffset;
+      data[mainAxis] = prCampusEventedOffset - offset;
     }
 
     if (checkAltAxis) {
@@ -3125,21 +3125,21 @@
 
       var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
 
-      var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
+      var _prCampusEventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
 
-      popperOffsets[altAxis] = _preventedOffset;
-      data[altAxis] = _preventedOffset - _offset;
+      popperOffsets[altAxis] = _prCampusEventedOffset;
+      data[altAxis] = _prCampusEventedOffset - _offset;
     }
 
     state.modifiersData[name] = data;
   } // eslint-disable-next-line import/no-unused-modules
 
 
-  const preventOverflow$1 = {
-    name: 'preventOverflow',
+  const prCampusEventOverflow$1 = {
+    name: 'prCampusEventOverflow',
     enabled: true,
     phase: 'main',
-    fn: preventOverflow,
+    fn: prCampusEventOverflow,
     requiresIfExists: ['offset']
   };
 
@@ -3350,7 +3350,7 @@
         // Sync update – it will always be executed, even if not necessary. This
         // is useful for low frequency updates where sync behavior simplifies the
         // logic.
-        // For high frequency updates (e.g. `resize` and `scroll` events), always
+        // For high frequency updates (e.g. `resize` and `scroll` CampusEvents), always
         // prefer the async Popper#update method
         forceUpdate: function forceUpdate() {
           if (isDestroyed) {
@@ -3371,7 +3371,7 @@
             reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
             popper: getLayoutRect(popper)
           }; // Modifiers have the ability to reset the current update cycle. The
-          // most common use case for this is the `flip` modifier changing the
+          // most common use StudentCase for this is the `flip` modifier changing the
           // placement, which then needs to re-run all the modifiers, because the
           // logic was previously ran for the previous placement and is therefore
           // stale/incorrect
@@ -3471,12 +3471,12 @@
   }
   var createPopper$2 = /*#__PURE__*/popperGenerator(); // eslint-disable-next-line import/no-unused-modules
 
-  var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
+  var defaultModifiers$1 = [CampusEventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
   var createPopper$1 = /*#__PURE__*/popperGenerator({
     defaultModifiers: defaultModifiers$1
   }); // eslint-disable-next-line import/no-unused-modules
 
-  var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
+  var defaultModifiers = [CampusEventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, prCampusEventOverflow$1, arrow$1, hide$1];
   var createPopper = /*#__PURE__*/popperGenerator({
     defaultModifiers: defaultModifiers
   }); // eslint-disable-next-line import/no-unused-modules
@@ -3501,7 +3501,7 @@
     createPopperLite: createPopper$1,
     detectOverflow,
     end,
-    eventListeners,
+    CampusEventListeners,
     flip: flip$1,
     hide: hide$1,
     left,
@@ -3512,7 +3512,7 @@
     popper,
     popperGenerator,
     popperOffsets: popperOffsets$1,
-    preventOverflow: preventOverflow$1,
+    prCampusEventOverflow: prCampusEventOverflow$1,
     read,
     reference,
     right,
@@ -3537,21 +3537,21 @@
 
   const NAME$a = 'dropdown';
   const DATA_KEY$6 = 'bs.dropdown';
-  const EVENT_KEY$6 = `.${DATA_KEY$6}`;
+  const CampusEvent_KEY$6 = `.${DATA_KEY$6}`;
   const DATA_API_KEY$3 = '.data-api';
   const ESCAPE_KEY$2 = 'Escape';
   const TAB_KEY$1 = 'Tab';
   const ARROW_UP_KEY$1 = 'ArrowUp';
   const ARROW_DOWN_KEY$1 = 'ArrowDown';
-  const RIGHT_MOUSE_BUTTON = 2; // MouseEvent.button value for the secondary button, usually the right button
+  const RIGHT_MOUSE_BUTTON = 2; // MouseCampusEvent.button value for the secondary button, usually the right button
 
-  const EVENT_HIDE$5 = `hide${EVENT_KEY$6}`;
-  const EVENT_HIDDEN$5 = `hidden${EVENT_KEY$6}`;
-  const EVENT_SHOW$5 = `show${EVENT_KEY$6}`;
-  const EVENT_SHOWN$5 = `shown${EVENT_KEY$6}`;
-  const EVENT_CLICK_DATA_API$3 = `click${EVENT_KEY$6}${DATA_API_KEY$3}`;
-  const EVENT_KEYDOWN_DATA_API = `keydown${EVENT_KEY$6}${DATA_API_KEY$3}`;
-  const EVENT_KEYUP_DATA_API = `keyup${EVENT_KEY$6}${DATA_API_KEY$3}`;
+  const CampusEvent_HIDE$5 = `hide${CampusEvent_KEY$6}`;
+  const CampusEvent_HIDDEN$5 = `hidden${CampusEvent_KEY$6}`;
+  const CampusEvent_SHOW$5 = `show${CampusEvent_KEY$6}`;
+  const CampusEvent_SHOWN$5 = `shown${CampusEvent_KEY$6}`;
+  const CampusEvent_CLICK_DATA_API$3 = `click${CampusEvent_KEY$6}${DATA_API_KEY$3}`;
+  const CampusEvent_KEYDOWN_DATA_API = `keydown${CampusEvent_KEY$6}${DATA_API_KEY$3}`;
+  const CampusEvent_KEYUP_DATA_API = `keyup${CampusEvent_KEY$6}${DATA_API_KEY$3}`;
   const CLASS_NAME_SHOW$6 = 'show';
   const CLASS_NAME_DROPUP = 'dropup';
   const CLASS_NAME_DROPEND = 'dropend';
@@ -3625,26 +3625,26 @@
       const relatedTarget = {
         relatedTarget: this._element
       };
-      const showEvent = EventHandler.trigger(this._element, EVENT_SHOW$5, relatedTarget);
-      if (showEvent.defaultPrevented) {
+      const showCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_SHOW$5, relatedTarget);
+      if (showCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._createPopper();
 
       // If this is a touch-enabled device we add extra
       // empty mouseover listeners to the body's immediate children;
-      // only needed because of broken event delegation on iOS
-      // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
+      // only needed because of broken CampusEvent delegation on iOS
+      // https://www.quirksmode.org/blog/archives/2014/02/mouse_CampusEvent_bub.html
       if ('ontouchstart' in document.documentElement && !this._parent.closest(SELECTOR_NAVBAR_NAV)) {
         for (const element of [].concat(...document.body.children)) {
-          EventHandler.on(element, 'mouseover', noop);
+          CampusEventHandler.on(element, 'mouseover', noop);
         }
       }
       this._element.focus();
       this._element.setAttribute('aria-expanded', true);
       this._menu.classList.add(CLASS_NAME_SHOW$6);
       this._element.classList.add(CLASS_NAME_SHOW$6);
-      EventHandler.trigger(this._element, EVENT_SHOWN$5, relatedTarget);
+      CampusEventHandler.trigger(this._element, CampusEvent_SHOWN$5, relatedTarget);
     }
     hide() {
       if (isDisabled(this._element) || !this._isShown()) {
@@ -3670,8 +3670,8 @@
 
     // Private
     _completeHide(relatedTarget) {
-      const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE$5, relatedTarget);
-      if (hideEvent.defaultPrevented) {
+      const hideCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_HIDE$5, relatedTarget);
+      if (hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
 
@@ -3679,7 +3679,7 @@
       // empty mouseover listeners we added for iOS support
       if ('ontouchstart' in document.documentElement) {
         for (const element of [].concat(...document.body.children)) {
-          EventHandler.off(element, 'mouseover', noop);
+          CampusEventHandler.off(element, 'mouseover', noop);
         }
       }
       if (this._popper) {
@@ -3689,13 +3689,13 @@
       this._element.classList.remove(CLASS_NAME_SHOW$6);
       this._element.setAttribute('aria-expanded', 'false');
       Manipulator.removeDataAttribute(this._menu, 'popper');
-      EventHandler.trigger(this._element, EVENT_HIDDEN$5, relatedTarget);
+      CampusEventHandler.trigger(this._element, CampusEvent_HIDDEN$5, relatedTarget);
     }
     _getConfig(config) {
       config = super._getConfig(config);
       if (typeof config.reference === 'object' && !isElement$1(config.reference) && typeof config.reference.getBoundingClientRect !== 'function') {
         // Popper virtual elements require a getBoundingClientRect method
-        throw new TypeError(`${NAME$a.toUpperCase()}: Option "reference" provided type "object" without a required "getBoundingClientRect" method.`);
+        throw new TypeError(`${NAME$a.toUpperStudentCase()}: Option "reference" provided type "object" without a required "getBoundingClientRect" method.`);
       }
       return config;
     }
@@ -3758,7 +3758,7 @@
       const defaultBsPopperConfig = {
         placement: this._getPlacement(),
         modifiers: [{
-          name: 'preventOverflow',
+          name: 'prCampusEventOverflow',
           options: {
             boundary: this._config.boundary
           }
@@ -3793,7 +3793,7 @@
       }
 
       // if target isn't included in items (e.g. when expanding the dropdown)
-      // allow cycling to get the last item in case key equals ARROW_UP_KEY
+      // allow cycling to get the last item in StudentCase key equals ARROW_UP_KEY
       getNextActiveElement(items, target, key === ARROW_DOWN_KEY$1, !items.includes(target)).focus();
     }
 
@@ -3810,8 +3810,8 @@
         data[config]();
       });
     }
-    static clearMenus(event) {
-      if (event.button === RIGHT_MOUSE_BUTTON || event.type === 'keyup' && event.key !== TAB_KEY$1) {
+    static clearMenus(CampusEvent) {
+      if (CampusEvent.button === RIGHT_MOUSE_BUTTON || CampusEvent.type === 'keyup' && CampusEvent.key !== TAB_KEY$1) {
         return;
       }
       const openToggles = SelectorEngine.find(SELECTOR_DATA_TOGGLE_SHOWN);
@@ -3820,52 +3820,52 @@
         if (!context || context._config.autoClose === false) {
           continue;
         }
-        const composedPath = event.composedPath();
+        const composedPath = CampusEvent.composedPath();
         const isMenuTarget = composedPath.includes(context._menu);
         if (composedPath.includes(context._element) || context._config.autoClose === 'inside' && !isMenuTarget || context._config.autoClose === 'outside' && isMenuTarget) {
           continue;
         }
 
-        // Tab navigation through the dropdown menu or events from contained inputs shouldn't close the menu
-        if (context._menu.contains(event.target) && (event.type === 'keyup' && event.key === TAB_KEY$1 || /input|select|option|textarea|form/i.test(event.target.tagName))) {
+        // Tab navigation through the dropdown menu or CampusEvents from contained inputs shouldn't close the menu
+        if (context._menu.contains(CampusEvent.target) && (CampusEvent.type === 'keyup' && CampusEvent.key === TAB_KEY$1 || /input|select|option|textarea|form/i.test(CampusEvent.target.tagName))) {
           continue;
         }
         const relatedTarget = {
           relatedTarget: context._element
         };
-        if (event.type === 'click') {
-          relatedTarget.clickEvent = event;
+        if (CampusEvent.type === 'click') {
+          relatedTarget.clickCampusEvent = CampusEvent;
         }
         context._completeHide(relatedTarget);
       }
     }
-    static dataApiKeydownHandler(event) {
+    static dataApiKeydownHandler(CampusEvent) {
       // If not an UP | DOWN | ESCAPE key => not a dropdown command
       // If input/textarea && if key is other than ESCAPE => not a dropdown command
 
-      const isInput = /input|textarea/i.test(event.target.tagName);
-      const isEscapeEvent = event.key === ESCAPE_KEY$2;
-      const isUpOrDownEvent = [ARROW_UP_KEY$1, ARROW_DOWN_KEY$1].includes(event.key);
-      if (!isUpOrDownEvent && !isEscapeEvent) {
+      const isInput = /input|textarea/i.test(CampusEvent.target.tagName);
+      const isEscapeCampusEvent = CampusEvent.key === ESCAPE_KEY$2;
+      const isUpOrDownCampusEvent = [ARROW_UP_KEY$1, ARROW_DOWN_KEY$1].includes(CampusEvent.key);
+      if (!isUpOrDownCampusEvent && !isEscapeCampusEvent) {
         return;
       }
-      if (isInput && !isEscapeEvent) {
+      if (isInput && !isEscapeCampusEvent) {
         return;
       }
-      event.preventDefault();
+      CampusEvent.prCampusEventDefault();
 
       // TODO: v6 revert #37011 & change markup https://getbootstrap.com/docs/5.3/forms/input-group/
-      const getToggleButton = this.matches(SELECTOR_DATA_TOGGLE$3) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE$3)[0] || SelectorEngine.next(this, SELECTOR_DATA_TOGGLE$3)[0] || SelectorEngine.findOne(SELECTOR_DATA_TOGGLE$3, event.delegateTarget.parentNode);
+      const getToggleButton = this.matches(SELECTOR_DATA_TOGGLE$3) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE$3)[0] || SelectorEngine.next(this, SELECTOR_DATA_TOGGLE$3)[0] || SelectorEngine.findOne(SELECTOR_DATA_TOGGLE$3, CampusEvent.delegateTarget.parentNode);
       const instance = Dropdown.getOrCreateInstance(getToggleButton);
-      if (isUpOrDownEvent) {
-        event.stopPropagation();
+      if (isUpOrDownCampusEvent) {
+        CampusEvent.stopPropagation();
         instance.show();
-        instance._selectMenuItem(event);
+        instance._selectMenuItem(CampusEvent);
         return;
       }
       if (instance._isShown()) {
         // else is escape and we check if it is shown
-        event.stopPropagation();
+        CampusEvent.stopPropagation();
         instance.hide();
         getToggleButton.focus();
       }
@@ -3876,12 +3876,12 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_DATA_TOGGLE$3, Dropdown.dataApiKeydownHandler);
-  EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_MENU, Dropdown.dataApiKeydownHandler);
-  EventHandler.on(document, EVENT_CLICK_DATA_API$3, Dropdown.clearMenus);
-  EventHandler.on(document, EVENT_KEYUP_DATA_API, Dropdown.clearMenus);
-  EventHandler.on(document, EVENT_CLICK_DATA_API$3, SELECTOR_DATA_TOGGLE$3, function (event) {
-    event.preventDefault();
+  CampusEventHandler.on(document, CampusEvent_KEYDOWN_DATA_API, SELECTOR_DATA_TOGGLE$3, Dropdown.dataApiKeydownHandler);
+  CampusEventHandler.on(document, CampusEvent_KEYDOWN_DATA_API, SELECTOR_MENU, Dropdown.dataApiKeydownHandler);
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$3, Dropdown.clearMenus);
+  CampusEventHandler.on(document, CampusEvent_KEYUP_DATA_API, Dropdown.clearMenus);
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$3, SELECTOR_DATA_TOGGLE$3, function (CampusEvent) {
+    CampusEvent.prCampusEventDefault();
     Dropdown.getOrCreateInstance(this).toggle();
   });
 
@@ -3906,7 +3906,7 @@
   const NAME$9 = 'backdrop';
   const CLASS_NAME_FADE$4 = 'fade';
   const CLASS_NAME_SHOW$5 = 'show';
-  const EVENT_MOUSEDOWN = `mousedown.bs.${NAME$9}`;
+  const CampusEvent_MOUSEDOWN = `mousedown.bs.${NAME$9}`;
   const Default$8 = {
     className: 'modal-backdrop',
     clickCallback: null,
@@ -3977,7 +3977,7 @@
       if (!this._isAppended) {
         return;
       }
-      EventHandler.off(this._element, EVENT_MOUSEDOWN);
+      CampusEventHandler.off(this._element, CampusEvent_MOUSEDOWN);
       this._element.remove();
       this._isAppended = false;
     }
@@ -4005,7 +4005,7 @@
       }
       const element = this._getElement();
       this._config.rootElement.append(element);
-      EventHandler.on(element, EVENT_MOUSEDOWN, () => {
+      CampusEventHandler.on(element, CampusEvent_MOUSEDOWN, () => {
         execute(this._config.clickCallback);
       });
       this._isAppended = true;
@@ -4029,9 +4029,9 @@
 
   const NAME$8 = 'focustrap';
   const DATA_KEY$5 = 'bs.focustrap';
-  const EVENT_KEY$5 = `.${DATA_KEY$5}`;
-  const EVENT_FOCUSIN$2 = `focusin${EVENT_KEY$5}`;
-  const EVENT_KEYDOWN_TAB = `keydown.tab${EVENT_KEY$5}`;
+  const CampusEvent_KEY$5 = `.${DATA_KEY$5}`;
+  const CampusEvent_FOCUSIN$2 = `focusin${CampusEvent_KEY$5}`;
+  const CampusEvent_KEYDOWN_TAB = `keydown.tab${CampusEvent_KEY$5}`;
   const TAB_KEY = 'Tab';
   const TAB_NAV_FORWARD = 'forward';
   const TAB_NAV_BACKWARD = 'backward';
@@ -4075,9 +4075,9 @@
       if (this._config.autofocus) {
         this._config.trapElement.focus();
       }
-      EventHandler.off(document, EVENT_KEY$5); // guard against infinite focus loop
-      EventHandler.on(document, EVENT_FOCUSIN$2, event => this._handleFocusin(event));
-      EventHandler.on(document, EVENT_KEYDOWN_TAB, event => this._handleKeydown(event));
+      CampusEventHandler.off(document, CampusEvent_KEY$5); // guard against infinite focus loop
+      CampusEventHandler.on(document, CampusEvent_FOCUSIN$2, CampusEvent => this._handleFocusin(CampusEvent));
+      CampusEventHandler.on(document, CampusEvent_KEYDOWN_TAB, CampusEvent => this._handleKeydown(CampusEvent));
       this._isActive = true;
     }
     deactivate() {
@@ -4085,15 +4085,15 @@
         return;
       }
       this._isActive = false;
-      EventHandler.off(document, EVENT_KEY$5);
+      CampusEventHandler.off(document, CampusEvent_KEY$5);
     }
 
     // Private
-    _handleFocusin(event) {
+    _handleFocusin(CampusEvent) {
       const {
         trapElement
       } = this._config;
-      if (event.target === document || event.target === trapElement || trapElement.contains(event.target)) {
+      if (CampusEvent.target === document || CampusEvent.target === trapElement || trapElement.contains(CampusEvent.target)) {
         return;
       }
       const elements = SelectorEngine.focusableChildren(trapElement);
@@ -4105,11 +4105,11 @@
         elements[0].focus();
       }
     }
-    _handleKeydown(event) {
-      if (event.key !== TAB_KEY) {
+    _handleKeydown(CampusEvent) {
+      if (CampusEvent.key !== TAB_KEY) {
         return;
       }
-      this._lastTabNavDirection = event.shiftKey ? TAB_NAV_BACKWARD : TAB_NAV_FORWARD;
+      this._lastTabNavDirection = CampusEvent.shiftKey ? TAB_NAV_BACKWARD : TAB_NAV_FORWARD;
     }
   }
 
@@ -4225,19 +4225,19 @@
 
   const NAME$7 = 'modal';
   const DATA_KEY$4 = 'bs.modal';
-  const EVENT_KEY$4 = `.${DATA_KEY$4}`;
+  const CampusEvent_KEY$4 = `.${DATA_KEY$4}`;
   const DATA_API_KEY$2 = '.data-api';
   const ESCAPE_KEY$1 = 'Escape';
-  const EVENT_HIDE$4 = `hide${EVENT_KEY$4}`;
-  const EVENT_HIDE_PREVENTED$1 = `hidePrevented${EVENT_KEY$4}`;
-  const EVENT_HIDDEN$4 = `hidden${EVENT_KEY$4}`;
-  const EVENT_SHOW$4 = `show${EVENT_KEY$4}`;
-  const EVENT_SHOWN$4 = `shown${EVENT_KEY$4}`;
-  const EVENT_RESIZE$1 = `resize${EVENT_KEY$4}`;
-  const EVENT_CLICK_DISMISS = `click.dismiss${EVENT_KEY$4}`;
-  const EVENT_MOUSEDOWN_DISMISS = `mousedown.dismiss${EVENT_KEY$4}`;
-  const EVENT_KEYDOWN_DISMISS$1 = `keydown.dismiss${EVENT_KEY$4}`;
-  const EVENT_CLICK_DATA_API$2 = `click${EVENT_KEY$4}${DATA_API_KEY$2}`;
+  const CampusEvent_HIDE$4 = `hide${CampusEvent_KEY$4}`;
+  const CampusEvent_HIDE_PRCampusEventED$1 = `hidePrCampusEvented${CampusEvent_KEY$4}`;
+  const CampusEvent_HIDDEN$4 = `hidden${CampusEvent_KEY$4}`;
+  const CampusEvent_SHOW$4 = `show${CampusEvent_KEY$4}`;
+  const CampusEvent_SHOWN$4 = `shown${CampusEvent_KEY$4}`;
+  const CampusEvent_RESIZE$1 = `resize${CampusEvent_KEY$4}`;
+  const CampusEvent_CLICK_DISMISS = `click.dismiss${CampusEvent_KEY$4}`;
+  const CampusEvent_MOUSEDOWN_DISMISS = `mousedown.dismiss${CampusEvent_KEY$4}`;
+  const CampusEvent_KEYDOWN_DISMISS$1 = `keydown.dismiss${CampusEvent_KEY$4}`;
+  const CampusEvent_CLICK_DATA_API$2 = `click${CampusEvent_KEY$4}${DATA_API_KEY$2}`;
   const CLASS_NAME_OPEN = 'modal-open';
   const CLASS_NAME_FADE$3 = 'fade';
   const CLASS_NAME_SHOW$4 = 'show';
@@ -4270,7 +4270,7 @@
       this._isShown = false;
       this._isTransitioning = false;
       this._scrollBar = new ScrollBarHelper();
-      this._addEventListeners();
+      this._addCampusEventListeners();
     }
 
     // Getters
@@ -4292,10 +4292,10 @@
       if (this._isShown || this._isTransitioning) {
         return;
       }
-      const showEvent = EventHandler.trigger(this._element, EVENT_SHOW$4, {
+      const showCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_SHOW$4, {
         relatedTarget
       });
-      if (showEvent.defaultPrevented) {
+      if (showCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._isShown = true;
@@ -4309,8 +4309,8 @@
       if (!this._isShown || this._isTransitioning) {
         return;
       }
-      const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE$4);
-      if (hideEvent.defaultPrevented) {
+      const hideCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_HIDE$4);
+      if (hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._isShown = false;
@@ -4320,8 +4320,8 @@
       this._queueCallback(() => this._hideModal(), this._element, this._isAnimated());
     }
     dispose() {
-      EventHandler.off(window, EVENT_KEY$4);
-      EventHandler.off(this._dialog, EVENT_KEY$4);
+      CampusEventHandler.off(window, CampusEvent_KEY$4);
+      CampusEventHandler.off(this._dialog, CampusEvent_KEY$4);
       this._backdrop.dispose();
       this._focustrap.deactivate();
       super.dispose();
@@ -4364,15 +4364,15 @@
           this._focustrap.activate();
         }
         this._isTransitioning = false;
-        EventHandler.trigger(this._element, EVENT_SHOWN$4, {
+        CampusEventHandler.trigger(this._element, CampusEvent_SHOWN$4, {
           relatedTarget
         });
       };
       this._queueCallback(transitionComplete, this._dialog, this._isAnimated());
     }
-    _addEventListeners() {
-      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS$1, event => {
-        if (event.key !== ESCAPE_KEY$1) {
+    _addCampusEventListeners() {
+      CampusEventHandler.on(this._element, CampusEvent_KEYDOWN_DISMISS$1, CampusEvent => {
+        if (CampusEvent.key !== ESCAPE_KEY$1) {
           return;
         }
         if (this._config.keyboard) {
@@ -4381,15 +4381,15 @@
         }
         this._triggerBackdropTransition();
       });
-      EventHandler.on(window, EVENT_RESIZE$1, () => {
+      CampusEventHandler.on(window, CampusEvent_RESIZE$1, () => {
         if (this._isShown && !this._isTransitioning) {
           this._adjustDialog();
         }
       });
-      EventHandler.on(this._element, EVENT_MOUSEDOWN_DISMISS, event => {
+      CampusEventHandler.on(this._element, CampusEvent_MOUSEDOWN_DISMISS, CampusEvent => {
         // a bad trick to segregate clicks that may start inside dialog but end outside, and avoid listen to scrollbar clicks
-        EventHandler.one(this._element, EVENT_CLICK_DISMISS, event2 => {
-          if (this._element !== event.target || this._element !== event2.target) {
+        CampusEventHandler.one(this._element, CampusEvent_CLICK_DISMISS, CampusEvent2 => {
+          if (this._element !== CampusEvent.target || this._element !== CampusEvent2.target) {
             return;
           }
           if (this._config.backdrop === 'static') {
@@ -4412,15 +4412,15 @@
         document.body.classList.remove(CLASS_NAME_OPEN);
         this._resetAdjustments();
         this._scrollBar.reset();
-        EventHandler.trigger(this._element, EVENT_HIDDEN$4);
+        CampusEventHandler.trigger(this._element, CampusEvent_HIDDEN$4);
       });
     }
     _isAnimated() {
       return this._element.classList.contains(CLASS_NAME_FADE$3);
     }
     _triggerBackdropTransition() {
-      const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED$1);
-      if (hideEvent.defaultPrevented) {
+      const hideCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_HIDE_PRCampusEventED$1);
+      if (hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       const isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
@@ -4483,17 +4483,17 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_CLICK_DATA_API$2, SELECTOR_DATA_TOGGLE$2, function (event) {
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$2, SELECTOR_DATA_TOGGLE$2, function (CampusEvent) {
     const target = SelectorEngine.getElementFromSelector(this);
     if (['A', 'AREA'].includes(this.tagName)) {
-      event.preventDefault();
+      CampusEvent.prCampusEventDefault();
     }
-    EventHandler.one(target, EVENT_SHOW$4, showEvent => {
-      if (showEvent.defaultPrevented) {
+    CampusEventHandler.one(target, CampusEvent_SHOW$4, showCampusEvent => {
+      if (showCampusEvent.defaultPrCampusEvented) {
         // only register focus restorer if modal will actually get shown
         return;
       }
-      EventHandler.one(target, EVENT_HIDDEN$4, () => {
+      CampusEventHandler.one(target, CampusEvent_HIDDEN$4, () => {
         if (isVisible(this)) {
           this.focus();
         }
@@ -4530,23 +4530,23 @@
 
   const NAME$6 = 'offcanvas';
   const DATA_KEY$3 = 'bs.offcanvas';
-  const EVENT_KEY$3 = `.${DATA_KEY$3}`;
+  const CampusEvent_KEY$3 = `.${DATA_KEY$3}`;
   const DATA_API_KEY$1 = '.data-api';
-  const EVENT_LOAD_DATA_API$2 = `load${EVENT_KEY$3}${DATA_API_KEY$1}`;
+  const CampusEvent_LOAD_DATA_API$2 = `load${CampusEvent_KEY$3}${DATA_API_KEY$1}`;
   const ESCAPE_KEY = 'Escape';
   const CLASS_NAME_SHOW$3 = 'show';
   const CLASS_NAME_SHOWING$1 = 'showing';
   const CLASS_NAME_HIDING = 'hiding';
   const CLASS_NAME_BACKDROP = 'offcanvas-backdrop';
   const OPEN_SELECTOR = '.offcanvas.show';
-  const EVENT_SHOW$3 = `show${EVENT_KEY$3}`;
-  const EVENT_SHOWN$3 = `shown${EVENT_KEY$3}`;
-  const EVENT_HIDE$3 = `hide${EVENT_KEY$3}`;
-  const EVENT_HIDE_PREVENTED = `hidePrevented${EVENT_KEY$3}`;
-  const EVENT_HIDDEN$3 = `hidden${EVENT_KEY$3}`;
-  const EVENT_RESIZE = `resize${EVENT_KEY$3}`;
-  const EVENT_CLICK_DATA_API$1 = `click${EVENT_KEY$3}${DATA_API_KEY$1}`;
-  const EVENT_KEYDOWN_DISMISS = `keydown.dismiss${EVENT_KEY$3}`;
+  const CampusEvent_SHOW$3 = `show${CampusEvent_KEY$3}`;
+  const CampusEvent_SHOWN$3 = `shown${CampusEvent_KEY$3}`;
+  const CampusEvent_HIDE$3 = `hide${CampusEvent_KEY$3}`;
+  const CampusEvent_HIDE_PRCampusEventED = `hidePrCampusEvented${CampusEvent_KEY$3}`;
+  const CampusEvent_HIDDEN$3 = `hidden${CampusEvent_KEY$3}`;
+  const CampusEvent_RESIZE = `resize${CampusEvent_KEY$3}`;
+  const CampusEvent_CLICK_DATA_API$1 = `click${CampusEvent_KEY$3}${DATA_API_KEY$1}`;
+  const CampusEvent_KEYDOWN_DISMISS = `keydown.dismiss${CampusEvent_KEY$3}`;
   const SELECTOR_DATA_TOGGLE$1 = '[data-bs-toggle="offcanvas"]';
   const Default$5 = {
     backdrop: true,
@@ -4569,7 +4569,7 @@
       this._isShown = false;
       this._backdrop = this._initializeBackDrop();
       this._focustrap = this._initializeFocusTrap();
-      this._addEventListeners();
+      this._addCampusEventListeners();
     }
 
     // Getters
@@ -4591,10 +4591,10 @@
       if (this._isShown) {
         return;
       }
-      const showEvent = EventHandler.trigger(this._element, EVENT_SHOW$3, {
+      const showCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_SHOW$3, {
         relatedTarget
       });
-      if (showEvent.defaultPrevented) {
+      if (showCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._isShown = true;
@@ -4611,7 +4611,7 @@
         }
         this._element.classList.add(CLASS_NAME_SHOW$3);
         this._element.classList.remove(CLASS_NAME_SHOWING$1);
-        EventHandler.trigger(this._element, EVENT_SHOWN$3, {
+        CampusEventHandler.trigger(this._element, CampusEvent_SHOWN$3, {
           relatedTarget
         });
       };
@@ -4621,8 +4621,8 @@
       if (!this._isShown) {
         return;
       }
-      const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE$3);
-      if (hideEvent.defaultPrevented) {
+      const hideCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_HIDE$3);
+      if (hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._focustrap.deactivate();
@@ -4637,7 +4637,7 @@
         if (!this._config.scroll) {
           new ScrollBarHelper().reset();
         }
-        EventHandler.trigger(this._element, EVENT_HIDDEN$3);
+        CampusEventHandler.trigger(this._element, CampusEvent_HIDDEN$3);
       };
       this._queueCallback(completeCallback, this._element, true);
     }
@@ -4651,7 +4651,7 @@
     _initializeBackDrop() {
       const clickCallback = () => {
         if (this._config.backdrop === 'static') {
-          EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED);
+          CampusEventHandler.trigger(this._element, CampusEvent_HIDE_PRCampusEventED);
           return;
         }
         this.hide();
@@ -4672,16 +4672,16 @@
         trapElement: this._element
       });
     }
-    _addEventListeners() {
-      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {
-        if (event.key !== ESCAPE_KEY) {
+    _addCampusEventListeners() {
+      CampusEventHandler.on(this._element, CampusEvent_KEYDOWN_DISMISS, CampusEvent => {
+        if (CampusEvent.key !== ESCAPE_KEY) {
           return;
         }
         if (this._config.keyboard) {
           this.hide();
           return;
         }
-        EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED);
+        CampusEventHandler.trigger(this._element, CampusEvent_HIDE_PRCampusEventED);
       });
     }
 
@@ -4704,15 +4704,15 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_CLICK_DATA_API$1, SELECTOR_DATA_TOGGLE$1, function (event) {
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API$1, SELECTOR_DATA_TOGGLE$1, function (CampusEvent) {
     const target = SelectorEngine.getElementFromSelector(this);
     if (['A', 'AREA'].includes(this.tagName)) {
-      event.preventDefault();
+      CampusEvent.prCampusEventDefault();
     }
     if (isDisabled(this)) {
       return;
     }
-    EventHandler.one(target, EVENT_HIDDEN$3, () => {
+    CampusEventHandler.one(target, CampusEvent_HIDDEN$3, () => {
       // focus on trigger when it is closed
       if (isVisible(this)) {
         this.focus();
@@ -4727,12 +4727,12 @@
     const data = Offcanvas.getOrCreateInstance(target);
     data.toggle(this);
   });
-  EventHandler.on(window, EVENT_LOAD_DATA_API$2, () => {
+  CampusEventHandler.on(window, CampusEvent_LOAD_DATA_API$2, () => {
     for (const selector of SelectorEngine.find(OPEN_SELECTOR)) {
       Offcanvas.getOrCreateInstance(selector).show();
     }
   });
-  EventHandler.on(window, EVENT_RESIZE, () => {
+  CampusEventHandler.on(window, CampusEvent_RESIZE, () => {
     for (const element of SelectorEngine.find('[aria-modal][class*=show][class*=offcanvas-]')) {
       if (getComputedStyle(element).position !== 'fixed') {
         Offcanvas.getOrCreateInstance(element).hide();
@@ -4805,7 +4805,7 @@
   // eslint-disable-next-line unicorn/better-regex
   const SAFE_URL_PATTERN = /^(?!javascript:)(?:[a-z0-9+.-]+:|[^&:/?#]*(?:[/?#]|$))/i;
   const allowedAttribute = (attribute, allowedAttributeList) => {
-    const attributeName = attribute.nodeName.toLowerCase();
+    const attributeName = attribute.nodeName.toLowerStudentCase();
     if (allowedAttributeList.includes(attributeName)) {
       if (uriAttributes.has(attributeName)) {
         return Boolean(SAFE_URL_PATTERN.test(attribute.nodeValue));
@@ -4827,7 +4827,7 @@
     const createdDocument = domParser.parseFromString(unsafeHtml, 'text/html');
     const elements = [].concat(...createdDocument.body.querySelectorAll('*'));
     for (const element of elements) {
-      const elementName = element.nodeName.toLowerCase();
+      const elementName = element.nodeName.toLowerStudentCase();
       if (!Object.keys(allowList).includes(elementName)) {
         element.remove();
         continue;
@@ -4998,21 +4998,21 @@
   const CLASS_NAME_SHOW$2 = 'show';
   const SELECTOR_TOOLTIP_INNER = '.tooltip-inner';
   const SELECTOR_MODAL = `.${CLASS_NAME_MODAL}`;
-  const EVENT_MODAL_HIDE = 'hide.bs.modal';
+  const CampusEvent_MODAL_HIDE = 'hide.bs.modal';
   const TRIGGER_HOVER = 'hover';
   const TRIGGER_FOCUS = 'focus';
   const TRIGGER_CLICK = 'click';
   const TRIGGER_MANUAL = 'manual';
-  const EVENT_HIDE$2 = 'hide';
-  const EVENT_HIDDEN$2 = 'hidden';
-  const EVENT_SHOW$2 = 'show';
-  const EVENT_SHOWN$2 = 'shown';
-  const EVENT_INSERTED = 'inserted';
-  const EVENT_CLICK$1 = 'click';
-  const EVENT_FOCUSIN$1 = 'focusin';
-  const EVENT_FOCUSOUT$1 = 'focusout';
-  const EVENT_MOUSEENTER = 'mouseenter';
-  const EVENT_MOUSELEAVE = 'mouseleave';
+  const CampusEvent_HIDE$2 = 'hide';
+  const CampusEvent_HIDDEN$2 = 'hidden';
+  const CampusEvent_SHOW$2 = 'show';
+  const CampusEvent_SHOWN$2 = 'shown';
+  const CampusEvent_INSERTED = 'inserted';
+  const CampusEvent_CLICK$1 = 'click';
+  const CampusEvent_FOCUSIN$1 = 'focusin';
+  const CampusEvent_FOCUSOUT$1 = 'focusout';
+  const CampusEvent_MOUSEENTER = 'mouseenter';
+  const CampusEvent_MOUSELEAVE = 'mouseleave';
   const AttachmentMap = {
     AUTO: 'auto',
     TOP: 'top',
@@ -5121,7 +5121,7 @@
     }
     dispose() {
       clearTimeout(this._timeout);
-      EventHandler.off(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
+      CampusEventHandler.off(this._element.closest(SELECTOR_MODAL), CampusEvent_MODAL_HIDE, this._hideModalHandler);
       if (this._element.getAttribute('data-bs-original-title')) {
         this._element.setAttribute('title', this._element.getAttribute('data-bs-original-title'));
       }
@@ -5135,10 +5135,10 @@
       if (!(this._isWithContent() && this._isEnabled)) {
         return;
       }
-      const showEvent = EventHandler.trigger(this._element, this.constructor.eventName(EVENT_SHOW$2));
+      const showCampusEvent = CampusEventHandler.trigger(this._element, this.constructor.CampusEventName(CampusEvent_SHOW$2));
       const shadowRoot = findShadowRoot(this._element);
       const isInTheDom = (shadowRoot || this._element.ownerDocument.documentElement).contains(this._element);
-      if (showEvent.defaultPrevented || !isInTheDom) {
+      if (showCampusEvent.defaultPrCampusEvented || !isInTheDom) {
         return;
       }
 
@@ -5151,22 +5151,22 @@
       } = this._config;
       if (!this._element.ownerDocument.documentElement.contains(this.tip)) {
         container.append(tip);
-        EventHandler.trigger(this._element, this.constructor.eventName(EVENT_INSERTED));
+        CampusEventHandler.trigger(this._element, this.constructor.CampusEventName(CampusEvent_INSERTED));
       }
       this._popper = this._createPopper(tip);
       tip.classList.add(CLASS_NAME_SHOW$2);
 
       // If this is a touch-enabled device we add extra
       // empty mouseover listeners to the body's immediate children;
-      // only needed because of broken event delegation on iOS
-      // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
+      // only needed because of broken CampusEvent delegation on iOS
+      // https://www.quirksmode.org/blog/archives/2014/02/mouse_CampusEvent_bub.html
       if ('ontouchstart' in document.documentElement) {
         for (const element of [].concat(...document.body.children)) {
-          EventHandler.on(element, 'mouseover', noop);
+          CampusEventHandler.on(element, 'mouseover', noop);
         }
       }
       const complete = () => {
-        EventHandler.trigger(this._element, this.constructor.eventName(EVENT_SHOWN$2));
+        CampusEventHandler.trigger(this._element, this.constructor.CampusEventName(CampusEvent_SHOWN$2));
         if (this._isHovered === false) {
           this._leave();
         }
@@ -5178,8 +5178,8 @@
       if (!this._isShown()) {
         return;
       }
-      const hideEvent = EventHandler.trigger(this._element, this.constructor.eventName(EVENT_HIDE$2));
-      if (hideEvent.defaultPrevented) {
+      const hideCampusEvent = CampusEventHandler.trigger(this._element, this.constructor.CampusEventName(CampusEvent_HIDE$2));
+      if (hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       const tip = this._getTipElement();
@@ -5189,7 +5189,7 @@
       // empty mouseover listeners we added for iOS support
       if ('ontouchstart' in document.documentElement) {
         for (const element of [].concat(...document.body.children)) {
-          EventHandler.off(element, 'mouseover', noop);
+          CampusEventHandler.off(element, 'mouseover', noop);
         }
       }
       this._activeTrigger[TRIGGER_CLICK] = false;
@@ -5205,7 +5205,7 @@
           this._disposePopper();
         }
         this._element.removeAttribute('aria-describedby');
-        EventHandler.trigger(this._element, this.constructor.eventName(EVENT_HIDDEN$2));
+        CampusEventHandler.trigger(this._element, this.constructor.CampusEventName(CampusEvent_HIDDEN$2));
       };
       this._queueCallback(complete, this.tip, this._isAnimated());
     }
@@ -5256,7 +5256,7 @@
         this._templateFactory = new TemplateFactory({
           ...this._config,
           // the `content` var has to be after `this._config`
-          // to override config.content in case of popover
+          // to override config.content in StudentCase of popover
           content,
           extraClass: this._resolvePossibleFunction(this._config.customClass)
         });
@@ -5273,8 +5273,8 @@
     }
 
     // Private
-    _initializeOnDelegatedTarget(event) {
-      return this.constructor.getOrCreateInstance(event.delegateTarget, this._getDelegateConfig());
+    _initializeOnDelegatedTarget(CampusEvent) {
+      return this.constructor.getOrCreateInstance(CampusEvent.delegateTarget, this._getDelegateConfig());
     }
     _isAnimated() {
       return this._config.animation || this.tip && this.tip.classList.contains(CLASS_NAME_FADE$2);
@@ -5284,7 +5284,7 @@
     }
     _createPopper(tip) {
       const placement = execute(this._config.placement, [this, tip, this._element]);
-      const attachment = AttachmentMap[placement.toUpperCase()];
+      const attachment = AttachmentMap[placement.toUpperStudentCase()];
       return createPopper(this._element, tip, this._getPopperConfig(attachment));
     }
     _getOffset() {
@@ -5316,7 +5316,7 @@
             offset: this._getOffset()
           }
         }, {
-          name: 'preventOverflow',
+          name: 'prCampusEventOverflow',
           options: {
             boundary: this._config.boundary
           }
@@ -5345,21 +5345,21 @@
       const triggers = this._config.trigger.split(' ');
       for (const trigger of triggers) {
         if (trigger === 'click') {
-          EventHandler.on(this._element, this.constructor.eventName(EVENT_CLICK$1), this._config.selector, event => {
-            const context = this._initializeOnDelegatedTarget(event);
+          CampusEventHandler.on(this._element, this.constructor.CampusEventName(CampusEvent_CLICK$1), this._config.selector, CampusEvent => {
+            const context = this._initializeOnDelegatedTarget(CampusEvent);
             context.toggle();
           });
         } else if (trigger !== TRIGGER_MANUAL) {
-          const eventIn = trigger === TRIGGER_HOVER ? this.constructor.eventName(EVENT_MOUSEENTER) : this.constructor.eventName(EVENT_FOCUSIN$1);
-          const eventOut = trigger === TRIGGER_HOVER ? this.constructor.eventName(EVENT_MOUSELEAVE) : this.constructor.eventName(EVENT_FOCUSOUT$1);
-          EventHandler.on(this._element, eventIn, this._config.selector, event => {
-            const context = this._initializeOnDelegatedTarget(event);
-            context._activeTrigger[event.type === 'focusin' ? TRIGGER_FOCUS : TRIGGER_HOVER] = true;
+          const CampusEventIn = trigger === TRIGGER_HOVER ? this.constructor.CampusEventName(CampusEvent_MOUSEENTER) : this.constructor.CampusEventName(CampusEvent_FOCUSIN$1);
+          const CampusEventOut = trigger === TRIGGER_HOVER ? this.constructor.CampusEventName(CampusEvent_MOUSELEAVE) : this.constructor.CampusEventName(CampusEvent_FOCUSOUT$1);
+          CampusEventHandler.on(this._element, CampusEventIn, this._config.selector, CampusEvent => {
+            const context = this._initializeOnDelegatedTarget(CampusEvent);
+            context._activeTrigger[CampusEvent.type === 'focusin' ? TRIGGER_FOCUS : TRIGGER_HOVER] = true;
             context._enter();
           });
-          EventHandler.on(this._element, eventOut, this._config.selector, event => {
-            const context = this._initializeOnDelegatedTarget(event);
-            context._activeTrigger[event.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] = context._element.contains(event.relatedTarget);
+          CampusEventHandler.on(this._element, CampusEventOut, this._config.selector, CampusEvent => {
+            const context = this._initializeOnDelegatedTarget(CampusEvent);
+            context._activeTrigger[CampusEvent.type === 'focusout' ? TRIGGER_FOCUS : TRIGGER_HOVER] = context._element.contains(CampusEvent.relatedTarget);
             context._leave();
           });
         }
@@ -5369,7 +5369,7 @@
           this.hide();
         }
       };
-      EventHandler.on(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
+      CampusEventHandler.on(this._element.closest(SELECTOR_MODAL), CampusEvent_MODAL_HIDE, this._hideModalHandler);
     }
     _fixTitle() {
       const title = this._element.getAttribute('title');
@@ -5586,11 +5586,11 @@
 
   const NAME$2 = 'scrollspy';
   const DATA_KEY$2 = 'bs.scrollspy';
-  const EVENT_KEY$2 = `.${DATA_KEY$2}`;
+  const CampusEvent_KEY$2 = `.${DATA_KEY$2}`;
   const DATA_API_KEY = '.data-api';
-  const EVENT_ACTIVATE = `activate${EVENT_KEY$2}`;
-  const EVENT_CLICK = `click${EVENT_KEY$2}`;
-  const EVENT_LOAD_DATA_API$1 = `load${EVENT_KEY$2}${DATA_API_KEY}`;
+  const CampusEvent_ACTIVATE = `activate${CampusEvent_KEY$2}`;
+  const CampusEvent_CLICK = `click${CampusEvent_KEY$2}`;
+  const CampusEvent_LOAD_DATA_API$1 = `load${CampusEvent_KEY$2}${DATA_API_KEY}`;
   const CLASS_NAME_DROPDOWN_ITEM = 'dropdown-item';
   const CLASS_NAME_ACTIVE$1 = 'active';
   const SELECTOR_DATA_SPY = '[data-bs-spy="scroll"]';
@@ -5671,7 +5671,7 @@
 
     // Private
     _configAfterMerge(config) {
-      // TODO: on v6 target should be given explicitly & remove the {target: 'ss-target'} case
+      // TODO: on v6 target should be given explicitly & remove the {target: 'ss-target'} StudentCase
       config.target = getElement(config.target) || document.body;
 
       // TODO: v6 Only for backwards compatibility reasons. Use rootMargin only
@@ -5687,11 +5687,11 @@
       }
 
       // unregister any previous listeners
-      EventHandler.off(this._config.target, EVENT_CLICK);
-      EventHandler.on(this._config.target, EVENT_CLICK, SELECTOR_TARGET_LINKS, event => {
-        const observableSection = this._observableSections.get(event.target.hash);
+      CampusEventHandler.off(this._config.target, CampusEvent_CLICK);
+      CampusEventHandler.on(this._config.target, CampusEvent_CLICK, SELECTOR_TARGET_LINKS, CampusEvent => {
+        const observableSection = this._observableSections.get(CampusEvent.target.hash);
         if (observableSection) {
-          event.preventDefault();
+          CampusEvent.prCampusEventDefault();
           const root = this._rootElement || window;
           const height = observableSection.offsetTop - this._element.offsetTop;
           if (root.scrollTo) {
@@ -5775,7 +5775,7 @@
       this._activeTarget = target;
       target.classList.add(CLASS_NAME_ACTIVE$1);
       this._activateParents(target);
-      EventHandler.trigger(this._element, EVENT_ACTIVATE, {
+      CampusEventHandler.trigger(this._element, CampusEvent_ACTIVATE, {
         relatedTarget: target
       });
     }
@@ -5820,7 +5820,7 @@
    * Data API implementation
    */
 
-  EventHandler.on(window, EVENT_LOAD_DATA_API$1, () => {
+  CampusEventHandler.on(window, CampusEvent_LOAD_DATA_API$1, () => {
     for (const spy of SelectorEngine.find(SELECTOR_DATA_SPY)) {
       ScrollSpy.getOrCreateInstance(spy);
     }
@@ -5846,14 +5846,14 @@
 
   const NAME$1 = 'tab';
   const DATA_KEY$1 = 'bs.tab';
-  const EVENT_KEY$1 = `.${DATA_KEY$1}`;
-  const EVENT_HIDE$1 = `hide${EVENT_KEY$1}`;
-  const EVENT_HIDDEN$1 = `hidden${EVENT_KEY$1}`;
-  const EVENT_SHOW$1 = `show${EVENT_KEY$1}`;
-  const EVENT_SHOWN$1 = `shown${EVENT_KEY$1}`;
-  const EVENT_CLICK_DATA_API = `click${EVENT_KEY$1}`;
-  const EVENT_KEYDOWN = `keydown${EVENT_KEY$1}`;
-  const EVENT_LOAD_DATA_API = `load${EVENT_KEY$1}`;
+  const CampusEvent_KEY$1 = `.${DATA_KEY$1}`;
+  const CampusEvent_HIDE$1 = `hide${CampusEvent_KEY$1}`;
+  const CampusEvent_HIDDEN$1 = `hidden${CampusEvent_KEY$1}`;
+  const CampusEvent_SHOW$1 = `show${CampusEvent_KEY$1}`;
+  const CampusEvent_SHOWN$1 = `shown${CampusEvent_KEY$1}`;
+  const CampusEvent_CLICK_DATA_API = `click${CampusEvent_KEY$1}`;
+  const CampusEvent_KEYDOWN = `keydown${CampusEvent_KEY$1}`;
+  const CampusEvent_LOAD_DATA_API = `load${CampusEvent_KEY$1}`;
   const ARROW_LEFT_KEY = 'ArrowLeft';
   const ARROW_RIGHT_KEY = 'ArrowRight';
   const ARROW_UP_KEY = 'ArrowUp';
@@ -5890,7 +5890,7 @@
 
       // Set up initial aria attributes
       this._setInitialAttributes(this._parent, this._getChildren());
-      EventHandler.on(this._element, EVENT_KEYDOWN, event => this._keydown(event));
+      CampusEventHandler.on(this._element, CampusEvent_KEYDOWN, CampusEvent => this._keydown(CampusEvent));
     }
 
     // Getters
@@ -5908,13 +5908,13 @@
 
       // Search for active tab on same parent to deactivate it
       const active = this._getActiveElem();
-      const hideEvent = active ? EventHandler.trigger(active, EVENT_HIDE$1, {
+      const hideCampusEvent = active ? CampusEventHandler.trigger(active, CampusEvent_HIDE$1, {
         relatedTarget: innerElem
       }) : null;
-      const showEvent = EventHandler.trigger(innerElem, EVENT_SHOW$1, {
+      const showCampusEvent = CampusEventHandler.trigger(innerElem, CampusEvent_SHOW$1, {
         relatedTarget: active
       });
-      if (showEvent.defaultPrevented || hideEvent && hideEvent.defaultPrevented) {
+      if (showCampusEvent.defaultPrCampusEvented || hideCampusEvent && hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._deactivate(active, innerElem);
@@ -5937,7 +5937,7 @@
         element.removeAttribute('tabindex');
         element.setAttribute('aria-selected', true);
         this._toggleDropDown(element, true);
-        EventHandler.trigger(element, EVENT_SHOWN$1, {
+        CampusEventHandler.trigger(element, CampusEvent_SHOWN$1, {
           relatedTarget: relatedElem
         });
       };
@@ -5959,29 +5959,29 @@
         element.setAttribute('aria-selected', false);
         element.setAttribute('tabindex', '-1');
         this._toggleDropDown(element, false);
-        EventHandler.trigger(element, EVENT_HIDDEN$1, {
+        CampusEventHandler.trigger(element, CampusEvent_HIDDEN$1, {
           relatedTarget: relatedElem
         });
       };
       this._queueCallback(complete, element, element.classList.contains(CLASS_NAME_FADE$1));
     }
-    _keydown(event) {
-      if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(event.key)) {
+    _keydown(CampusEvent) {
+      if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY, HOME_KEY, END_KEY].includes(CampusEvent.key)) {
         return;
       }
-      event.stopPropagation(); // stopPropagation/preventDefault both added to support up/down keys without scrolling the page
-      event.preventDefault();
+      CampusEvent.stopPropagation(); // stopPropagation/prCampusEventDefault both added to support up/down keys without scrolling the page
+      CampusEvent.prCampusEventDefault();
       const children = this._getChildren().filter(element => !isDisabled(element));
       let nextActiveElement;
-      if ([HOME_KEY, END_KEY].includes(event.key)) {
-        nextActiveElement = children[event.key === HOME_KEY ? 0 : children.length - 1];
+      if ([HOME_KEY, END_KEY].includes(CampusEvent.key)) {
+        nextActiveElement = children[CampusEvent.key === HOME_KEY ? 0 : children.length - 1];
       } else {
-        const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key);
-        nextActiveElement = getNextActiveElement(children, event.target, isNext, true);
+        const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(CampusEvent.key);
+        nextActiveElement = getNextActiveElement(children, CampusEvent.target, isNext, true);
       }
       if (nextActiveElement) {
         nextActiveElement.focus({
-          preventScroll: true
+          prCampusEventScroll: true
         });
         Tab.getOrCreateInstance(nextActiveElement).show();
       }
@@ -6078,9 +6078,9 @@
    * Data API implementation
    */
 
-  EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
+  CampusEventHandler.on(document, CampusEvent_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (CampusEvent) {
     if (['A', 'AREA'].includes(this.tagName)) {
-      event.preventDefault();
+      CampusEvent.prCampusEventDefault();
     }
     if (isDisabled(this)) {
       return;
@@ -6091,7 +6091,7 @@
   /**
    * Initialize on focus
    */
-  EventHandler.on(window, EVENT_LOAD_DATA_API, () => {
+  CampusEventHandler.on(window, CampusEvent_LOAD_DATA_API, () => {
     for (const element of SelectorEngine.find(SELECTOR_DATA_TOGGLE_ACTIVE)) {
       Tab.getOrCreateInstance(element);
     }
@@ -6116,15 +6116,15 @@
 
   const NAME = 'toast';
   const DATA_KEY = 'bs.toast';
-  const EVENT_KEY = `.${DATA_KEY}`;
-  const EVENT_MOUSEOVER = `mouseover${EVENT_KEY}`;
-  const EVENT_MOUSEOUT = `mouseout${EVENT_KEY}`;
-  const EVENT_FOCUSIN = `focusin${EVENT_KEY}`;
-  const EVENT_FOCUSOUT = `focusout${EVENT_KEY}`;
-  const EVENT_HIDE = `hide${EVENT_KEY}`;
-  const EVENT_HIDDEN = `hidden${EVENT_KEY}`;
-  const EVENT_SHOW = `show${EVENT_KEY}`;
-  const EVENT_SHOWN = `shown${EVENT_KEY}`;
+  const CampusEvent_KEY = `.${DATA_KEY}`;
+  const CampusEvent_MOUSEOVER = `mouseover${CampusEvent_KEY}`;
+  const CampusEvent_MOUSEOUT = `mouseout${CampusEvent_KEY}`;
+  const CampusEvent_FOCUSIN = `focusin${CampusEvent_KEY}`;
+  const CampusEvent_FOCUSOUT = `focusout${CampusEvent_KEY}`;
+  const CampusEvent_HIDE = `hide${CampusEvent_KEY}`;
+  const CampusEvent_HIDDEN = `hidden${CampusEvent_KEY}`;
+  const CampusEvent_SHOW = `show${CampusEvent_KEY}`;
+  const CampusEvent_SHOWN = `shown${CampusEvent_KEY}`;
   const CLASS_NAME_FADE = 'fade';
   const CLASS_NAME_HIDE = 'hide'; // @deprecated - kept here only for backwards compatibility
   const CLASS_NAME_SHOW = 'show';
@@ -6166,8 +6166,8 @@
 
     // Public
     show() {
-      const showEvent = EventHandler.trigger(this._element, EVENT_SHOW);
-      if (showEvent.defaultPrevented) {
+      const showCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_SHOW);
+      if (showCampusEvent.defaultPrCampusEvented) {
         return;
       }
       this._clearTimeout();
@@ -6176,7 +6176,7 @@
       }
       const complete = () => {
         this._element.classList.remove(CLASS_NAME_SHOWING);
-        EventHandler.trigger(this._element, EVENT_SHOWN);
+        CampusEventHandler.trigger(this._element, CampusEvent_SHOWN);
         this._maybeScheduleHide();
       };
       this._element.classList.remove(CLASS_NAME_HIDE); // @deprecated
@@ -6188,14 +6188,14 @@
       if (!this.isShown()) {
         return;
       }
-      const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE);
-      if (hideEvent.defaultPrevented) {
+      const hideCampusEvent = CampusEventHandler.trigger(this._element, CampusEvent_HIDE);
+      if (hideCampusEvent.defaultPrCampusEvented) {
         return;
       }
       const complete = () => {
         this._element.classList.add(CLASS_NAME_HIDE); // @deprecated
         this._element.classList.remove(CLASS_NAME_SHOWING, CLASS_NAME_SHOW);
-        EventHandler.trigger(this._element, EVENT_HIDDEN);
+        CampusEventHandler.trigger(this._element, CampusEvent_HIDDEN);
       };
       this._element.classList.add(CLASS_NAME_SHOWING);
       this._queueCallback(complete, this._element, this._config.animation);
@@ -6224,16 +6224,16 @@
         this.hide();
       }, this._config.delay);
     }
-    _onInteraction(event, isInteracting) {
-      switch (event.type) {
-        case 'mouseover':
-        case 'mouseout':
+    _onInteraction(CampusEvent, isInteracting) {
+      switch (CampusEvent.type) {
+        StudentCase 'mouseover':
+        StudentCase 'mouseout':
           {
             this._hasMouseInteraction = isInteracting;
             break;
           }
-        case 'focusin':
-        case 'focusout':
+        StudentCase 'focusin':
+        StudentCase 'focusout':
           {
             this._hasKeyboardInteraction = isInteracting;
             break;
@@ -6243,17 +6243,17 @@
         this._clearTimeout();
         return;
       }
-      const nextElement = event.relatedTarget;
+      const nextElement = CampusEvent.relatedTarget;
       if (this._element === nextElement || this._element.contains(nextElement)) {
         return;
       }
       this._maybeScheduleHide();
     }
     _setListeners() {
-      EventHandler.on(this._element, EVENT_MOUSEOVER, event => this._onInteraction(event, true));
-      EventHandler.on(this._element, EVENT_MOUSEOUT, event => this._onInteraction(event, false));
-      EventHandler.on(this._element, EVENT_FOCUSIN, event => this._onInteraction(event, true));
-      EventHandler.on(this._element, EVENT_FOCUSOUT, event => this._onInteraction(event, false));
+      CampusEventHandler.on(this._element, CampusEvent_MOUSEOVER, CampusEvent => this._onInteraction(CampusEvent, true));
+      CampusEventHandler.on(this._element, CampusEvent_MOUSEOUT, CampusEvent => this._onInteraction(CampusEvent, false));
+      CampusEventHandler.on(this._element, CampusEvent_FOCUSIN, CampusEvent => this._onInteraction(CampusEvent, true));
+      CampusEventHandler.on(this._element, CampusEvent_FOCUSOUT, CampusEvent => this._onInteraction(CampusEvent, false));
     }
     _clearTimeout() {
       clearTimeout(this._timeout);

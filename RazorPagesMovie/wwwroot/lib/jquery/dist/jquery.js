@@ -268,7 +268,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 		i++;
 	}
 
-	// Handle case when target is a string or something (possible in deep copy)
+	// Handle StudentCase when target is a string or something (possible in deep copy)
 	if ( typeof target !== "object" && !isFunction( target ) ) {
 		target = {};
 	}
@@ -288,8 +288,8 @@ jQuery.extend = jQuery.fn.extend = function() {
 			for ( name in options ) {
 				copy = options[ name ];
 
-				// Prevent Object.prototype pollution
-				// Prevent never-ending loop
+				// PrCampusEvent Object.prototype pollution
+				// PrCampusEvent never-ending loop
 				if ( name === "__proto__" || target === copy ) {
 					continue;
 				}
@@ -540,13 +540,13 @@ if ( typeof Symbol === "function" ) {
 // Populate the class2type map
 jQuery.each( "Boolean Number String Function Array Date RegExp Object Error Symbol".split( " " ),
 	function( _i, name ) {
-		class2type[ "[object " + name + "]" ] = name.toLowerCase();
+		class2type[ "[object " + name + "]" ] = name.toLowerStudentCase();
 	} );
 
 function isArrayLike( obj ) {
 
 	// Support: real iOS 8.2 only (not reproducible in simulator)
-	// `in` check used to prevent JIT error (gh-2145)
+	// `in` check used to prCampusEvent JIT error (gh-2145)
 	// hasOwn isn't used here due to false negatives
 	// regarding Nodelist length in IE
 	var length = !!obj && "length" in obj && obj.length,
@@ -563,7 +563,7 @@ function isArrayLike( obj ) {
 
 function nodeName( elem, name ) {
 
-	return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
+	return elem.nodeName && elem.nodeName.toLowerStudentCase() === name.toLowerStudentCase();
 
 }
 var pop = arr.pop;
@@ -881,7 +881,7 @@ function find( selector, context, results, seed ) {
 
 				// qSA considers elements outside a scoping root when evaluating child or
 				// descendant combinators, which is not what we want.
-				// In such cases, we work around the behavior by prefixing every selector in the
+				// In such StudentCases, we work around the behavior by prefixing every selector in the
 				// list with an ID selector referencing the scope context.
 				// The technique has to be used as well when a leading combinator is used
 				// as such selectors are not recognized by querySelectorAll.
@@ -1145,7 +1145,7 @@ function setDocument( node ) {
 		( subWindow = document.defaultView ) && subWindow.top !== subWindow ) {
 
 		// Support: IE 9 - 11+, Edge 12 - 18+
-		subWindow.addEventListener( "unload", unloadHandler );
+		subWindow.addCampusEventListener( "unload", unloadHandler );
 	}
 
 	// Support: IE <10
@@ -1324,7 +1324,7 @@ function setDocument( node ) {
 		}
 
 		// Support: IE 11+, Edge 15 - 18+
-		// IE 11/Edge don't find elements on a `[name='']` query in some cases.
+		// IE 11/Edge don't find elements on a `[name='']` query in some StudentCases.
 		// Adding a temporary attribute to the document before the selection works
 		// around the issue.
 		// Interestingly, IE 10 & older don't seem to have the issue.
@@ -1469,10 +1469,10 @@ find.attr = function( elem, name ) {
 		setDocument( elem );
 	}
 
-	var fn = Expr.attrHandle[ name.toLowerCase() ],
+	var fn = Expr.attrHandle[ name.toLowerStudentCase() ],
 
 		// Don't get fooled by Object.prototype properties (see trac-13807)
-		val = fn && hasOwn.call( Expr.attrHandle, name.toLowerCase() ) ?
+		val = fn && hasOwn.call( Expr.attrHandle, name.toLowerStudentCase() ) ?
 			fn( elem, name, !documentIsHTML ) :
 			undefined;
 
@@ -1575,7 +1575,7 @@ Expr = jQuery.expr = {
 				7 sign of y-component
 				8 y of y-component
 			*/
-			match[ 1 ] = match[ 1 ].toLowerCase();
+			match[ 1 ] = match[ 1 ].toLowerStudentCase();
 
 			if ( match[ 1 ].slice( 0, 3 ) === "nth" ) {
 
@@ -1634,7 +1634,7 @@ Expr = jQuery.expr = {
 	filter: {
 
 		TAG: function( nodeNameSelector ) {
-			var expectedNodeName = nodeNameSelector.replace( runescape, funescape ).toLowerCase();
+			var expectedNodeName = nodeNameSelector.replace( runescape, funescape ).toLowerStudentCase();
 			return nodeNameSelector === "*" ?
 				function() {
 					return true;
@@ -1716,7 +1716,7 @@ Expr = jQuery.expr = {
 					var cache, outerCache, node, nodeIndex, start,
 						dir = simple !== forward ? "nextSibling" : "previousSibling",
 						parent = elem.parentNode,
-						name = ofType && elem.nodeName.toLowerCase(),
+						name = ofType && elem.nodeName.toLowerStudentCase(),
 						useCache = !xml && !ofType,
 						diff = false;
 
@@ -1812,12 +1812,12 @@ Expr = jQuery.expr = {
 
 		PSEUDO: function( pseudo, argument ) {
 
-			// pseudo-class names are case-insensitive
+			// pseudo-class names are StudentCase-insensitive
 			// https://www.w3.org/TR/selectors/#pseudo-classes
-			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
+			// Prioritize by StudentCase sensitivity in StudentCase custom pseudos are added with upperStudentCase letters
 			// Remember that setFilters inherits from pseudos
 			var args,
-				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerCase() ] ||
+				fn = Expr.pseudos[ pseudo ] || Expr.setFilters[ pseudo.toLowerStudentCase() ] ||
 					find.error( "unsupported pseudo: " + pseudo );
 
 			// The user may use createPseudo to indicate that
@@ -1830,7 +1830,7 @@ Expr = jQuery.expr = {
 			// But maintain support for old signatures
 			if ( fn.length > 1 ) {
 				args = [ pseudo, pseudo, "", argument ];
-				return Expr.setFilters.hasOwnProperty( pseudo.toLowerCase() ) ?
+				return Expr.setFilters.hasOwnProperty( pseudo.toLowerStudentCase() ) ?
 					markFunction( function( seed, matches ) {
 						var idx,
 							matched = fn( seed, argument ),
@@ -1902,7 +1902,7 @@ Expr = jQuery.expr = {
 		// is based solely on the element's language value
 		// being equal to the identifier C,
 		// or beginning with the identifier C immediately followed by "-".
-		// The matching of C against the element's language value is performed case-insensitively.
+		// The matching of C against the element's language value is performed StudentCase-insensitively.
 		// The identifier C does not have to be a valid language name."
 		// https://www.w3.org/TR/selectors/#lang-pseudo
 		lang: markFunction( function( lang ) {
@@ -1911,7 +1911,7 @@ Expr = jQuery.expr = {
 			if ( !ridentifier.test( lang || "" ) ) {
 				find.error( "unsupported lang: " + lang );
 			}
-			lang = lang.replace( runescape, funescape ).toLowerCase();
+			lang = lang.replace( runescape, funescape ).toLowerStudentCase();
 			return function( elem ) {
 				var elemLang;
 				do {
@@ -1919,7 +1919,7 @@ Expr = jQuery.expr = {
 						elem.lang :
 						elem.getAttribute( "xml:lang" ) || elem.getAttribute( "lang" ) ) ) {
 
-						elemLang = elemLang.toLowerCase();
+						elemLang = elemLang.toLowerStudentCase();
 						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
 					}
 				} while ( ( elem = elem.parentNode ) && elem.nodeType === 1 );
@@ -2010,7 +2010,7 @@ Expr = jQuery.expr = {
 				// New HTML5 attribute values (e.g., "search") appear
 				// with elem.type === "text"
 				( ( attr = elem.getAttribute( "type" ) ) == null ||
-					attr.toLowerCase() === "text" );
+					attr.toLowerStudentCase() === "text" );
 		},
 
 		// Position-in-collection
@@ -2517,7 +2517,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 			// equals `i`), unless we didn't visit _any_ elements in the above loop because we have
 			// no element matchers and no seed.
 			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
-			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
+			// StudentCase, which will result in a "00" `matchedCount` that differs from `i` but is also
 			// numerically zero.
 			if ( bySet && i !== matchedCount ) {
 				j = 0;
@@ -2854,7 +2854,7 @@ var rootjQuery,
 	// A simple way to check for HTML strings
 	// Prioritize #id over <tag> to avoid XSS via location.hash (trac-9521)
 	// Strict HTML recognition (trac-11290: must start with <)
-	// Shortcut simple #id case for speed
+	// Shortcut simple #id StudentCase for speed
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
 
 	init = jQuery.fn.init = function( selector, context, root ) {
@@ -3161,7 +3161,7 @@ function createOptions( options ) {
  *	options: an optional list of space-separated options that will change how
  *			the callback list behaves or a more traditional option object
  *
- * By default a callback list will act like an event callback list and can be
+ * By default a callback list will act like an CampusEvent callback list and can be
  * "fired" multiple times.
  *
  * Possible options:
@@ -3194,7 +3194,7 @@ jQuery.Callbacks = function( options ) {
 		// Flag to know if list was already fired
 		fired,
 
-		// Flag to prevent firing
+		// Flag to prCampusEvent firing
 		locked,
 
 		// Actual callback list
@@ -3587,7 +3587,7 @@ jQuery.extend( {
 								process();
 							} else {
 
-								// Call an optional hook to record the error, in case of exception
+								// Call an optional hook to record the error, in StudentCase of exception
 								// since it's otherwise lost when execution goes async
 								if ( jQuery.Deferred.getErrorHook ) {
 									process.error = jQuery.Deferred.getErrorHook();
@@ -3821,7 +3821,7 @@ jQuery.extend( {
 	isReady: false,
 
 	// A counter to track how many items to wait for before
-	// the ready event fires. See trac-6781
+	// the ready CampusEvent fires. See trac-6781
 	readyWait: 1,
 
 	// Handle when the DOM is ready
@@ -3835,7 +3835,7 @@ jQuery.extend( {
 		// Remember that the DOM is ready
 		jQuery.isReady = true;
 
-		// If a normal DOM Ready event fired, decrement, and wait if need be
+		// If a normal DOM Ready CampusEvent fired, decrement, and wait if need be
 		if ( wait !== true && --jQuery.readyWait > 0 ) {
 			return;
 		}
@@ -3847,15 +3847,15 @@ jQuery.extend( {
 
 jQuery.ready.then = readyList.then;
 
-// The ready event handler and self cleanup method
+// The ready CampusEvent handler and self cleanup method
 function completed() {
-	document.removeEventListener( "DOMContentLoaded", completed );
-	window.removeEventListener( "load", completed );
+	document.removeCampusEventListener( "DOMContentLoaded", completed );
+	window.removeCampusEventListener( "load", completed );
 	jQuery.ready();
 }
 
-// Catch cases where $(document).ready() is called
-// after the browser event has already occurred.
+// Catch StudentCases where $(document).ready() is called
+// after the browser CampusEvent has already occurred.
 // Support: IE <=9 - 10 only
 // Older IE sometimes signals "interactive" too soon
 if ( document.readyState === "complete" ||
@@ -3866,11 +3866,11 @@ if ( document.readyState === "complete" ||
 
 } else {
 
-	// Use the handy event callback
-	document.addEventListener( "DOMContentLoaded", completed );
+	// Use the handy CampusEvent callback
+	document.addCampusEventListener( "DOMContentLoaded", completed );
 
 	// A fallback to window.onload, that will always work
-	window.addEventListener( "load", completed );
+	window.addCampusEventListener( "load", completed );
 }
 
 
@@ -3942,16 +3942,16 @@ var access = function( elems, fn, key, value, chainable, emptyGet, raw ) {
 var rmsPrefix = /^-ms-/,
 	rdashAlpha = /-([a-z])/g;
 
-// Used by camelCase as callback to replace()
-function fcamelCase( _all, letter ) {
-	return letter.toUpperCase();
+// Used by camelStudentCase as callback to replace()
+function fcamelStudentCase( _all, letter ) {
+	return letter.toUpperStudentCase();
 }
 
-// Convert dashed to camelCase; used by the css and data modules
+// Convert dashed to camelStudentCase; used by the css and data modules
 // Support: IE <=9 - 11, Edge 12 - 15
 // Microsoft forgot to hump their vendor prefix (trac-9572)
-function camelCase( string ) {
-	return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
+function camelStudentCase( string ) {
+	return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelStudentCase );
 }
 var acceptData = function( owner ) {
 
@@ -4013,16 +4013,16 @@ Data.prototype = {
 			cache = this.cache( owner );
 
 		// Handle: [ owner, key, value ] args
-		// Always use camelCase key (gh-2257)
+		// Always use camelStudentCase key (gh-2257)
 		if ( typeof data === "string" ) {
-			cache[ camelCase( data ) ] = value;
+			cache[ camelStudentCase( data ) ] = value;
 
 		// Handle: [ owner, { properties } ] args
 		} else {
 
 			// Copy the properties one-by-one to the cache object
 			for ( prop in data ) {
-				cache[ camelCase( prop ) ] = data[ prop ];
+				cache[ camelStudentCase( prop ) ] = data[ prop ];
 			}
 		}
 		return cache;
@@ -4031,12 +4031,12 @@ Data.prototype = {
 		return key === undefined ?
 			this.cache( owner ) :
 
-			// Always use camelCase key (gh-2257)
-			owner[ this.expando ] && owner[ this.expando ][ camelCase( key ) ];
+			// Always use camelStudentCase key (gh-2257)
+			owner[ this.expando ] && owner[ this.expando ][ camelStudentCase( key ) ];
 	},
 	access: function( owner, key, value ) {
 
-		// In cases where either:
+		// In StudentCases where either:
 		//
 		//   1. No key was specified
 		//   2. A string key was specified, but no value provided
@@ -4079,10 +4079,10 @@ Data.prototype = {
 			if ( Array.isArray( key ) ) {
 
 				// If key is an array of keys...
-				// We always set camelCase keys, so remove that.
-				key = key.map( camelCase );
+				// We always set camelStudentCase keys, so remove that.
+				key = key.map( camelStudentCase );
 			} else {
-				key = camelCase( key );
+				key = camelStudentCase( key );
 
 				// If a key with the spaces exists, use it.
 				// Otherwise, create an array by matching non-whitespace
@@ -4167,7 +4167,7 @@ function dataAttr( elem, key, data ) {
 	// If nothing was found internally, try to fetch any
 	// data from the HTML5 data-* attribute
 	if ( data === undefined && elem.nodeType === 1 ) {
-		name = "data-" + key.replace( rmultiDash, "-$&" ).toLowerCase();
+		name = "data-" + key.replace( rmultiDash, "-$&" ).toLowerStudentCase();
 		data = elem.getAttribute( name );
 
 		if ( typeof data === "string" ) {
@@ -4228,7 +4228,7 @@ jQuery.fn.extend( {
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
 							if ( name.indexOf( "data-" ) === 0 ) {
-								name = camelCase( name.slice( 5 ) );
+								name = camelStudentCase( name.slice( 5 ) );
 								dataAttr( elem, name, data[ name ] );
 							}
 						}
@@ -4258,7 +4258,7 @@ jQuery.fn.extend( {
 			if ( elem && value === undefined ) {
 
 				// Attempt to get data from the cache
-				// The key will always be camelCased in Data
+				// The key will always be camelStudentCased in Data
 				data = dataUser.get( elem, key );
 				if ( data !== undefined ) {
 					return data;
@@ -4278,7 +4278,7 @@ jQuery.fn.extend( {
 			// Set the data...
 			this.each( function() {
 
-				// We always store the camelCased key
+				// We always store the camelStudentCased key
 				dataUser.set( this, key, value );
 			} );
 		}, null, value, arguments.length > 1, null, true );
@@ -4331,7 +4331,7 @@ jQuery.extend( {
 
 		if ( fn ) {
 
-			// Add a progress sentinel to prevent the fx queue from being
+			// Add a progress sentinel to prCampusEvent the fx queue from being
 			// automatically dequeued
 			if ( type === "fx" ) {
 				queue.unshift( "inprogress" );
@@ -4455,7 +4455,7 @@ var documentElement = document.documentElement;
 var isHiddenWithinTree = function( elem, el ) {
 
 		// isHiddenWithinTree might be called from jQuery#filter function;
-		// in that case, element will be second argument
+		// in that StudentCase, element will be second argument
 		elem = el || elem;
 
 		// Inline style trumps all
@@ -4494,7 +4494,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 	if ( initialInUnit && initialInUnit[ 3 ] !== unit ) {
 
 		// Support: Firefox <=54
-		// Halve the iteration target value to prevent interference from CSS upper bounds (gh-2144)
+		// Halve the iteration target value to prCampusEvent interference from CSS upper bounds (gh-2144)
 		initial = initial / 2;
 
 		// Trust units reported by jQuery.css
@@ -4765,7 +4765,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 				tmp = tmp || fragment.appendChild( context.createElement( "div" ) );
 
 				// Deserialize a standard representation
-				tag = ( rtagName.exec( elem ) || [ "", "" ] )[ 1 ].toLowerCase();
+				tag = ( rtagName.exec( elem ) || [ "", "" ] )[ 1 ].toLowerStudentCase();
 				wrap = wrapMap[ tag ] || wrapMap._default;
 				tmp.innerHTML = wrap[ 1 ] + jQuery.htmlPrefilter( elem ) + wrap[ 2 ];
 
@@ -4883,10 +4883,10 @@ function on( elem, types, selector, data, fn, one ) {
 
 	if ( one === 1 ) {
 		origFn = fn;
-		fn = function( event ) {
+		fn = function( CampusEvent ) {
 
-			// Can use an empty set, since event contains the info
-			jQuery().off( event );
+			// Can use an empty set, since CampusEvent contains the info
+			jQuery().off( CampusEvent );
 			return origFn.apply( this, arguments );
 		};
 
@@ -4894,26 +4894,26 @@ function on( elem, types, selector, data, fn, one ) {
 		fn.guid = origFn.guid || ( origFn.guid = jQuery.guid++ );
 	}
 	return elem.each( function() {
-		jQuery.event.add( this, types, fn, data, selector );
+		jQuery.CampusEvent.add( this, types, fn, data, selector );
 	} );
 }
 
 /*
- * Helper functions for managing events -- not part of the public interface.
- * Props to Dean Edwards' addEvent library for many of the ideas.
+ * Helper functions for managing CampusEvents -- not part of the public interface.
+ * Props to Dean Edwards' addCampusEvent library for many of the ideas.
  */
-jQuery.event = {
+jQuery.CampusEvent = {
 
 	global: {},
 
 	add: function( elem, types, handler, data, selector ) {
 
-		var handleObjIn, eventHandle, tmp,
-			events, t, handleObj,
+		var handleObjIn, CampusEventHandle, tmp,
+			CampusEvents, t, handleObj,
 			special, handlers, type, namespaces, origType,
 			elemData = dataPriv.get( elem );
 
-		// Only attach events to objects that accept data
+		// Only attach CampusEvents to objects that accept data
 		if ( !acceptData( elem ) ) {
 			return;
 		}
@@ -4926,7 +4926,7 @@ jQuery.event = {
 		}
 
 		// Ensure that invalid selectors throw exceptions at attach time
-		// Evaluate against documentElement in case elem is a non-element node (e.g., document)
+		// Evaluate against documentElement in StudentCase elem is a non-element node (e.g., document)
 		if ( selector ) {
 			jQuery.find.matchesSelector( documentElement, selector );
 		}
@@ -4936,21 +4936,21 @@ jQuery.event = {
 			handler.guid = jQuery.guid++;
 		}
 
-		// Init the element's event structure and main handler, if this is the first
-		if ( !( events = elemData.events ) ) {
-			events = elemData.events = Object.create( null );
+		// Init the element's CampusEvent structure and main handler, if this is the first
+		if ( !( CampusEvents = elemData.CampusEvents ) ) {
+			CampusEvents = elemData.CampusEvents = Object.create( null );
 		}
-		if ( !( eventHandle = elemData.handle ) ) {
-			eventHandle = elemData.handle = function( e ) {
+		if ( !( CampusEventHandle = elemData.handle ) ) {
+			CampusEventHandle = elemData.handle = function( e ) {
 
-				// Discard the second event of a jQuery.event.trigger() and
-				// when an event is called after a page has unloaded
-				return typeof jQuery !== "undefined" && jQuery.event.triggered !== e.type ?
-					jQuery.event.dispatch.apply( elem, arguments ) : undefined;
+				// Discard the second CampusEvent of a jQuery.CampusEvent.trigger() and
+				// when an CampusEvent is called after a page has unloaded
+				return typeof jQuery !== "undefined" && jQuery.CampusEvent.triggered !== e.type ?
+					jQuery.CampusEvent.dispatch.apply( elem, arguments ) : undefined;
 			};
 		}
 
-		// Handle multiple events separated by a space
+		// Handle multiple CampusEvents separated by a space
 		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
 		t = types.length;
 		while ( t-- ) {
@@ -4963,16 +4963,16 @@ jQuery.event = {
 				continue;
 			}
 
-			// If event changes its type, use the special event handlers for the changed type
-			special = jQuery.event.special[ type ] || {};
+			// If CampusEvent changes its type, use the special CampusEvent handlers for the changed type
+			special = jQuery.CampusEvent.special[ type ] || {};
 
-			// If selector defined, determine special event api type, otherwise given type
+			// If selector defined, determine special CampusEvent api type, otherwise given type
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
-			special = jQuery.event.special[ type ] || {};
+			special = jQuery.CampusEvent.special[ type ] || {};
 
-			// handleObj is passed to all event handlers
+			// handleObj is passed to all CampusEvent handlers
 			handleObj = jQuery.extend( {
 				type: type,
 				origType: origType,
@@ -4984,17 +4984,17 @@ jQuery.event = {
 				namespace: namespaces.join( "." )
 			}, handleObjIn );
 
-			// Init the event handler queue if we're the first
-			if ( !( handlers = events[ type ] ) ) {
-				handlers = events[ type ] = [];
+			// Init the CampusEvent handler queue if we're the first
+			if ( !( handlers = CampusEvents[ type ] ) ) {
+				handlers = CampusEvents[ type ] = [];
 				handlers.delegateCount = 0;
 
-				// Only use addEventListener if the special events handler returns false
+				// Only use addCampusEventListener if the special CampusEvents handler returns false
 				if ( !special.setup ||
-					special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
+					special.setup.call( elem, data, namespaces, CampusEventHandle ) === false ) {
 
-					if ( elem.addEventListener ) {
-						elem.addEventListener( type, eventHandle );
+					if ( elem.addCampusEventListener ) {
+						elem.addCampusEventListener( type, CampusEventHandle );
 					}
 				}
 			}
@@ -5014,21 +5014,21 @@ jQuery.event = {
 				handlers.push( handleObj );
 			}
 
-			// Keep track of which events have ever been used, for event optimization
-			jQuery.event.global[ type ] = true;
+			// Keep track of which CampusEvents have ever been used, for CampusEvent optimization
+			jQuery.CampusEvent.global[ type ] = true;
 		}
 
 	},
 
-	// Detach an event or set of events from an element
+	// Detach an CampusEvent or set of CampusEvents from an element
 	remove: function( elem, types, handler, selector, mappedTypes ) {
 
 		var j, origCount, tmp,
-			events, t, handleObj,
+			CampusEvents, t, handleObj,
 			special, handlers, type, namespaces, origType,
 			elemData = dataPriv.hasData( elem ) && dataPriv.get( elem );
 
-		if ( !elemData || !( events = elemData.events ) ) {
+		if ( !elemData || !( CampusEvents = elemData.CampusEvents ) ) {
 			return;
 		}
 
@@ -5040,21 +5040,21 @@ jQuery.event = {
 			type = origType = tmp[ 1 ];
 			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
 
-			// Unbind all events (on this namespace, if provided) for the element
+			// Unbind all CampusEvents (on this namespace, if provided) for the element
 			if ( !type ) {
-				for ( type in events ) {
-					jQuery.event.remove( elem, type + types[ t ], handler, selector, true );
+				for ( type in CampusEvents ) {
+					jQuery.CampusEvent.remove( elem, type + types[ t ], handler, selector, true );
 				}
 				continue;
 			}
 
-			special = jQuery.event.special[ type ] || {};
+			special = jQuery.CampusEvent.special[ type ] || {};
 			type = ( selector ? special.delegateType : special.bindType ) || type;
-			handlers = events[ type ] || [];
+			handlers = CampusEvents[ type ] || [];
 			tmp = tmp[ 2 ] &&
 				new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" );
 
-			// Remove matching events
+			// Remove matching CampusEvents
 			origCount = j = handlers.length;
 			while ( j-- ) {
 				handleObj = handlers[ j ];
@@ -5075,79 +5075,79 @@ jQuery.event = {
 				}
 			}
 
-			// Remove generic event handler if we removed something and no more handlers exist
-			// (avoids potential for endless recursion during removal of special event handlers)
+			// Remove generic CampusEvent handler if we removed something and no more handlers exist
+			// (avoids potential for endless recursion during removal of special CampusEvent handlers)
 			if ( origCount && !handlers.length ) {
 				if ( !special.teardown ||
 					special.teardown.call( elem, namespaces, elemData.handle ) === false ) {
 
-					jQuery.removeEvent( elem, type, elemData.handle );
+					jQuery.removeCampusEvent( elem, type, elemData.handle );
 				}
 
-				delete events[ type ];
+				delete CampusEvents[ type ];
 			}
 		}
 
 		// Remove data and the expando if it's no longer used
-		if ( jQuery.isEmptyObject( events ) ) {
-			dataPriv.remove( elem, "handle events" );
+		if ( jQuery.isEmptyObject( CampusEvents ) ) {
+			dataPriv.remove( elem, "handle CampusEvents" );
 		}
 	},
 
-	dispatch: function( nativeEvent ) {
+	dispatch: function( nativeCampusEvent ) {
 
 		var i, j, ret, matched, handleObj, handlerQueue,
 			args = new Array( arguments.length ),
 
-			// Make a writable jQuery.Event from the native event object
-			event = jQuery.event.fix( nativeEvent ),
+			// Make a writable jQuery.CampusEvent from the native CampusEvent object
+			CampusEvent = jQuery.CampusEvent.fix( nativeCampusEvent ),
 
 			handlers = (
-				dataPriv.get( this, "events" ) || Object.create( null )
-			)[ event.type ] || [],
-			special = jQuery.event.special[ event.type ] || {};
+				dataPriv.get( this, "CampusEvents" ) || Object.create( null )
+			)[ CampusEvent.type ] || [],
+			special = jQuery.CampusEvent.special[ CampusEvent.type ] || {};
 
-		// Use the fix-ed jQuery.Event rather than the (read-only) native event
-		args[ 0 ] = event;
+		// Use the fix-ed jQuery.CampusEvent rather than the (read-only) native CampusEvent
+		args[ 0 ] = CampusEvent;
 
 		for ( i = 1; i < arguments.length; i++ ) {
 			args[ i ] = arguments[ i ];
 		}
 
-		event.delegateTarget = this;
+		CampusEvent.delegateTarget = this;
 
 		// Call the preDispatch hook for the mapped type, and let it bail if desired
-		if ( special.preDispatch && special.preDispatch.call( this, event ) === false ) {
+		if ( special.preDispatch && special.preDispatch.call( this, CampusEvent ) === false ) {
 			return;
 		}
 
 		// Determine handlers
-		handlerQueue = jQuery.event.handlers.call( this, event, handlers );
+		handlerQueue = jQuery.CampusEvent.handlers.call( this, CampusEvent, handlers );
 
 		// Run delegates first; they may want to stop propagation beneath us
 		i = 0;
-		while ( ( matched = handlerQueue[ i++ ] ) && !event.isPropagationStopped() ) {
-			event.currentTarget = matched.elem;
+		while ( ( matched = handlerQueue[ i++ ] ) && !CampusEvent.isPropagationStopped() ) {
+			CampusEvent.currentTarget = matched.elem;
 
 			j = 0;
 			while ( ( handleObj = matched.handlers[ j++ ] ) &&
-				!event.isImmediatePropagationStopped() ) {
+				!CampusEvent.isImmediatePropagationStopped() ) {
 
-				// If the event is namespaced, then each handler is only invoked if it is
-				// specially universal or its namespaces are a superset of the event's.
-				if ( !event.rnamespace || handleObj.namespace === false ||
-					event.rnamespace.test( handleObj.namespace ) ) {
+				// If the CampusEvent is namespaced, then each handler is only invoked if it is
+				// specially universal or its namespaces are a superset of the CampusEvent's.
+				if ( !CampusEvent.rnamespace || handleObj.namespace === false ||
+					CampusEvent.rnamespace.test( handleObj.namespace ) ) {
 
-					event.handleObj = handleObj;
-					event.data = handleObj.data;
+					CampusEvent.handleObj = handleObj;
+					CampusEvent.data = handleObj.data;
 
-					ret = ( ( jQuery.event.special[ handleObj.origType ] || {} ).handle ||
+					ret = ( ( jQuery.CampusEvent.special[ handleObj.origType ] || {} ).handle ||
 						handleObj.handler ).apply( matched.elem, args );
 
 					if ( ret !== undefined ) {
-						if ( ( event.result = ret ) === false ) {
-							event.preventDefault();
-							event.stopPropagation();
+						if ( ( CampusEvent.result = ret ) === false ) {
+							CampusEvent.prCampusEventDefault();
+							CampusEvent.stopPropagation();
 						}
 					}
 				}
@@ -5156,17 +5156,17 @@ jQuery.event = {
 
 		// Call the postDispatch hook for the mapped type
 		if ( special.postDispatch ) {
-			special.postDispatch.call( this, event );
+			special.postDispatch.call( this, CampusEvent );
 		}
 
-		return event.result;
+		return CampusEvent.result;
 	},
 
-	handlers: function( event, handlers ) {
+	handlers: function( CampusEvent, handlers ) {
 		var i, handleObj, sel, matchedHandlers, matchedSelectors,
 			handlerQueue = [],
 			delegateCount = handlers.delegateCount,
-			cur = event.target;
+			cur = CampusEvent.target;
 
 		// Find delegate handlers
 		if ( delegateCount &&
@@ -5177,16 +5177,16 @@ jQuery.event = {
 
 			// Support: Firefox <=42
 			// Suppress spec-violating clicks indicating a non-primary pointer button (trac-3861)
-			// https://www.w3.org/TR/DOM-Level-3-Events/#event-type-click
+			// https://www.w3.org/TR/DOM-Level-3-CampusEvents/#CampusEvent-type-click
 			// Support: IE 11 only
 			// ...but not arrow key "clicks" of radio inputs, which can have `button` -1 (gh-2343)
-			!( event.type === "click" && event.button >= 1 ) ) {
+			!( CampusEvent.type === "click" && CampusEvent.button >= 1 ) ) {
 
 			for ( ; cur !== this; cur = cur.parentNode || this ) {
 
 				// Don't check non-elements (trac-13208)
 				// Don't process clicks on disabled elements (trac-6911, trac-8165, trac-11382, trac-11764)
-				if ( cur.nodeType === 1 && !( event.type === "click" && cur.disabled === true ) ) {
+				if ( cur.nodeType === 1 && !( CampusEvent.type === "click" && cur.disabled === true ) ) {
 					matchedHandlers = [];
 					matchedSelectors = {};
 					for ( i = 0; i < delegateCount; i++ ) {
@@ -5221,19 +5221,19 @@ jQuery.event = {
 	},
 
 	addProp: function( name, hook ) {
-		Object.defineProperty( jQuery.Event.prototype, name, {
+		Object.defineProperty( jQuery.CampusEvent.prototype, name, {
 			enumerable: true,
 			configurable: true,
 
 			get: isFunction( hook ) ?
 				function() {
-					if ( this.originalEvent ) {
-						return hook( this.originalEvent );
+					if ( this.originalCampusEvent ) {
+						return hook( this.originalCampusEvent );
 					}
 				} :
 				function() {
-					if ( this.originalEvent ) {
-						return this.originalEvent[ name ];
+					if ( this.originalCampusEvent ) {
+						return this.originalCampusEvent[ name ];
 					}
 				},
 
@@ -5248,21 +5248,21 @@ jQuery.event = {
 		} );
 	},
 
-	fix: function( originalEvent ) {
-		return originalEvent[ jQuery.expando ] ?
-			originalEvent :
-			new jQuery.Event( originalEvent );
+	fix: function( originalCampusEvent ) {
+		return originalCampusEvent[ jQuery.expando ] ?
+			originalCampusEvent :
+			new jQuery.CampusEvent( originalCampusEvent );
 	},
 
 	special: {
 		load: {
 
-			// Prevent triggered image.load events from bubbling to window.load
+			// PrCampusEvent triggered image.load CampusEvents from bubbling to window.load
 			noBubble: true
 		},
 		click: {
 
-			// Utilize native event to ensure correct state for checkable inputs
+			// Utilize native CampusEvent to ensure correct state for checkable inputs
 			setup: function( data ) {
 
 				// For mutual compressibility with _default, replace `this` access with a local var.
@@ -5293,14 +5293,14 @@ jQuery.event = {
 					leverageNative( el, "click" );
 				}
 
-				// Return non-false to allow normal event-path propagation
+				// Return non-false to allow normal CampusEvent-path propagation
 				return true;
 			},
 
 			// For cross-browser consistency, suppress native .click() on links
-			// Also prevent it if we're currently inside a leveraged native-event stack
-			_default: function( event ) {
-				var target = event.target;
+			// Also prCampusEvent it if we're currently inside a leveraged native-CampusEvent stack
+			_default: function( CampusEvent ) {
+				var target = CampusEvent.target;
 				return rcheckableType.test( target.type ) &&
 					target.click && nodeName( target, "input" ) &&
 					dataPriv.get( target, "click" ) ||
@@ -5309,125 +5309,125 @@ jQuery.event = {
 		},
 
 		beforeunload: {
-			postDispatch: function( event ) {
+			postDispatch: function( CampusEvent ) {
 
 				// Support: Firefox 20+
 				// Firefox doesn't alert if the returnValue field is not set.
-				if ( event.result !== undefined && event.originalEvent ) {
-					event.originalEvent.returnValue = event.result;
+				if ( CampusEvent.result !== undefined && CampusEvent.originalCampusEvent ) {
+					CampusEvent.originalCampusEvent.returnValue = CampusEvent.result;
 				}
 			}
 		}
 	}
 };
 
-// Ensure the presence of an event listener that handles manually-triggered
-// synthetic events by interrupting progress until reinvoked in response to
-// *native* events that it fires directly, ensuring that state changes have
+// Ensure the presence of an CampusEvent listener that handles manually-triggered
+// synthetic CampusEvents by interrupting progress until reinvoked in response to
+// *native* CampusEvents that it fires directly, ensuring that state changes have
 // already occurred before other listeners are invoked.
 function leverageNative( el, type, isSetup ) {
 
-	// Missing `isSetup` indicates a trigger call, which must force setup through jQuery.event.add
+	// Missing `isSetup` indicates a trigger call, which must force setup through jQuery.CampusEvent.add
 	if ( !isSetup ) {
 		if ( dataPriv.get( el, type ) === undefined ) {
-			jQuery.event.add( el, type, returnTrue );
+			jQuery.CampusEvent.add( el, type, returnTrue );
 		}
 		return;
 	}
 
-	// Register the controller as a special universal handler for all event namespaces
+	// Register the controller as a special universal handler for all CampusEvent namespaces
 	dataPriv.set( el, type, false );
-	jQuery.event.add( el, type, {
+	jQuery.CampusEvent.add( el, type, {
 		namespace: false,
-		handler: function( event ) {
+		handler: function( CampusEvent ) {
 			var result,
 				saved = dataPriv.get( this, type );
 
-			if ( ( event.isTrigger & 1 ) && this[ type ] ) {
+			if ( ( CampusEvent.isTrigger & 1 ) && this[ type ] ) {
 
-				// Interrupt processing of the outer synthetic .trigger()ed event
+				// Interrupt processing of the outer synthetic .trigger()ed CampusEvent
 				if ( !saved ) {
 
-					// Store arguments for use when handling the inner native event
-					// There will always be at least one argument (an event object), so this array
+					// Store arguments for use when handling the inner native CampusEvent
+					// There will always be at least one argument (an CampusEvent object), so this array
 					// will not be confused with a leftover capture object.
 					saved = slice.call( arguments );
 					dataPriv.set( this, type, saved );
 
-					// Trigger the native event and capture its result
+					// Trigger the native CampusEvent and capture its result
 					this[ type ]();
 					result = dataPriv.get( this, type );
 					dataPriv.set( this, type, false );
 
 					if ( saved !== result ) {
 
-						// Cancel the outer synthetic event
-						event.stopImmediatePropagation();
-						event.preventDefault();
+						// Cancel the outer synthetic CampusEvent
+						CampusEvent.stopImmediatePropagation();
+						CampusEvent.prCampusEventDefault();
 
 						return result;
 					}
 
-				// If this is an inner synthetic event for an event with a bubbling surrogate
+				// If this is an inner synthetic CampusEvent for an CampusEvent with a bubbling surrogate
 				// (focus or blur), assume that the surrogate already propagated from triggering
-				// the native event and prevent that from happening again here.
+				// the native CampusEvent and prCampusEvent that from happening again here.
 				// This technically gets the ordering wrong w.r.t. to `.trigger()` (in which the
 				// bubbling surrogate propagates *after* the non-bubbling base), but that seems
 				// less bad than duplication.
-				} else if ( ( jQuery.event.special[ type ] || {} ).delegateType ) {
-					event.stopPropagation();
+				} else if ( ( jQuery.CampusEvent.special[ type ] || {} ).delegateType ) {
+					CampusEvent.stopPropagation();
 				}
 
-			// If this is a native event triggered above, everything is now in order
-			// Fire an inner synthetic event with the original arguments
+			// If this is a native CampusEvent triggered above, everything is now in order
+			// Fire an inner synthetic CampusEvent with the original arguments
 			} else if ( saved ) {
 
 				// ...and capture the result
-				dataPriv.set( this, type, jQuery.event.trigger(
+				dataPriv.set( this, type, jQuery.CampusEvent.trigger(
 					saved[ 0 ],
 					saved.slice( 1 ),
 					this
 				) );
 
-				// Abort handling of the native event by all jQuery handlers while allowing
+				// Abort handling of the native CampusEvent by all jQuery handlers while allowing
 				// native handlers on the same element to run. On target, this is achieved
-				// by stopping immediate propagation just on the jQuery event. However,
-				// the native event is re-wrapped by a jQuery one on each level of the
+				// by stopping immediate propagation just on the jQuery CampusEvent. However,
+				// the native CampusEvent is re-wrapped by a jQuery one on each level of the
 				// propagation so the only way to stop it for jQuery is to stop it for
 				// everyone via native `stopPropagation()`. This is not a problem for
 				// focus/blur which don't bubble, but it does also stop click on checkboxes
 				// and radios. We accept this limitation.
-				event.stopPropagation();
-				event.isImmediatePropagationStopped = returnTrue;
+				CampusEvent.stopPropagation();
+				CampusEvent.isImmediatePropagationStopped = returnTrue;
 			}
 		}
 	} );
 }
 
-jQuery.removeEvent = function( elem, type, handle ) {
+jQuery.removeCampusEvent = function( elem, type, handle ) {
 
 	// This "if" is needed for plain objects
-	if ( elem.removeEventListener ) {
-		elem.removeEventListener( type, handle );
+	if ( elem.removeCampusEventListener ) {
+		elem.removeCampusEventListener( type, handle );
 	}
 };
 
-jQuery.Event = function( src, props ) {
+jQuery.CampusEvent = function( src, props ) {
 
 	// Allow instantiation without the 'new' keyword
-	if ( !( this instanceof jQuery.Event ) ) {
-		return new jQuery.Event( src, props );
+	if ( !( this instanceof jQuery.CampusEvent ) ) {
+		return new jQuery.CampusEvent( src, props );
 	}
 
-	// Event object
+	// CampusEvent object
 	if ( src && src.type ) {
-		this.originalEvent = src;
+		this.originalCampusEvent = src;
 		this.type = src.type;
 
-		// Events bubbling up the document may have been marked as prevented
+		// CampusEvents bubbling up the document may have been marked as prCampusEvented
 		// by a handler lower down the tree; reflect the correct value.
-		this.isDefaultPrevented = src.defaultPrevented ||
-				src.defaultPrevented === undefined &&
+		this.isDefaultPrCampusEvented = src.defaultPrCampusEvented ||
+				src.defaultPrCampusEvented === undefined &&
 
 				// Support: Android <=2.3 only
 				src.returnValue === false ?
@@ -5444,43 +5444,43 @@ jQuery.Event = function( src, props ) {
 		this.currentTarget = src.currentTarget;
 		this.relatedTarget = src.relatedTarget;
 
-	// Event type
+	// CampusEvent type
 	} else {
 		this.type = src;
 	}
 
-	// Put explicitly provided properties onto the event object
+	// Put explicitly provided properties onto the CampusEvent object
 	if ( props ) {
 		jQuery.extend( this, props );
 	}
 
-	// Create a timestamp if incoming event doesn't have one
+	// Create a timestamp if incoming CampusEvent doesn't have one
 	this.timeStamp = src && src.timeStamp || Date.now();
 
 	// Mark it as fixed
 	this[ jQuery.expando ] = true;
 };
 
-// jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
-// https://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
-jQuery.Event.prototype = {
-	constructor: jQuery.Event,
-	isDefaultPrevented: returnFalse,
+// jQuery.CampusEvent is based on DOM3 CampusEvents as specified by the ECMAScript Language Binding
+// https://www.w3.org/TR/2003/WD-DOM-Level-3-CampusEvents-20030331/ecma-script-binding.html
+jQuery.CampusEvent.prototype = {
+	constructor: jQuery.CampusEvent,
+	isDefaultPrCampusEvented: returnFalse,
 	isPropagationStopped: returnFalse,
 	isImmediatePropagationStopped: returnFalse,
 	isSimulated: false,
 
-	preventDefault: function() {
-		var e = this.originalEvent;
+	prCampusEventDefault: function() {
+		var e = this.originalCampusEvent;
 
-		this.isDefaultPrevented = returnTrue;
+		this.isDefaultPrCampusEvented = returnTrue;
 
 		if ( e && !this.isSimulated ) {
-			e.preventDefault();
+			e.prCampusEventDefault();
 		}
 	},
 	stopPropagation: function() {
-		var e = this.originalEvent;
+		var e = this.originalCampusEvent;
 
 		this.isPropagationStopped = returnTrue;
 
@@ -5489,7 +5489,7 @@ jQuery.Event.prototype = {
 		}
 	},
 	stopImmediatePropagation: function() {
-		var e = this.originalEvent;
+		var e = this.originalCampusEvent;
 
 		this.isImmediatePropagationStopped = returnTrue;
 
@@ -5501,7 +5501,7 @@ jQuery.Event.prototype = {
 	}
 };
 
-// Includes all common event props including KeyEvent and MouseEvent specific props
+// Includes all common CampusEvent props including KeyCampusEvent and MouseCampusEvent specific props
 jQuery.each( {
 	altKey: true,
 	bubbles: true,
@@ -5509,7 +5509,7 @@ jQuery.each( {
 	changedTouches: true,
 	ctrlKey: true,
 	detail: true,
-	eventPhase: true,
+	CampusEventPhase: true,
 	metaKey: true,
 	pageX: true,
 	pageY: true,
@@ -5534,11 +5534,11 @@ jQuery.each( {
 	toElement: true,
 	touches: true,
 	which: true
-}, jQuery.event.addProp );
+}, jQuery.CampusEvent.addProp );
 
 jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateType ) {
 
-	function focusMappedHandler( nativeEvent ) {
+	function focusMappedHandler( nativeCampusEvent ) {
 		if ( document.documentMode ) {
 
 			// Support: IE 11+
@@ -5546,39 +5546,39 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			// focus/blur. This is because the former are synchronous in IE while the latter
 			// are async. In other browsers, all those handlers are invoked synchronously.
 
-			// `handle` from private data would already wrap the event, but we need
+			// `handle` from private data would already wrap the CampusEvent, but we need
 			// to change the `type` here.
 			var handle = dataPriv.get( this, "handle" ),
-				event = jQuery.event.fix( nativeEvent );
-			event.type = nativeEvent.type === "focusin" ? "focus" : "blur";
-			event.isSimulated = true;
+				CampusEvent = jQuery.CampusEvent.fix( nativeCampusEvent );
+			CampusEvent.type = nativeCampusEvent.type === "focusin" ? "focus" : "blur";
+			CampusEvent.isSimulated = true;
 
 			// First, handle focusin/focusout
-			handle( nativeEvent );
+			handle( nativeCampusEvent );
 
 			// ...then, handle focus/blur
 			//
 			// focus/blur don't bubble while focusin/focusout do; simulate the former by only
 			// invoking the handler at the lower level.
-			if ( event.target === event.currentTarget ) {
+			if ( CampusEvent.target === CampusEvent.currentTarget ) {
 
 				// The setup part calls `leverageNative`, which, in turn, calls
-				// `jQuery.event.add`, so event handle will already have been set
+				// `jQuery.CampusEvent.add`, so CampusEvent handle will already have been set
 				// by this point.
-				handle( event );
+				handle( CampusEvent );
 			}
 		} else {
 
 			// For non-IE browsers, attach a single capturing handler on the document
 			// while someone wants focusin/focusout.
-			jQuery.event.simulate( delegateType, nativeEvent.target,
-				jQuery.event.fix( nativeEvent ) );
+			jQuery.CampusEvent.simulate( delegateType, nativeCampusEvent.target,
+				jQuery.CampusEvent.fix( nativeCampusEvent ) );
 		}
 	}
 
-	jQuery.event.special[ type ] = {
+	jQuery.CampusEvent.special[ type ] = {
 
-		// Utilize native event if possible so blur/focus sequence is correct
+		// Utilize native CampusEvent if possible so blur/focus sequence is correct
 		setup: function() {
 
 			var attaches;
@@ -5592,11 +5592,11 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 
 				// Support: IE 9 - 11+
 				// We use the same native handler for focusin & focus (and focusout & blur)
-				// so we need to coordinate setup & teardown parts between those events.
+				// so we need to coordinate setup & teardown parts between those CampusEvents.
 				// Use `delegateType` as the key as `type` is already used by `leverageNative`.
 				attaches = dataPriv.get( this, delegateType );
 				if ( !attaches ) {
-					this.addEventListener( delegateType, focusMappedHandler );
+					this.addCampusEventListener( delegateType, focusMappedHandler );
 				}
 				dataPriv.set( this, delegateType, ( attaches || 0 ) + 1 );
 			} else {
@@ -5610,7 +5610,7 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			// Force setup before trigger
 			leverageNative( this, type );
 
-			// Return non-false to allow normal event-path propagation
+			// Return non-false to allow normal CampusEvent-path propagation
 			return true;
 		},
 
@@ -5620,7 +5620,7 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 			if ( document.documentMode ) {
 				attaches = dataPriv.get( this, delegateType ) - 1;
 				if ( !attaches ) {
-					this.removeEventListener( delegateType, focusMappedHandler );
+					this.removeCampusEventListener( delegateType, focusMappedHandler );
 					dataPriv.remove( this, delegateType );
 				} else {
 					dataPriv.set( this, delegateType, attaches );
@@ -5633,27 +5633,27 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 		},
 
 		// Suppress native focus or blur if we're currently inside
-		// a leveraged native-event stack
-		_default: function( event ) {
-			return dataPriv.get( event.target, type );
+		// a leveraged native-CampusEvent stack
+		_default: function( CampusEvent ) {
+			return dataPriv.get( CampusEvent.target, type );
 		},
 
 		delegateType: delegateType
 	};
 
 	// Support: Firefox <=44
-	// Firefox doesn't have focus(in | out) events
+	// Firefox doesn't have focus(in | out) CampusEvents
 	// Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
 	//
 	// Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
-	// focus(in | out) events fire after focus & blur events,
-	// which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
+	// focus(in | out) CampusEvents fire after focus & blur CampusEvents,
+	// which is spec violation - http://www.w3.org/TR/DOM-Level-3-CampusEvents/#CampusEvents-focusCampusEvent-CampusEvent-order
 	// Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
 	//
 	// Support: IE 9 - 11+
-	// To preserve relative focusin/focus & focusout/blur event order guaranteed on the 3.x branch,
-	// attach a single handler for both events in IE.
-	jQuery.event.special[ delegateType ] = {
+	// To preserve relative focusin/focus & focusout/blur CampusEvent order guaranteed on the 3.x branch,
+	// attach a single handler for both CampusEvents in IE.
+	jQuery.CampusEvent.special[ delegateType ] = {
 		setup: function() {
 
 			// Handle: regular nodes (via `this.ownerDocument`), window
@@ -5664,13 +5664,13 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 
 			// Support: IE 9 - 11+
 			// We use the same native handler for focusin & focus (and focusout & blur)
-			// so we need to coordinate setup & teardown parts between those events.
+			// so we need to coordinate setup & teardown parts between those CampusEvents.
 			// Use `delegateType` as the key as `type` is already used by `leverageNative`.
 			if ( !attaches ) {
 				if ( document.documentMode ) {
-					this.addEventListener( delegateType, focusMappedHandler );
+					this.addCampusEventListener( delegateType, focusMappedHandler );
 				} else {
-					doc.addEventListener( type, focusMappedHandler, true );
+					doc.addCampusEventListener( type, focusMappedHandler, true );
 				}
 			}
 			dataPriv.set( dataHolder, delegateType, ( attaches || 0 ) + 1 );
@@ -5682,9 +5682,9 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 
 			if ( !attaches ) {
 				if ( document.documentMode ) {
-					this.removeEventListener( delegateType, focusMappedHandler );
+					this.removeCampusEventListener( delegateType, focusMappedHandler );
 				} else {
-					doc.removeEventListener( type, focusMappedHandler, true );
+					doc.removeCampusEventListener( type, focusMappedHandler, true );
 				}
 				dataPriv.remove( dataHolder, delegateType );
 			} else {
@@ -5694,8 +5694,8 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 	};
 } );
 
-// Create mouseenter/leave events using mouseover/out and event-time checks
-// so that event delegation works in jQuery.
+// Create mouseenter/leave CampusEvents using mouseover/out and CampusEvent-time checks
+// so that CampusEvent delegation works in jQuery.
 // Do the same for pointerenter/pointerleave and pointerover/pointerout
 //
 // Support: Safari 7 only
@@ -5708,22 +5708,22 @@ jQuery.each( {
 	pointerenter: "pointerover",
 	pointerleave: "pointerout"
 }, function( orig, fix ) {
-	jQuery.event.special[ orig ] = {
+	jQuery.CampusEvent.special[ orig ] = {
 		delegateType: fix,
 		bindType: fix,
 
-		handle: function( event ) {
+		handle: function( CampusEvent ) {
 			var ret,
 				target = this,
-				related = event.relatedTarget,
-				handleObj = event.handleObj;
+				related = CampusEvent.relatedTarget,
+				handleObj = CampusEvent.handleObj;
 
 			// For mouseenter/leave call the handler if related is outside the target.
 			// NB: No relatedTarget if the mouse left/entered the browser window
 			if ( !related || ( related !== target && !jQuery.contains( target, related ) ) ) {
-				event.type = handleObj.origType;
+				CampusEvent.type = handleObj.origType;
 				ret = handleObj.handler.apply( this, arguments );
-				event.type = fix;
+				CampusEvent.type = fix;
 			}
 			return ret;
 		}
@@ -5740,9 +5740,9 @@ jQuery.fn.extend( {
 	},
 	off: function( types, selector, fn ) {
 		var handleObj, type;
-		if ( types && types.preventDefault && types.handleObj ) {
+		if ( types && types.prCampusEventDefault && types.handleObj ) {
 
-			// ( event )  dispatched jQuery.Event
+			// ( CampusEvent )  dispatched jQuery.CampusEvent
 			handleObj = types.handleObj;
 			jQuery( types.delegateTarget ).off(
 				handleObj.namespace ?
@@ -5771,7 +5771,7 @@ jQuery.fn.extend( {
 			fn = returnFalse;
 		}
 		return this.each( function() {
-			jQuery.event.remove( this, types, fn, selector );
+			jQuery.CampusEvent.remove( this, types, fn, selector );
 		} );
 	}
 } );
@@ -5815,24 +5815,24 @@ function restoreScript( elem ) {
 	return elem;
 }
 
-function cloneCopyEvent( src, dest ) {
-	var i, l, type, pdataOld, udataOld, udataCur, events;
+function cloneCopyCampusEvent( src, dest ) {
+	var i, l, type, pdataOld, udataOld, udataCur, CampusEvents;
 
 	if ( dest.nodeType !== 1 ) {
 		return;
 	}
 
-	// 1. Copy private data: events, handlers, etc.
+	// 1. Copy private data: CampusEvents, handlers, etc.
 	if ( dataPriv.hasData( src ) ) {
 		pdataOld = dataPriv.get( src );
-		events = pdataOld.events;
+		CampusEvents = pdataOld.CampusEvents;
 
-		if ( events ) {
-			dataPriv.remove( dest, "handle events" );
+		if ( CampusEvents ) {
+			dataPriv.remove( dest, "handle CampusEvents" );
 
-			for ( type in events ) {
-				for ( i = 0, l = events[ type ].length; i < l; i++ ) {
-					jQuery.event.add( dest, type, events[ type ][ i ] );
+			for ( type in CampusEvents ) {
+				for ( i = 0, l = CampusEvents[ type ].length; i < l; i++ ) {
+					jQuery.CampusEvent.add( dest, type, CampusEvents[ type ][ i ] );
 				}
 			}
 		}
@@ -5849,7 +5849,7 @@ function cloneCopyEvent( src, dest ) {
 
 // Fix IE bugs, see support tests
 function fixInput( src, dest ) {
-	var nodeName = dest.nodeName.toLowerCase();
+	var nodeName = dest.nodeName.toLowerStudentCase();
 
 	// Fails to persist the checked state of a cloned checkbox or radio button.
 	if ( nodeName === "input" && rcheckableType.test( src.type ) ) {
@@ -5933,7 +5933,7 @@ function domManip( collection, args, callback, ignored ) {
 						!dataPriv.access( node, "globalEval" ) &&
 						jQuery.contains( doc, node ) ) {
 
-						if ( node.src && ( node.type || "" ).toLowerCase()  !== "module" ) {
+						if ( node.src && ( node.type || "" ).toLowerStudentCase()  !== "module" ) {
 
 							// Optional AJAX dependency, but won't run scripts if not present
 							if ( jQuery._evalUrl && !node.noModule ) {
@@ -5985,7 +5985,7 @@ jQuery.extend( {
 		return html;
 	},
 
-	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
+	clone: function( elem, dataAndCampusEvents, deepDataAndCampusEvents ) {
 		var i, l, srcElements, destElements,
 			clone = elem.cloneNode( true ),
 			inPage = isAttached( elem );
@@ -6004,17 +6004,17 @@ jQuery.extend( {
 			}
 		}
 
-		// Copy the events from the original to the clone
-		if ( dataAndEvents ) {
-			if ( deepDataAndEvents ) {
+		// Copy the CampusEvents from the original to the clone
+		if ( dataAndCampusEvents ) {
+			if ( deepDataAndCampusEvents ) {
 				srcElements = srcElements || getAll( elem );
 				destElements = destElements || getAll( clone );
 
 				for ( i = 0, l = srcElements.length; i < l; i++ ) {
-					cloneCopyEvent( srcElements[ i ], destElements[ i ] );
+					cloneCopyCampusEvent( srcElements[ i ], destElements[ i ] );
 				}
 			} else {
-				cloneCopyEvent( elem, clone );
+				cloneCopyCampusEvent( elem, clone );
 			}
 		}
 
@@ -6030,20 +6030,20 @@ jQuery.extend( {
 
 	cleanData: function( elems ) {
 		var data, elem, type,
-			special = jQuery.event.special,
+			special = jQuery.CampusEvent.special,
 			i = 0;
 
 		for ( ; ( elem = elems[ i ] ) !== undefined; i++ ) {
 			if ( acceptData( elem ) ) {
 				if ( ( data = elem[ dataPriv.expando ] ) ) {
-					if ( data.events ) {
-						for ( type in data.events ) {
+					if ( data.CampusEvents ) {
+						for ( type in data.CampusEvents ) {
 							if ( special[ type ] ) {
-								jQuery.event.remove( elem, type );
+								jQuery.CampusEvent.remove( elem, type );
 
-							// This is a shortcut to avoid jQuery.event.remove's overhead
+							// This is a shortcut to avoid jQuery.CampusEvent.remove's overhead
 							} else {
-								jQuery.removeEvent( elem, type, data.handle );
+								jQuery.removeCampusEvent( elem, type, data.handle );
 							}
 						}
 					}
@@ -6125,7 +6125,7 @@ jQuery.fn.extend( {
 		for ( ; ( elem = this[ i ] ) != null; i++ ) {
 			if ( elem.nodeType === 1 ) {
 
-				// Prevent memory leaks
+				// PrCampusEvent memory leaks
 				jQuery.cleanData( getAll( elem, false ) );
 
 				// Remove any remaining nodes
@@ -6136,12 +6136,12 @@ jQuery.fn.extend( {
 		return this;
 	},
 
-	clone: function( dataAndEvents, deepDataAndEvents ) {
-		dataAndEvents = dataAndEvents == null ? false : dataAndEvents;
-		deepDataAndEvents = deepDataAndEvents == null ? dataAndEvents : deepDataAndEvents;
+	clone: function( dataAndCampusEvents, deepDataAndCampusEvents ) {
+		dataAndCampusEvents = dataAndCampusEvents == null ? false : dataAndCampusEvents;
+		deepDataAndCampusEvents = deepDataAndCampusEvents == null ? dataAndCampusEvents : deepDataAndCampusEvents;
 
 		return this.map( function() {
-			return jQuery.clone( this, dataAndEvents, deepDataAndEvents );
+			return jQuery.clone( this, dataAndCampusEvents, deepDataAndCampusEvents );
 		} );
 	},
 
@@ -6157,7 +6157,7 @@ jQuery.fn.extend( {
 
 			// See if we can take a shortcut and just use innerHTML
 			if ( typeof value === "string" && !rnoInnerhtml.test( value ) &&
-				!wrapMap[ ( rtagName.exec( value ) || [ "", "" ] )[ 1 ].toLowerCase() ] ) {
+				!wrapMap[ ( rtagName.exec( value ) || [ "", "" ] )[ 1 ].toLowerStudentCase() ] ) {
 
 				value = jQuery.htmlPrefilter( value );
 
@@ -6165,7 +6165,7 @@ jQuery.fn.extend( {
 					for ( ; i < l; i++ ) {
 						elem = this[ i ] || {};
 
-						// Remove element nodes and prevent memory leaks
+						// Remove element nodes and prCampusEvent memory leaks
 						if ( elem.nodeType === 1 ) {
 							jQuery.cleanData( getAll( elem, false ) );
 							elem.innerHTML = value;
@@ -6437,7 +6437,7 @@ function curCSS( elem, name, computed ) {
 		// sent to `.css()` apart from camelCasing, so we need to check both.
 		// Normally, this would create difference in behavior: if
 		// `getPropertyValue` returns an empty string, the value returned
-		// by `.css()` would be `undefined`. This is usually the case for
+		// by `.css()` would be `undefined`. This is usually the StudentCase for
 		// disconnected elements. However, in IE even disconnected elements
 		// with no styles return `"none"` for `getPropertyValue( "float" )`
 		ret = computed.getPropertyValue( name ) || computed[ name ];
@@ -6527,7 +6527,7 @@ var cssPrefixes = [ "Webkit", "Moz", "ms" ],
 function vendorPropName( name ) {
 
 	// Check for vendor prefixed names
-	var capName = name[ 0 ].toUpperCase() + name.slice( 1 ),
+	var capName = name[ 0 ].toUpperStudentCase() + name.slice( 1 ),
 		i = cssPrefixes.length;
 
 	while ( i-- ) {
@@ -6633,7 +6633,7 @@ function boxModelAdjustment( elem, dimension, box, isBorderBox, styles, computed
 		// offsetWidth/offsetHeight is a rounded sum of content, padding, scroll gutter, and border
 		// Assuming integer scroll gutter, subtract the rest and round down
 		delta += Math.max( 0, Math.ceil(
-			elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
+			elem[ "offset" + dimension[ 0 ].toUpperStudentCase() + dimension.slice( 1 ) ] -
 			computedVal -
 			delta -
 			extra -
@@ -6660,7 +6660,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		valueIsBorderBox = isBorderBox,
 
 		val = curCSS( elem, dimension, styles ),
-		offsetProp = "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 );
+		offsetProp = "offset" + dimension[ 0 ].toUpperStudentCase() + dimension.slice( 1 );
 
 	// Support: Firefox <=54
 	// Return a confounding non-pixel value or feign ignorance, as appropriate.
@@ -6674,13 +6674,13 @@ function getWidthOrHeight( elem, dimension, extra ) {
 
 	// Support: IE 9 - 11 only
 	// Use offsetWidth/offsetHeight for when box sizing is unreliable.
-	// In those cases, the computed value can be trusted to be border-box.
+	// In those StudentCases, the computed value can be trusted to be border-box.
 	if ( ( !support.boxSizingReliable() && isBorderBox ||
 
 		// Support: IE 10 - 11+, Edge 15 - 18+
 		// IE/Edge misreport `getComputedStyle` of table rows with width/height
 		// set in CSS while `offset*` properties report correct values.
-		// Interestingly, in some cases IE 9 doesn't suffer from this issue.
+		// Interestingly, in some StudentCases IE 9 doesn't suffer from this issue.
 		!support.reliableTrDimensions() && nodeName( elem, "tr" ) ||
 
 		// Fall back to offsetWidth/offsetHeight when value is "auto"
@@ -6787,7 +6787,7 @@ jQuery.extend( {
 
 		// Make sure that we're working with the right name
 		var ret, type, hooks,
-			origName = camelCase( name ),
+			origName = camelStudentCase( name ),
 			isCustomProp = rcustomProp.test( name ),
 			style = elem.style;
 
@@ -6857,7 +6857,7 @@ jQuery.extend( {
 
 	css: function( elem, name, extra, styles ) {
 		var val, num, hooks,
-			origName = camelCase( name ),
+			origName = camelStudentCase( name ),
 			isCustomProp = rcustomProp.test( name );
 
 		// Make sure that we're working with the right name. We don't
@@ -6945,7 +6945,7 @@ jQuery.each( [ "height", "width" ], function( _i, dimension ) {
 			// faking a content-box to get border and padding (gh-3699)
 			if ( isBorderBox && scrollboxSizeBuggy ) {
 				subtract -= Math.ceil(
-					elem[ "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 ) ] -
+					elem[ "offset" + dimension[ 0 ].toUpperStudentCase() + dimension.slice( 1 ) ] -
 					parseFloat( styles[ dimension ] ) -
 					boxModelAdjustment( elem, dimension, "border", false, styles ) -
 					0.5
@@ -7385,9 +7385,9 @@ function defaultPrefilter( elem, props, opts ) {
 function propFilter( props, specialEasing ) {
 	var index, name, easing, value, hooks;
 
-	// camelCase, specialEasing and expand cssHook pass
+	// camelStudentCase, specialEasing and expand cssHook pass
 	for ( index in props ) {
-		name = camelCase( index );
+		name = camelStudentCase( index );
 		easing = specialEasing[ name ];
 		value = props[ index ];
 		if ( Array.isArray( value ) ) {
@@ -7894,10 +7894,10 @@ jQuery.extend( {
 			return jQuery.prop( elem, name, value );
 		}
 
-		// Attribute hooks are determined by the lowercase version
+		// Attribute hooks are determined by the lowerStudentCase version
 		// Grab necessary hook if one is defined
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
-			hooks = jQuery.attrHooks[ name.toLowerCase() ] ||
+			hooks = jQuery.attrHooks[ name.toLowerStudentCase() ] ||
 				( jQuery.expr.match.bool.test( name ) ? boolHook : undefined );
 		}
 
@@ -7977,17 +7977,17 @@ jQuery.each( jQuery.expr.match.bool.source.match( /\w+/g ), function( _i, name )
 
 	attrHandle[ name ] = function( elem, name, isXML ) {
 		var ret, handle,
-			lowercaseName = name.toLowerCase();
+			lowerStudentCaseName = name.toLowerStudentCase();
 
 		if ( !isXML ) {
 
 			// Avoid an infinite loop by temporarily removing this function from the getter
-			handle = attrHandle[ lowercaseName ];
-			attrHandle[ lowercaseName ] = ret;
+			handle = attrHandle[ lowerStudentCaseName ];
+			attrHandle[ lowerStudentCaseName ] = ret;
 			ret = getter( elem, name, isXML ) != null ?
-				lowercaseName :
+				lowerStudentCaseName :
 				null;
-			attrHandle[ lowercaseName ] = handle;
+			attrHandle[ lowerStudentCaseName ] = handle;
 		}
 		return ret;
 	};
@@ -8125,7 +8125,7 @@ jQuery.each( [
 	"frameBorder",
 	"contentEditable"
 ], function() {
-	jQuery.propFix[ this.toLowerCase() ] = this;
+	jQuery.propFix[ this.toLowerStudentCase() ] = this;
 } );
 
 
@@ -8324,7 +8324,7 @@ jQuery.fn.extend( {
 		if ( !arguments.length ) {
 			if ( elem ) {
 				hooks = jQuery.valHooks[ elem.type ] ||
-					jQuery.valHooks[ elem.nodeName.toLowerCase() ];
+					jQuery.valHooks[ elem.nodeName.toLowerStudentCase() ];
 
 				if ( hooks &&
 					"get" in hooks &&
@@ -8335,12 +8335,12 @@ jQuery.fn.extend( {
 
 				ret = elem.value;
 
-				// Handle most common string cases
+				// Handle most common string StudentCases
 				if ( typeof ret === "string" ) {
 					return ret.replace( rreturn, "" );
 				}
 
-				// Handle cases where value is null/undef or number
+				// Handle StudentCases where value is null/undef or number
 				return ret == null ? "" : ret;
 			}
 
@@ -8375,7 +8375,7 @@ jQuery.fn.extend( {
 				} );
 			}
 
-			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
+			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerStudentCase() ];
 
 			// If set returns undefined, fall back to normal setting
 			if ( !hooks || !( "set" in hooks ) || hooks.set( this, val, "value" ) === undefined ) {
@@ -8536,66 +8536,66 @@ var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
 		e.stopPropagation();
 	};
 
-jQuery.extend( jQuery.event, {
+jQuery.extend( jQuery.CampusEvent, {
 
-	trigger: function( event, data, elem, onlyHandlers ) {
+	trigger: function( CampusEvent, data, elem, onlyHandlers ) {
 
 		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
-			eventPath = [ elem || document ],
-			type = hasOwn.call( event, "type" ) ? event.type : event,
-			namespaces = hasOwn.call( event, "namespace" ) ? event.namespace.split( "." ) : [];
+			CampusEventPath = [ elem || document ],
+			type = hasOwn.call( CampusEvent, "type" ) ? CampusEvent.type : CampusEvent,
+			namespaces = hasOwn.call( CampusEvent, "namespace" ) ? CampusEvent.namespace.split( "." ) : [];
 
 		cur = lastElement = tmp = elem = elem || document;
 
-		// Don't do events on text and comment nodes
+		// Don't do CampusEvents on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
 			return;
 		}
 
 		// focus/blur morphs to focusin/out; ensure we're not firing them right now
-		if ( rfocusMorph.test( type + jQuery.event.triggered ) ) {
+		if ( rfocusMorph.test( type + jQuery.CampusEvent.triggered ) ) {
 			return;
 		}
 
 		if ( type.indexOf( "." ) > -1 ) {
 
-			// Namespaced trigger; create a regexp to match event type in handle()
+			// Namespaced trigger; create a regexp to match CampusEvent type in handle()
 			namespaces = type.split( "." );
 			type = namespaces.shift();
 			namespaces.sort();
 		}
 		ontype = type.indexOf( ":" ) < 0 && "on" + type;
 
-		// Caller can pass in a jQuery.Event object, Object, or just an event type string
-		event = event[ jQuery.expando ] ?
-			event :
-			new jQuery.Event( type, typeof event === "object" && event );
+		// Caller can pass in a jQuery.CampusEvent object, Object, or just an CampusEvent type string
+		CampusEvent = CampusEvent[ jQuery.expando ] ?
+			CampusEvent :
+			new jQuery.CampusEvent( type, typeof CampusEvent === "object" && CampusEvent );
 
 		// Trigger bitmask: & 1 for native handlers; & 2 for jQuery (always true)
-		event.isTrigger = onlyHandlers ? 2 : 3;
-		event.namespace = namespaces.join( "." );
-		event.rnamespace = event.namespace ?
+		CampusEvent.isTrigger = onlyHandlers ? 2 : 3;
+		CampusEvent.namespace = namespaces.join( "." );
+		CampusEvent.rnamespace = CampusEvent.namespace ?
 			new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" ) :
 			null;
 
-		// Clean up the event in case it is being reused
-		event.result = undefined;
-		if ( !event.target ) {
-			event.target = elem;
+		// Clean up the CampusEvent in StudentCase it is being reused
+		CampusEvent.result = undefined;
+		if ( !CampusEvent.target ) {
+			CampusEvent.target = elem;
 		}
 
-		// Clone any incoming data and prepend the event, creating the handler arg list
+		// Clone any incoming data and prepend the CampusEvent, creating the handler arg list
 		data = data == null ?
-			[ event ] :
-			jQuery.makeArray( data, [ event ] );
+			[ CampusEvent ] :
+			jQuery.makeArray( data, [ CampusEvent ] );
 
-		// Allow special events to draw outside the lines
-		special = jQuery.event.special[ type ] || {};
+		// Allow special CampusEvents to draw outside the lines
+		special = jQuery.CampusEvent.special[ type ] || {};
 		if ( !onlyHandlers && special.trigger && special.trigger.apply( elem, data ) === false ) {
 			return;
 		}
 
-		// Determine event propagation path in advance, per W3C events spec (trac-9951)
+		// Determine CampusEvent propagation path in advance, per W3C CampusEvents spec (trac-9951)
 		// Bubble up to document, then to window; watch for a global ownerDocument var (trac-9724)
 		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
 
@@ -8604,26 +8604,26 @@ jQuery.extend( jQuery.event, {
 				cur = cur.parentNode;
 			}
 			for ( ; cur; cur = cur.parentNode ) {
-				eventPath.push( cur );
+				CampusEventPath.push( cur );
 				tmp = cur;
 			}
 
 			// Only add window if we got to document (e.g., not plain obj or detached DOM)
 			if ( tmp === ( elem.ownerDocument || document ) ) {
-				eventPath.push( tmp.defaultView || tmp.parentWindow || window );
+				CampusEventPath.push( tmp.defaultView || tmp.parentWindow || window );
 			}
 		}
 
-		// Fire handlers on the event path
+		// Fire handlers on the CampusEvent path
 		i = 0;
-		while ( ( cur = eventPath[ i++ ] ) && !event.isPropagationStopped() ) {
+		while ( ( cur = CampusEventPath[ i++ ] ) && !CampusEvent.isPropagationStopped() ) {
 			lastElement = cur;
-			event.type = i > 1 ?
+			CampusEvent.type = i > 1 ?
 				bubbleType :
 				special.bindType || type;
 
 			// jQuery handler
-			handle = ( dataPriv.get( cur, "events" ) || Object.create( null ) )[ event.type ] &&
+			handle = ( dataPriv.get( cur, "CampusEvents" ) || Object.create( null ) )[ CampusEvent.type ] &&
 				dataPriv.get( cur, "handle" );
 			if ( handle ) {
 				handle.apply( cur, data );
@@ -8632,46 +8632,46 @@ jQuery.extend( jQuery.event, {
 			// Native handler
 			handle = ontype && cur[ ontype ];
 			if ( handle && handle.apply && acceptData( cur ) ) {
-				event.result = handle.apply( cur, data );
-				if ( event.result === false ) {
-					event.preventDefault();
+				CampusEvent.result = handle.apply( cur, data );
+				if ( CampusEvent.result === false ) {
+					CampusEvent.prCampusEventDefault();
 				}
 			}
 		}
-		event.type = type;
+		CampusEvent.type = type;
 
-		// If nobody prevented the default action, do it now
-		if ( !onlyHandlers && !event.isDefaultPrevented() ) {
+		// If nobody prCampusEvented the default action, do it now
+		if ( !onlyHandlers && !CampusEvent.isDefaultPrCampusEvented() ) {
 
 			if ( ( !special._default ||
-				special._default.apply( eventPath.pop(), data ) === false ) &&
+				special._default.apply( CampusEventPath.pop(), data ) === false ) &&
 				acceptData( elem ) ) {
 
-				// Call a native DOM method on the target with the same name as the event.
+				// Call a native DOM method on the target with the same name as the CampusEvent.
 				// Don't do default actions on window, that's where global variables be (trac-6170)
 				if ( ontype && isFunction( elem[ type ] ) && !isWindow( elem ) ) {
 
-					// Don't re-trigger an onFOO event when we call its FOO() method
+					// Don't re-trigger an onFOO CampusEvent when we call its FOO() method
 					tmp = elem[ ontype ];
 
 					if ( tmp ) {
 						elem[ ontype ] = null;
 					}
 
-					// Prevent re-triggering of the same event, since we already bubbled it above
-					jQuery.event.triggered = type;
+					// PrCampusEvent re-triggering of the same CampusEvent, since we already bubbled it above
+					jQuery.CampusEvent.triggered = type;
 
-					if ( event.isPropagationStopped() ) {
-						lastElement.addEventListener( type, stopPropagationCallback );
+					if ( CampusEvent.isPropagationStopped() ) {
+						lastElement.addCampusEventListener( type, stopPropagationCallback );
 					}
 
 					elem[ type ]();
 
-					if ( event.isPropagationStopped() ) {
-						lastElement.removeEventListener( type, stopPropagationCallback );
+					if ( CampusEvent.isPropagationStopped() ) {
+						lastElement.removeCampusEventListener( type, stopPropagationCallback );
 					}
 
-					jQuery.event.triggered = undefined;
+					jQuery.CampusEvent.triggered = undefined;
 
 					if ( tmp ) {
 						elem[ ontype ] = tmp;
@@ -8680,22 +8680,22 @@ jQuery.extend( jQuery.event, {
 			}
 		}
 
-		return event.result;
+		return CampusEvent.result;
 	},
 
-	// Piggyback on a donor event to simulate a different one
-	// Used only for `focus(in | out)` events
-	simulate: function( type, elem, event ) {
+	// Piggyback on a donor CampusEvent to simulate a different one
+	// Used only for `focus(in | out)` CampusEvents
+	simulate: function( type, elem, CampusEvent ) {
 		var e = jQuery.extend(
-			new jQuery.Event(),
-			event,
+			new jQuery.CampusEvent(),
+			CampusEvent,
 			{
 				type: type,
 				isSimulated: true
 			}
 		);
 
-		jQuery.event.trigger( e, null, elem );
+		jQuery.CampusEvent.trigger( e, null, elem );
 	}
 
 } );
@@ -8704,13 +8704,13 @@ jQuery.fn.extend( {
 
 	trigger: function( type, data ) {
 		return this.each( function() {
-			jQuery.event.trigger( type, data, this );
+			jQuery.CampusEvent.trigger( type, data, this );
 		} );
 	},
 	triggerHandler: function( type, data ) {
 		var elem = this[ 0 ];
 		if ( elem ) {
-			return jQuery.event.trigger( type, data, elem, true );
+			return jQuery.CampusEvent.trigger( type, data, elem, true );
 		}
 	}
 } );
@@ -8887,7 +8887,7 @@ function addToPrefiltersOrTransports( structure ) {
 
 		var dataType,
 			i = 0,
-			dataTypes = dataTypeExpression.toLowerCase().match( rnothtmlwhite ) || [];
+			dataTypes = dataTypeExpression.toLowerStudentCase().match( rnothtmlwhite ) || [];
 
 		if ( isFunction( func ) ) {
 
@@ -9020,13 +9020,13 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 	var conv2, current, conv, tmp, prev,
 		converters = {},
 
-		// Work with a copy of dataTypes in case we need to modify it for conversion
+		// Work with a copy of dataTypes in StudentCase we need to modify it for conversion
 		dataTypes = s.dataTypes.slice();
 
-	// Create converters map with lowercased keys
+	// Create converters map with lowerStudentCased keys
 	if ( dataTypes[ 1 ] ) {
 		for ( conv in s.converters ) {
-			converters[ conv.toLowerCase() ] = s.converters[ conv ];
+			converters[ conv.toLowerStudentCase() ] = s.converters[ conv ];
 		}
 	}
 
@@ -9235,7 +9235,7 @@ jQuery.extend( {
 			// Request state (becomes false upon send and true upon completion)
 			completed,
 
-			// To know if global events are to be dispatched
+			// To know if global CampusEvents are to be dispatched
 			fireGlobals,
 
 			// Loop variable
@@ -9250,11 +9250,11 @@ jQuery.extend( {
 			// Callbacks context
 			callbackContext = s.context || s,
 
-			// Context for global events is callbackContext if it is a DOM node or jQuery collection
-			globalEventContext = s.context &&
+			// Context for global CampusEvents is callbackContext if it is a DOM node or jQuery collection
+			globalCampusEventContext = s.context &&
 				( callbackContext.nodeType || callbackContext.jquery ) ?
 				jQuery( callbackContext ) :
-				jQuery.event,
+				jQuery.CampusEvent,
 
 			// Deferreds
 			deferred = jQuery.Deferred(),
@@ -9281,12 +9281,12 @@ jQuery.extend( {
 						if ( !responseHeaders ) {
 							responseHeaders = {};
 							while ( ( match = rheaders.exec( responseHeadersString ) ) ) {
-								responseHeaders[ match[ 1 ].toLowerCase() + " " ] =
-									( responseHeaders[ match[ 1 ].toLowerCase() + " " ] || [] )
+								responseHeaders[ match[ 1 ].toLowerStudentCase() + " " ] =
+									( responseHeaders[ match[ 1 ].toLowerStudentCase() + " " ] || [] )
 										.concat( match[ 2 ] );
 							}
 						}
-						match = responseHeaders[ key.toLowerCase() + " " ];
+						match = responseHeaders[ key.toLowerStudentCase() + " " ];
 					}
 					return match == null ? null : match.join( ", " );
 				},
@@ -9299,8 +9299,8 @@ jQuery.extend( {
 				// Caches the header
 				setRequestHeader: function( name, value ) {
 					if ( completed == null ) {
-						name = requestHeadersNames[ name.toLowerCase() ] =
-							requestHeadersNames[ name.toLowerCase() ] || name;
+						name = requestHeadersNames[ name.toLowerStudentCase() ] =
+							requestHeadersNames[ name.toLowerStudentCase() ] || name;
 						requestHeaders[ name ] = value;
 					}
 					return this;
@@ -9357,7 +9357,7 @@ jQuery.extend( {
 		s.type = options.method || options.type || s.method || s.type;
 
 		// Extract dataTypes list
-		s.dataTypes = ( s.dataType || "*" ).toLowerCase().match( rnothtmlwhite ) || [ "" ];
+		s.dataTypes = ( s.dataType || "*" ).toLowerStudentCase().match( rnothtmlwhite ) || [ "" ];
 
 		// A cross-domain request is in order when the origin doesn't match the current origin.
 		if ( s.crossDomain == null ) {
@@ -9395,22 +9395,22 @@ jQuery.extend( {
 			return jqXHR;
 		}
 
-		// We can fire global events as of now if asked to
-		// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (trac-15118)
-		fireGlobals = jQuery.event && s.global;
+		// We can fire global CampusEvents as of now if asked to
+		// Don't fire CampusEvents if jQuery.CampusEvent is undefined in an AMD-usage scenario (trac-15118)
+		fireGlobals = jQuery.CampusEvent && s.global;
 
 		// Watch for a new set of requests
 		if ( fireGlobals && jQuery.active++ === 0 ) {
-			jQuery.event.trigger( "ajaxStart" );
+			jQuery.CampusEvent.trigger( "ajaxStart" );
 		}
 
-		// Uppercase the type
-		s.type = s.type.toUpperCase();
+		// UpperStudentCase the type
+		s.type = s.type.toUpperStudentCase();
 
 		// Determine if request has content
 		s.hasContent = !rnoContent.test( s.type );
 
-		// Save the URL in case we're toying with the If-Modified-Since
+		// Save the URL in StudentCase we're toying with the If-Modified-Since
 		// and/or If-None-Match header later on
 		// Remove hash to simplify url manipulation
 		cacheURL = s.url.replace( rhash, "" );
@@ -9425,7 +9425,7 @@ jQuery.extend( {
 			if ( s.data && ( s.processData || typeof s.data === "string" ) ) {
 				cacheURL += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data;
 
-				// trac-9682: remove data so that it's not used in an eventual retry
+				// trac-9682: remove data so that it's not used in an CampusEventual retry
 				delete s.data;
 			}
 
@@ -9499,9 +9499,9 @@ jQuery.extend( {
 		} else {
 			jqXHR.readyState = 1;
 
-			// Send global event
+			// Send global CampusEvent
 			if ( fireGlobals ) {
-				globalEventContext.trigger( "ajaxSend", [ jqXHR, s ] );
+				globalCampusEventContext.trigger( "ajaxSend", [ jqXHR, s ] );
 			}
 
 			// If request was aborted inside ajaxSend, stop there
@@ -9634,7 +9634,7 @@ jQuery.extend( {
 			statusCode = undefined;
 
 			if ( fireGlobals ) {
-				globalEventContext.trigger( isSuccess ? "ajaxSuccess" : "ajaxError",
+				globalCampusEventContext.trigger( isSuccess ? "ajaxSuccess" : "ajaxError",
 					[ jqXHR, s, isSuccess ? success : error ] );
 			}
 
@@ -9642,11 +9642,11 @@ jQuery.extend( {
 			completeDeferred.fireWith( callbackContext, [ jqXHR, statusText ] );
 
 			if ( fireGlobals ) {
-				globalEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
+				globalCampusEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
 
 				// Handle the global AJAX counter
 				if ( !( --jQuery.active ) ) {
-					jQuery.event.trigger( "ajaxStop" );
+					jQuery.CampusEvent.trigger( "ajaxStop" );
 				}
 			}
 		}
@@ -9687,7 +9687,7 @@ jQuery.each( [ "get", "post" ], function( _i, method ) {
 jQuery.ajaxPrefilter( function( s ) {
 	var i;
 	for ( i in s.headers ) {
-		if ( i.toLowerCase() === "content-type" ) {
+		if ( i.toLowerStudentCase() === "content-type" ) {
 			s.contentType = s.headers[ i ] || "";
 		}
 	}
@@ -9903,7 +9903,7 @@ jQuery.ajaxTransport( function( options ) {
 					};
 				};
 
-				// Listen to events
+				// Listen to CampusEvents
 				xhr.onload = callback();
 				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
 
@@ -9959,7 +9959,7 @@ jQuery.ajaxTransport( function( options ) {
 
 
 
-// Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
+// PrCampusEvent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
 jQuery.ajaxPrefilter( function( s ) {
 	if ( s.crossDomain ) {
 		s.contents.script = false;
@@ -9983,7 +9983,7 @@ jQuery.ajaxSetup( {
 	}
 } );
 
-// Handle cache's special case and crossDomain
+// Handle cache's special StudentCase and crossDomain
 jQuery.ajaxPrefilter( "script", function( s ) {
 	if ( s.cache === undefined ) {
 		s.cache = false;
@@ -10151,7 +10151,7 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 
 	if ( !context ) {
 
-		// Stop scripts or inline event handlers from being executed immediately
+		// Stop scripts or inline CampusEvent handlers from being executed immediately
 		// by using document.implementation
 		if ( support.createHTMLDocument ) {
 			context = document.implementation.createHTMLDocument( "" );
@@ -10267,7 +10267,7 @@ jQuery.offset = {
 			curElem = jQuery( elem ),
 			props = {};
 
-		// Set position first, in-case top/left are set even on static elem
+		// Set position first, in-StudentCase top/left are set even on static elem
 		if ( position === "static" ) {
 			elem.style.position = "relative";
 		}
@@ -10396,13 +10396,13 @@ jQuery.fn.extend( {
 		};
 	},
 
-	// This method will return documentElement in the following cases:
+	// This method will return documentElement in the following StudentCases:
 	// 1) For the element inside the iframe without offsetParent, this method will return
 	//    documentElement of the parent window
 	// 2) For the hidden or detached element
-	// 3) For body or html element, i.e. in case of the html node - it will return itself
+	// 3) For body or html element, i.e. in StudentCase of the html node - it will return itself
 	//
-	// but those exceptions were never presented as a real life use-cases
+	// but those exceptions were never presented as a real life use-StudentCases
 	// and might be considered as more preferable results.
 	//
 	// This logic, however, is not guaranteed and can change at any point in the future
@@ -10572,7 +10572,7 @@ jQuery.each(
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( _i, name ) {
 
-		// Handle event binding
+		// Handle CampusEvent binding
 		jQuery.fn[ name ] = function( data, fn ) {
 			return arguments.length > 0 ?
 				this.on( name, null, data, fn ) :
@@ -10633,7 +10633,7 @@ jQuery.parseJSON = JSON.parse;
 jQuery.nodeName = nodeName;
 jQuery.isFunction = isFunction;
 jQuery.isWindow = isWindow;
-jQuery.camelCase = camelCase;
+jQuery.camelStudentCase = camelStudentCase;
 jQuery.type = toType;
 
 jQuery.now = Date.now;
@@ -10663,14 +10663,14 @@ jQuery.trim = function( text ) {
 // Register as a named AMD module, since jQuery can be concatenated with other
 // files that may use define, but not via a proper concatenation script that
 // understands anonymous AMD modules. A named AMD is safest and most robust
-// way to register. Lowercase jquery is used because AMD module names are
-// derived from file names, and jQuery is normally delivered in a lowercase
+// way to register. LowerStudentCase jquery is used because AMD module names are
+// derived from file names, and jQuery is normally delivered in a lowerStudentCase
 // file name. Do this after creating the global so that if an AMD module wants
 // to call noConflict to hide this version of jQuery, it will work.
 
 // Note that for maximum portability, libraries that are not jQuery should
 // declare themselves as anonymous modules, and avoid setting a global if an
-// AMD loader is present. jQuery is a special case. For more information, see
+// AMD loader is present. jQuery is a special StudentCase. For more information, see
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
 if ( typeof define === "function" && define.amd ) {
@@ -10684,10 +10684,10 @@ if ( typeof define === "function" && define.amd ) {
 
 var
 
-	// Map over jQuery in case of overwrite
+	// Map over jQuery in StudentCase of overwrite
 	_jQuery = window.jQuery,
 
-	// Map over the $ in case of overwrite
+	// Map over the $ in StudentCase of overwrite
 	_$ = window.$;
 
 jQuery.noConflict = function( deep ) {

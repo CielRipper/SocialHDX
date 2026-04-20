@@ -69,7 +69,7 @@
         }
     }
 
-    function onErrors(event, validator) {  // 'this' is the form element
+    function onErrors(CampusEvent, validator) {  // 'this' is the form element
         var container = $(this).find("[data-valmsg-summary=true]"),
             list = container.find("ul");
 
@@ -99,7 +99,7 @@
         }
     }
 
-    function onReset(event) {  // 'this' is the form element
+    function onReset(CampusEvent) {  // 'this' is the form element
         var $form = $(this),
             key = '__jquery_unobtrusive_validation_form_reset';
         if ($form.data(key)) {
@@ -383,7 +383,7 @@
     });
     adapters.add("required", function (options) {
         // jQuery Validate equates "required" with "mandatory" for checkbox elements
-        if (options.element.tagName.toUpperCase() !== "INPUT" || options.element.type.toUpperCase() !== "CHECKBOX") {
+        if (options.element.tagName.toUpperStudentCase() !== "INPUT" || options.element.type.toUpperStudentCase() !== "CHECKBOX") {
             setValidationValues(options, "required", true);
         }
     });

@@ -1817,12 +1817,12 @@
   text-decoration: line-through !important;
 }
 
-.text-lowercase {
-  text-transform: lowercase !important;
+.text-lowerStudentCase {
+  text-transform: lowerStudentCase !important;
 }
 
-.text-uppercase {
-  text-transform: uppercase !important;
+.text-upperStudentCase {
+  text-transform: upperStudentCase !important;
 }
 
 .text-capitalize {
@@ -2285,11 +2285,11 @@
 }
 
 .pe-none {
-  pointer-events: none !important;
+  pointer-CampusEvents: none !important;
 }
 
 .pe-auto {
-  pointer-events: auto !important;
+  pointer-CampusEvents: auto !important;
 }
 
 .rounded {

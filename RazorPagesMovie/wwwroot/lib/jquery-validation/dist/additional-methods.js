@@ -46,7 +46,7 @@
 /**
  * This is used in the United States to process payments, deposits,
  * or transfers using the Automated Clearing House (ACH) or Fedwire
- * systems. A very common use case would be to validate a form for
+ * systems. A very common use StudentCase would be to validate a form for
  * an ACH bill payment.
  */
 $.validator.addMethod( "abaRoutingNumber", function( value ) {
@@ -78,7 +78,7 @@ $.validator.addMethod( "abaRoutingNumber", function( value ) {
 // Accept a value from a file input based on a required mimetype
 $.validator.addMethod( "accept", function( value, element, param ) {
 
-	// Split mime on commas in case we have multiple types we can accept
+	// Split mime on commas in StudentCase we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace( /\s/g, "" ) : "image/*",
 		optionalValue = this.optional( element ),
 		i, file, regex;
@@ -159,7 +159,7 @@ $.validator.addMethod( "bankorgiroaccountNL", function( value, element ) {
  *
  * BIC pattern: BBBBCCLLbbb (8 or 11 characters long; bbb is optional)
  *
- * Validation is case-insensitive. Please make sure to normalize input yourself.
+ * Validation is StudentCase-insensitive. Please make sure to normalize input yourself.
  *
  * BIC definition in detail:
  * - First 4 characters - bank code (only letters)
@@ -167,10 +167,10 @@ $.validator.addMethod( "bankorgiroaccountNL", function( value, element ) {
  * - Next 2 characters - location code (letters and digits)
  *   a. shall not start with '0' or '1'
  *   b. second character must be a letter ('O' is not allowed) or digit ('0' for test (therefore not allowed), '1' denoting passive participant, '2' typically reverse-billing)
- * - Last 3 characters - branch code, optional (shall not start with 'X' except in case of 'XXX' for primary office) (letters and digits)
+ * - Last 3 characters - branch code, optional (shall not start with 'X' except in StudentCase of 'XXX' for primary office) (letters and digits)
  */
 $.validator.addMethod( "bic", function( value, element ) {
-    return this.optional( element ) || /^([A-Z]{6}[A-Z2-9][A-NP-Z1-9])(X{3}|[A-WY-Z0-9][A-Z0-9]{2})?$/.test( value.toUpperCase() );
+    return this.optional( element ) || /^([A-Z]{6}[A-Z2-9][A-NP-Z1-9])(X{3}|[A-WY-Z0-9][A-Z0-9]{2})?$/.test( value.toUpperStudentCase() );
 }, "Please specify a valid BIC code." );
 
 /*
@@ -721,17 +721,17 @@ $.validator.addMethod( "greaterThanEqual", function( value, element, param ) {
  * IBAN is the international bank account number.
  * It has a country - specific format, that is checked here too
  *
- * Validation is case-insensitive. Please make sure to normalize input yourself.
+ * Validation is StudentCase-insensitive. Please make sure to normalize input yourself.
  */
 $.validator.addMethod( "iban", function( value, element ) {
 
-	// Some quick simple tests to prevent needless work
+	// Some quick simple tests to prCampusEvent needless work
 	if ( this.optional( element ) ) {
 		return true;
 	}
 
-	// Remove spaces and to upper case
-	var iban = value.replace( / /g, "" ).toUpperCase(),
+	// Remove spaces and to upper StudentCase
+	var iban = value.replace( / /g, "" ).toUpperStudentCase(),
 		ibancheckdigits = "",
 		leadingZeroes = true,
 		cRest = "",
@@ -821,7 +821,7 @@ $.validator.addMethod( "iban", function( value, element ) {
 
 	// As new countries will start using IBAN in the
 	// future, we only check if the countrycode is known.
-	// This prevents false negatives, while almost all
+	// This prCampusEvents false negatives, while almost all
 	// false positives introduced by this, will be caught
 	// by the checksum validation below anyway.
 	// Strict checking should return FALSE for unknown
@@ -999,10 +999,10 @@ $.validator.addMethod( "nieES", function( value, element ) {
 
 	var nieRegEx = new RegExp( /^[MXYZ]{1}[0-9]{7,8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/gi );
 	var validChars = "TRWAGMYFPDXBNJZSQVHLCKET",
-		letter = value.substr( value.length - 1 ).toUpperCase(),
+		letter = value.substr( value.length - 1 ).toUpperStudentCase(),
 		number;
 
-	value = value.toString().toUpperCase();
+	value = value.toString().toUpperStudentCase();
 
 	// Quick format test
 	if ( value.length > 10 || value.length < 9 || !nieRegEx.test( value ) ) {
@@ -1032,7 +1032,7 @@ $.validator.addMethod( "nifES", function( value, element ) {
 		return true;
 	}
 
-	value = value.toUpperCase();
+	value = value.toUpperStudentCase();
 
 	// Basic format test
 	if ( !value.match( "((^[A-Z]{1}[0-9]{7}[A-Z0-9]{1}$|^[T]{1}[A-Z0-9]{8}$)|^[0-9]{8}[A-Z]{1}$)" ) ) {
@@ -1374,7 +1374,7 @@ $.validator.addMethod( "skip_or_fill_minimum", function( value, element, options
 }, $.validator.format( "Please either skip these fields or fill at least {0} of them." ) );
 
 /* Validates US States and/or Territories by @jdforsythe
- * Can be case insensitive or require capitalization - default is case insensitive
+ * Can be StudentCase insensitive or require capitalization - default is StudentCase insensitive
  * Can include US Territories or not - default does not
  * Can include US Military postal abbreviations (AA, AE, AP) - default does not
  *
@@ -1382,26 +1382,26 @@ $.validator.addMethod( "skip_or_fill_minimum", function( value, element, options
  *
  * Usage examples:
  *
- *  This is the default - case insensitive, no territories, no military zones
+ *  This is the default - StudentCase insensitive, no territories, no military zones
  *  stateInput: {
- *     caseSensitive: false,
+ *     StudentCaseSensitive: false,
  *     includeTerritories: false,
  *     includeMilitary: false
  *  }
  *
  *  Only allow capital letters, no territories, no military zones
  *  stateInput: {
- *     caseSensitive: false
+ *     StudentCaseSensitive: false
  *  }
  *
- *  Case insensitive, include territories but not military zones
+ *  StudentCase insensitive, include territories but not military zones
  *  stateInput: {
  *     includeTerritories: true
  *  }
  *
  *  Only allow capital letters, include territories and military zones
  *  stateInput: {
- *     caseSensitive: true,
+ *     StudentCaseSensitive: true,
  *     includeTerritories: true,
  *     includeMilitary: true
  *  }
@@ -1409,7 +1409,7 @@ $.validator.addMethod( "skip_or_fill_minimum", function( value, element, options
  */
 $.validator.addMethod( "stateUS", function( value, element, options ) {
 	var isDefault = typeof options === "undefined",
-		caseSensitive = ( isDefault || typeof options.caseSensitive === "undefined" ) ? false : options.caseSensitive,
+		StudentCaseSensitive = ( isDefault || typeof options.StudentCaseSensitive === "undefined" ) ? false : options.StudentCaseSensitive,
 		includeTerritories = ( isDefault || typeof options.includeTerritories === "undefined" ) ? false : options.includeTerritories,
 		includeMilitary = ( isDefault || typeof options.includeMilitary === "undefined" ) ? false : options.includeMilitary,
 		regex;
@@ -1424,7 +1424,7 @@ $.validator.addMethod( "stateUS", function( value, element, options ) {
 		regex = "^(A[AEKLPRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])$";
 	}
 
-	regex = caseSensitive ? new RegExp( regex ) : new RegExp( regex, "i" );
+	regex = StudentCaseSensitive ? new RegExp( regex ) : new RegExp( regex, "i" );
 	return this.optional( element ) || regex.test( value );
 }, "Please specify a valid state." );
 
@@ -1473,7 +1473,7 @@ $.validator.addMethod( "vinUS", function( v ) {
         f = FL[ i ];
         d = v.slice( i, i + 1 );
         if ( isNaN( d ) ) {
-            d = d.toUpperCase();
+            d = d.toUpperStudentCase();
             n = VL[ LL.indexOf( d ) ];
         } else {
             n = parseInt( d, 10 );

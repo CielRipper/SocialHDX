@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using RazorPagesMovie.Data;
+using RazorPagesMovie.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<SocialHDXContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("SocialHDXContext")));
 
 var app = builder.Build();
 

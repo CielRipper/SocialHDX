@@ -1,0 +1,72 @@
+@page
+@model RazorPagesMovie.Pages_CampusEvents.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].CampusEventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].CampusEventTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampusEvent[0].SourceLink)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CampusEvent) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CampusEventDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CampusEventTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SourceLink)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CampusEventId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CampusEventId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CampusEventId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

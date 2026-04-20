@@ -1,0 +1,65 @@
+@page
+@model RazorPagesMovie.Pages_CampusEvents.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>CampusEvent</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="CampusEvent.Title" class="control-label"></label>
+                <input asp-for="CampusEvent.Title" class="form-control" aria-required="true"/>
+                <span asp-validation-for="CampusEvent.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusEvent.Description" class="control-label"></label>
+                <input asp-for="CampusEvent.Description" class="form-control" />
+                <span asp-validation-for="CampusEvent.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusEvent.CampusEventDate" class="control-label"></label>
+                <input asp-for="CampusEvent.CampusEventDate" class="form-control" />
+                <span asp-validation-for="CampusEvent.CampusEventDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusEvent.CampusEventTime" class="control-label"></label>
+                <input asp-for="CampusEvent.CampusEventTime" class="form-control" />
+                <span asp-validation-for="CampusEvent.CampusEventTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusEvent.Location" class="control-label"></label>
+                <input asp-for="CampusEvent.Location" class="form-control" />
+                <span asp-validation-for="CampusEvent.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusEvent.Category" class="control-label"></label>
+                <input asp-for="CampusEvent.Category" class="form-control" />
+                <span asp-validation-for="CampusEvent.Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CampusEvent.SourceLink" class="control-label"></label>
+                <input asp-for="CampusEvent.SourceLink" class="form-control" />
+                <span asp-validation-for="CampusEvent.SourceLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

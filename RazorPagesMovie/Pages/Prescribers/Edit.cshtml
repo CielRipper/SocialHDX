@@ -1,0 +1,58 @@
+@page
+@model RazorPagesMovie.Pages_Prescribers.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Prescriber</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Prescriber.PrescriberId" />
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Prescriber.FirstName" class="control-label"></label>
+                <input asp-for="Prescriber.FirstName" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Prescriber.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Prescriber.LastName" class="control-label"></label>
+                <input asp-for="Prescriber.LastName" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Prescriber.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Prescriber.Email" class="control-label"></label>
+                <input asp-for="Prescriber.Email" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Prescriber.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prescriber.Department" class="control-label"></label>
+                <input asp-for="Prescriber.Department" class="form-control" />
+                <span asp-validation-for="Prescriber.Department" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Prescriber.TrainedStatus" /> @Html.DisplayNameFor(model => model.Prescriber.TrainedStatus)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
