@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages_CampusEvents
+namespace RazorPagesMovie.Pages.CampusEvents
 {
     public class DetailsModel : PageModel
     {

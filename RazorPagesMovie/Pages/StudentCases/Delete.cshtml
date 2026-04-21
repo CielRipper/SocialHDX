@@ -1,5 +1,5 @@
 @page
-@model RazorPagesMovie.Pages_StudentCases.DeleteModel
+@model RazorPagesMovie.Pages.StudentCases.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -19,16 +19,16 @@
             @Html.DisplayFor(model => model.StudentCase.OpenedDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StudentCase.StudentCaseReason)
+            @Html.DisplayNameFor(model => model.StudentCase.CaseReason)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StudentCase.StudentCaseReason)
+            @Html.DisplayFor(model => model.StudentCase.CaseReason)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StudentCase.StudentCaseStatus)
+            @Html.DisplayNameFor(model => model.StudentCase.CaseStatus)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.StudentCase.StudentCaseStatus)
+            @Html.DisplayFor(model => model.StudentCase.CaseStatus)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StudentCase.Student)

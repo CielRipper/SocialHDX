@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages.CampusEvents
+namespace RazorPagesMovie.Pages.Prescriptions
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace RazorPagesMovie.Pages.CampusEvents
         }
 
         [BindProperty]
-        public CampusEvent CampusEvent { get; set; } = default!;
+        public Prescription Prescription { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,11 +29,11 @@ namespace RazorPagesMovie.Pages.CampusEvents
                 return NotFound();
             }
 
-            var campusevent = await _context.CampusEvent.FirstOrDefaultAsync(m => m.CampusEventId == id);
+            var prescription = await _context.Prescription.FirstOrDefaultAsync(m => m.PrescriptionId == id);
 
-            if (campusevent is not null)
+            if (prescription is not null)
             {
-                CampusEvent = campusevent;
+                Prescription = prescription;
 
                 return Page();
             }
@@ -48,11 +48,11 @@ namespace RazorPagesMovie.Pages.CampusEvents
                 return NotFound();
             }
 
-            var campusevent = await _context.CampusEvent.FindAsync(id);
-            if (campusevent != null)
+            var prescription = await _context.Prescription.FindAsync(id);
+            if (prescription != null)
             {
-                CampusEvent = campusevent;
-                _context.CampusEvent.Remove(CampusEvent);
+                Prescription = prescription;
+                _context.Prescription.Remove(Prescription);
                 await _context.SaveChangesAsync();
             }
 

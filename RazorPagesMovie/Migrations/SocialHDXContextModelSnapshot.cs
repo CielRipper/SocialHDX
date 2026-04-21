@@ -32,10 +32,10 @@ namespace RazorPagesMovie.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CampusEventDate")
+                    b.Property<DateTime>("EventDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CampusEventTime")
+                    b.Property<DateTime>("EventTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Location")
@@ -56,34 +56,6 @@ namespace RazorPagesMovie.Migrations
                     b.HasKey("CampusEventId");
 
                     b.ToTable("CampusEvent");
-                });
-
-            modelBuilder.Entity("RazorPagesMovie.Models.StudentCaseNote", b =>
-                {
-                    b.Property<int>("StudentCaseNoteId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NoteText")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("PrescriberId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StudentCaseId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("StudentCaseNoteId");
-
-                    b.HasIndex("PrescriberId");
-
-                    b.HasIndex("StudentCaseId");
-
-                    b.ToTable("StudentCaseNote");
                 });
 
             modelBuilder.Entity("RazorPagesMovie.Models.Prescriber", b =>
@@ -206,11 +178,11 @@ namespace RazorPagesMovie.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("StudentCaseReason")
+                    b.Property<string>("CaseReason")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("StudentCaseStatus")
+                    b.Property<string>("CaseStatus")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
@@ -235,21 +207,30 @@ namespace RazorPagesMovie.Migrations
 
             modelBuilder.Entity("RazorPagesMovie.Models.StudentCaseNote", b =>
                 {
-                    b.HasOne("RazorPagesMovie.Models.Prescriber", "Prescriber")
-                        .WithMany()
-                        .HasForeignKey("PrescriberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("StudentCaseNoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.HasOne("RazorPagesMovie.Models.StudentCase", "StudentCase")
-                        .WithMany("StudentCaseNotes")
-                        .HasForeignKey("StudentCaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
 
-                    b.Navigation("Prescriber");
+                    b.Property<string>("NoteText")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Navigation("StudentCase");
+                    b.Property<int>("PrescriberId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StudentCaseId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("StudentCaseNoteId");
+
+                    b.HasIndex("PrescriberId");
+
+                    b.HasIndex("StudentCaseId");
+
+                    b.ToTable("StudentCaseNote");
                 });
 
             modelBuilder.Entity("RazorPagesMovie.Models.Prescription", b =>
@@ -296,6 +277,25 @@ namespace RazorPagesMovie.Migrations
                     b.Navigation("Prescriber");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("RazorPagesMovie.Models.StudentCaseNote", b =>
+                {
+                    b.HasOne("RazorPagesMovie.Models.Prescriber", "Prescriber")
+                        .WithMany()
+                        .HasForeignKey("PrescriberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RazorPagesMovie.Models.StudentCase", "StudentCase")
+                        .WithMany("StudentCaseNotes")
+                        .HasForeignKey("StudentCaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Prescriber");
+
+                    b.Navigation("StudentCase");
                 });
 
             modelBuilder.Entity("RazorPagesMovie.Models.StudentCase", b =>

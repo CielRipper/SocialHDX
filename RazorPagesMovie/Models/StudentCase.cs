@@ -15,10 +15,10 @@ public class StudentCase
     [DataType(DataType.DateTime)]
     public DateTime OpenedDate { get; set; }
 
-    public string StudentCaseReason { get; set; } = string.Empty;
+    public string CaseReason { get; set; } = string.Empty;
 
     [StringLength(20)]
-    public string StudentCaseStatus { get; set; } = string.Empty;
+    public string CaseStatus { get; set; } = string.Empty;
 
     public Student? Student { get; set; }
     public Prescriber? Prescriber { get; set; }

@@ -1,0 +1,79 @@
+@page
+@model RazorPagesMovie.Pages.Prescriptions.CreateModel
+
+@{
+    ViewData["Title"] = "Create Prescription";
+}
+
+<h1>Create Prescription</h1>
+
+<h4>Prescription</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Prescription.StudentId" class="control-label"></label>
+                <select asp-for="Prescription.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prescription.PrescriberId" class="control-label"></label>
+                <select asp-for="Prescription.PrescriberId" class="form-control" asp-items="ViewBag.PrescriberId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prescription.CampusEventId" class="control-label"></label>
+                <select asp-for="Prescription.CampusEventId" class="form-control" asp-items="ViewBag.CampusEventId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prescription.DateAssigned" class="control-label"></label>
+                <input asp-for="Prescription.DateAssigned" class="form-control" />
+                <span asp-validation-for="Prescription.DateAssigned" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prescription.Reason" class="control-label"></label>
+                <input asp-for="Prescription.Reason" class="form-control" />
+                <span asp-validation-for="Prescription.Reason" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prescription.Status" class="control-label"></label>
+                <input asp-for="Prescription.Status" class="form-control" />
+                <span asp-validation-for="Prescription.Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Prescription.AttendanceConfirmed" />
+                    @Html.DisplayNameFor(model => model.Prescription.AttendanceConfirmed)
+                </label>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Prescription.ReminderSent" />
+                    @Html.DisplayNameFor(model => model.Prescription.ReminderSent)
+                </label>
+            </div>
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-2">
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

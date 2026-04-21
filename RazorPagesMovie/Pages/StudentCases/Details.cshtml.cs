@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages_StudentCases
+namespace RazorPagesMovie.Pages.StudentCases
 {
     public class DetailsModel : PageModel
     {

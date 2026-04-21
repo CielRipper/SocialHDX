@@ -13,10 +13,10 @@ public class CampusEvent
     public string Description { get; set; } = string.Empty;
 
     [DataType(DataType.Date)]
-    public DateTime CampusEventDate { get; set; }
+    public DateTime EventDate { get; set; }
 
     [DataType(DataType.Time)]
-    public DateTime CampusEventTime { get; set; }
+    public DateTime EventTime { get; set; }
 
     [StringLength(150)]
     public string Location { get; set; } = string.Empty;

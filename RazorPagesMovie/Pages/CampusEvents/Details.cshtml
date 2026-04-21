@@ -1,5 +1,5 @@
 @page
-@model RazorPagesMovie.Pages_CampusEvents.DetailsModel
+@model RazorPagesMovie.Pages.CampusEvents.DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -24,16 +24,16 @@
             @Html.DisplayFor(model => model.CampusEvent.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CampusEvent.CampusEventDate)
+            @Html.DisplayNameFor(model => model.CampusEvent.EventDate)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CampusEvent.CampusEventDate)
+            @Html.DisplayFor(model => model.CampusEvent.EventDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CampusEvent.CampusEventTime)
+            @Html.DisplayNameFor(model => model.CampusEvent.EventTime)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CampusEvent.CampusEventTime)
+            @Html.DisplayFor(model => model.CampusEvent.EventTime)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CampusEvent.Location)

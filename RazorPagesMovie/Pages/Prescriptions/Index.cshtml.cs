@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages.StudentCaseNotes
+namespace RazorPagesMovie.Pages.Prescriptions
 {
     public class IndexModel : PageModel
     {
@@ -14,13 +14,14 @@ namespace RazorPagesMovie.Pages.StudentCaseNotes
             _context = context;
         }
 
-        public IList<StudentCaseNote> StudentCaseNote { get; set; } = default!;
+        public IList<Prescription> Prescription { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            StudentCaseNote = await _context.StudentCaseNote
-                .Include(n => n.StudentCase)
-                .Include(n => n.Prescriber)
+            Prescription = await _context.Prescription
+                .Include(p => p.Student)
+                .Include(p => p.Prescriber)
+                .Include(p => p.CampusEvent)
                 .ToListAsync();
         }
     }

@@ -1,54 +1,35 @@
 @page
-@model RazorPagesMovie.Pages_StudentCases.IndexModel
+@model RazorPagesMovie.Pages.StudentCases.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Student Cases";
 }
 
-<h1>Index</h1>
+<h1>Student Cases</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCase[0].OpenedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCase[0].StudentCaseReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCase[0].StudentCaseStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCase[0].Student)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentCase[0].Prescriber)
-            </th>
+            <th>Student</th>
+            <th>Prescriber</th>
+            <th>Opened Date</th>
+            <th>Case Reason</th>
+            <th>Case Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.StudentCase) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentCaseReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentCaseStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prescriber.Email)
-            </td>
+            <td>@item.Student?.FirstName @item.Student?.LastName</td>
+            <td>@item.Prescriber?.FirstName @item.Prescriber?.LastName</td>
+            <td>@item.OpenedDate</td>
+            <td>@item.CaseReason</td>
+            <td>@item.CaseStatus</td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.StudentCaseId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.StudentCaseId">Details</a> |

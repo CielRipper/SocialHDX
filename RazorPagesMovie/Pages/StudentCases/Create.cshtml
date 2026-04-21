@@ -1,54 +1,62 @@
 @page
-@model RazorPagesMovie.Pages_StudentCases.CreateModel
+@model RazorPagesMovie.Pages.StudentCases.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-        
-        <h1>Create</h1>
-        
-    <h4>StudentCase</h4>
-    <hr />
-    <div class="row">
+@{
+    ViewData["Title"] = "Create Student Case";
+}
+
+<h1>Create Student Case</h1>
+
+<h4>Student Case</h4>
+<hr />
+<div class="row">
     <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <span class="text-danger">*</span>
                 <label asp-for="StudentCase.StudentId" class="control-label"></label>
-                <select asp-for="StudentCase.StudentId" class ="form-control" asp-items="ViewBag.StudentId" aria-required="true"></select>
+                <select asp-for="StudentCase.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+                <span asp-validation-for="StudentCase.StudentId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <span class="text-danger">*</span>
                 <label asp-for="StudentCase.PrescriberId" class="control-label"></label>
-                <select asp-for="StudentCase.PrescriberId" class ="form-control" asp-items="ViewBag.PrescriberId" aria-required="true"></select>
+                <select asp-for="StudentCase.PrescriberId" class="form-control" asp-items="ViewBag.PrescriberId"></select>
+                <span asp-validation-for="StudentCase.PrescriberId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="StudentCase.OpenedDate" class="control-label"></label>
                 <input asp-for="StudentCase.OpenedDate" class="form-control" />
                 <span asp-validation-for="StudentCase.OpenedDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="StudentCase.StudentCaseReason" class="control-label"></label>
-                <input asp-for="StudentCase.StudentCaseReason" class="form-control" />
-                <span asp-validation-for="StudentCase.StudentCaseReason" class="text-danger"></span>
+                <label asp-for="StudentCase.CaseReason" class="control-label"></label>
+                <input asp-for="StudentCase.CaseReason" class="form-control" />
+                <span asp-validation-for="StudentCase.CaseReason" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="StudentCase.StudentCaseStatus" class="control-label"></label>
-                <input asp-for="StudentCase.StudentCaseStatus" class="form-control" />
-                <span asp-validation-for="StudentCase.StudentCaseStatus" class="text-danger"></span>
+                <label asp-for="StudentCase.CaseStatus" class="control-label"></label>
+                <input asp-for="StudentCase.CaseStatus" class="form-control" />
+                <span asp-validation-for="StudentCase.CaseStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <div class="form-group mt-2">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div class="mt-2">
     <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

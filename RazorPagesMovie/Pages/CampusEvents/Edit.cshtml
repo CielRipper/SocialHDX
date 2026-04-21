@@ -1,5 +1,5 @@
 @page
-@model RazorPagesMovie.Pages_CampusEvents.EditModel
+@model RazorPagesMovie.Pages.CampusEvents.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -26,14 +26,14 @@
                 <span asp-validation-for="CampusEvent.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CampusEvent.CampusEventDate" class="control-label"></label>
-                <input asp-for="CampusEvent.CampusEventDate" class="form-control" />
-                <span asp-validation-for="CampusEvent.CampusEventDate" class="text-danger"></span>
+                <label asp-for="CampusEvent.EventDate" class="control-label"></label>
+                <input asp-for="CampusEvent.EventDate" class="form-control" />
+                <span asp-validation-for="CampusEvent.EventDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CampusEvent.CampusEventTime" class="control-label"></label>
-                <input asp-for="CampusEvent.CampusEventTime" class="form-control" />
-                <span asp-validation-for="CampusEvent.CampusEventTime" class="text-danger"></span>
+                <label asp-for="CampusEvent.EventTime" class="control-label"></label>
+                <input asp-for="CampusEvent.EventTime" class="form-control" />
+                <span asp-validation-for="CampusEvent.EventTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CampusEvent.Location" class="control-label"></label>

@@ -19,8 +19,8 @@ namespace RazorPagesMovie.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    CampusEventDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CampusEventTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EventDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EventTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Location = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     Category = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     SourceLink = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false)
@@ -65,35 +65,6 @@ namespace RazorPagesMovie.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentCase",
-                columns: table => new
-                {
-                    StudentCaseId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    StudentId = table.Column<int>(type: "INTEGER", nullable: false),
-                    PrescriberId = table.Column<int>(type: "INTEGER", nullable: false),
-                    OpenedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    StudentCaseReason = table.Column<string>(type: "TEXT", nullable: false),
-                    StudentCaseStatus = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentCase", x => x.StudentCaseId);
-                    table.ForeignKey(
-                        name: "FK_StudentCase_Prescriber_PrescriberId",
-                        column: x => x.PrescriberId,
-                        principalTable: "Prescriber",
-                        principalColumn: "PrescriberId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StudentCase_Student_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Student",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Prescription",
                 columns: table => new
                 {
@@ -132,6 +103,35 @@ namespace RazorPagesMovie.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StudentCase",
+                columns: table => new
+                {
+                    StudentCaseId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StudentId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PrescriberId = table.Column<int>(type: "INTEGER", nullable: false),
+                    OpenedDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CaseReason = table.Column<string>(type: "TEXT", nullable: false),
+                    CaseStatus = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StudentCase", x => x.StudentCaseId);
+                    table.ForeignKey(
+                        name: "FK_StudentCase_Prescriber_PrescriberId",
+                        column: x => x.PrescriberId,
+                        principalTable: "Prescriber",
+                        principalColumn: "PrescriberId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentCase_Student_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "StudentId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StudentCaseNote",
                 columns: table => new
                 {
@@ -146,38 +146,18 @@ namespace RazorPagesMovie.Migrations
                 {
                     table.PrimaryKey("PK_StudentCaseNote", x => x.StudentCaseNoteId);
                     table.ForeignKey(
-                        name: "FK_StudentCaseNote_StudentCase_StudentCaseId",
-                        column: x => x.StudentCaseId,
-                        principalTable: "StudentCase",
-                        principalColumn: "StudentCaseId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_StudentCaseNote_Prescriber_PrescriberId",
                         column: x => x.PrescriberId,
                         principalTable: "Prescriber",
                         principalColumn: "PrescriberId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StudentCaseNote_StudentCase_StudentCaseId",
+                        column: x => x.StudentCaseId,
+                        principalTable: "StudentCase",
+                        principalColumn: "StudentCaseId",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCase_PrescriberId",
-                table: "StudentCase",
-                column: "PrescriberId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCase_StudentId",
-                table: "StudentCase",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCaseNote_StudentCaseId",
-                table: "StudentCaseNote",
-                column: "StudentCaseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCaseNote_PrescriberId",
-                table: "StudentCaseNote",
-                column: "PrescriberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescription_CampusEventId",
@@ -193,22 +173,42 @@ namespace RazorPagesMovie.Migrations
                 name: "IX_Prescription_StudentId",
                 table: "Prescription",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCase_PrescriberId",
+                table: "StudentCase",
+                column: "PrescriberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCase_StudentId",
+                table: "StudentCase",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCaseNote_PrescriberId",
+                table: "StudentCaseNote",
+                column: "PrescriberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentCaseNote_StudentCaseId",
+                table: "StudentCaseNote",
+                column: "StudentCaseId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StudentCaseNote");
-
-            migrationBuilder.DropTable(
                 name: "Prescription");
 
             migrationBuilder.DropTable(
-                name: "StudentCase");
+                name: "StudentCaseNote");
 
             migrationBuilder.DropTable(
                 name: "CampusEvent");
+
+            migrationBuilder.DropTable(
+                name: "StudentCase");
 
             migrationBuilder.DropTable(
                 name: "Prescriber");

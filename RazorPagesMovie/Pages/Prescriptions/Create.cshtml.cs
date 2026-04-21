@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages.StudentCaseNotes
+namespace RazorPagesMovie.Pages.Prescriptions
 {
     public class CreateModel : PageModel
     {
@@ -15,26 +15,28 @@ namespace RazorPagesMovie.Pages.StudentCaseNotes
             _context = context;
         }
 
-        [BindProperty]
-        public StudentCaseNote StudentCaseNote { get; set; } = default!;
-
         public IActionResult OnGet()
         {
-            ViewData["StudentCaseId"] = new SelectList(_context.StudentCase, "StudentCaseId", "CaseReason");
+            ViewData["StudentId"] = new SelectList(_context.Student, "StudentId", "FirstName");
             ViewData["PrescriberId"] = new SelectList(_context.Prescriber, "PrescriberId", "FirstName");
+            ViewData["CampusEventId"] = new SelectList(_context.CampusEvent, "CampusEventId", "Title");
             return Page();
         }
+
+        [BindProperty]
+        public Prescription Prescription { get; set; } = default!;
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                ViewData["StudentCaseId"] = new SelectList(_context.StudentCase, "StudentCaseId", "CaseReason");
+                ViewData["StudentId"] = new SelectList(_context.Student, "StudentId", "FirstName");
                 ViewData["PrescriberId"] = new SelectList(_context.Prescriber, "PrescriberId", "FirstName");
+                ViewData["CampusEventId"] = new SelectList(_context.CampusEvent, "CampusEventId", "Title");
                 return Page();
             }
 
-            _context.StudentCaseNote.Add(StudentCaseNote);
+            _context.Prescription.Add(Prescription);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

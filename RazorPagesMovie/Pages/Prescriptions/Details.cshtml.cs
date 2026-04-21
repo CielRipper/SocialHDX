@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages.Prescribers
+namespace RazorPagesMovie.Pages.Prescriptions
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace RazorPagesMovie.Pages.Prescribers
             _context = context;
         }
 
-        public Prescriber Prescriber { get; set; } = default!;
+        public Prescription Prescription { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,11 +28,11 @@ namespace RazorPagesMovie.Pages.Prescribers
                 return NotFound();
             }
 
-            var prescriber = await _context.Prescriber.FirstOrDefaultAsync(m => m.PrescriberId == id);
+            var prescription = await _context.Prescription.FirstOrDefaultAsync(m => m.PrescriptionId == id);
 
-            if (prescriber is not null)
+            if (prescription is not null)
             {
-                Prescriber = prescriber;
+                Prescription = prescription;
 
                 return Page();
             }

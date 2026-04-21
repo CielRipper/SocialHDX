@@ -1,46 +1,56 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages_StudentCases
+namespace RazorPagesMovie.Pages.StudentCases
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorPagesMovie.Data.SocialHDXContext _context;
+        private readonly SocialHDXContext _context;
 
-        public CreateModel(RazorPagesMovie.Data.SocialHDXContext context)
+        public CreateModel(SocialHDXContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
+        public StudentCase StudentCase { get; set; } = new StudentCase();
+
         public IActionResult OnGet()
         {
-        ViewData["PrescriberId"] = new SelectList(_context.Prescriber, "PrescriberId", "Email");
-        ViewData["StudentId"] = new SelectList(_context.Student, "StudentId", "Email");
+            LoadSelections();
+            StudentCase.OpenedDate = DateTime.Now;
             return Page();
         }
 
-        [BindProperty]
-        public StudentCase StudentCase { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                LoadSelections();
                 return Page();
             }
 
             _context.StudentCase.Add(StudentCase);
             await _context.SaveChangesAsync();
-
             return RedirectToPage("./Index");
+        }
+
+        private void LoadSelections()
+        {
+            ViewData["StudentId"] = new SelectList(
+                _context.Student,
+                "StudentId",
+                "FirstName"
+            );
+
+            ViewData["PrescriberId"] = new SelectList(
+                _context.Prescriber,
+                "PrescriberId",
+                "FirstName"
+            );
         }
     }
 }

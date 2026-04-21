@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages.CampusEvents
+namespace RazorPagesMovie.Pages.Prescriptions
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace RazorPagesMovie.Pages.CampusEvents
         }
 
         [BindProperty]
-        public CampusEvent CampusEvent { get; set; } = default!;
+        public Prescription Prescription { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,12 +30,15 @@ namespace RazorPagesMovie.Pages.CampusEvents
                 return NotFound();
             }
 
-            var campusevent =  await _context.CampusEvent.FirstOrDefaultAsync(m => m.CampusEventId == id);
-            if (campusevent == null)
+            var prescription =  await _context.Prescription.FirstOrDefaultAsync(m => m.PrescriptionId == id);
+            if (prescription == null)
             {
                 return NotFound();
             }
-            CampusEvent = campusevent;
+            Prescription = prescription;
+           ViewData["CampusEventId"] = new SelectList(_context.CampusEvent, "CampusEventId", "Title");
+           ViewData["PrescriberId"] = new SelectList(_context.Prescriber, "PrescriberId", "Email");
+           ViewData["StudentId"] = new SelectList(_context.Student, "StudentId", "Email");
             return Page();
         }
 
@@ -48,7 +51,7 @@ namespace RazorPagesMovie.Pages.CampusEvents
                 return Page();
             }
 
-            _context.Attach(CampusEvent).State = EntityState.Modified;
+            _context.Attach(Prescription).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +59,7 @@ namespace RazorPagesMovie.Pages.CampusEvents
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CampusEventExists(CampusEvent.CampusEventId))
+                if (!PrescriptionExists(Prescription.PrescriptionId))
                 {
                     return NotFound();
                 }
@@ -69,9 +72,9 @@ namespace RazorPagesMovie.Pages.CampusEvents
             return RedirectToPage("./Index");
         }
 
-        private bool CampusEventExists(int id)
+        private bool PrescriptionExists(int id)
         {
-            return _context.CampusEvent.Any(e => e.CampusEventId == id);
+            return _context.Prescription.Any(e => e.PrescriptionId == id);
         }
     }
 }

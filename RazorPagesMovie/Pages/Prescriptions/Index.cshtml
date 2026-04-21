@@ -1,0 +1,47 @@
+@page
+@model RazorPagesMovie.Pages.Prescriptions.IndexModel
+
+@{
+    ViewData["Title"] = "Prescriptions";
+}
+
+<h1>Prescriptions</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Prescriber</th>
+            <th>Campus Event</th>
+            <th>Date Assigned</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Attendance Confirmed</th>
+            <th>Reminder Sent</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Prescription) {
+        <tr>
+            <td>@item.Student?.FirstName @item.Student?.LastName</td>
+            <td>@item.Prescriber?.FirstName @item.Prescriber?.LastName</td>
+            <td>@item.CampusEvent?.Title</td>
+            <td>@item.DateAssigned</td>
+            <td>@item.Reason</td>
+            <td>@item.Status</td>
+            <td>@item.AttendanceConfirmed</td>
+            <td>@item.ReminderSent</td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.PrescriptionId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.PrescriptionId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PrescriptionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

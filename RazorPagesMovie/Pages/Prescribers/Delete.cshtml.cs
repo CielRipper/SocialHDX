@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
-namespace RazorPagesMovie.Pages_Prescribers
+namespace RazorPagesMovie.Pages.Prescribers
 {
     public class DeleteModel : PageModel
     {
