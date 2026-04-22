@@ -71,6 +71,27 @@ function renderEvents(events) {
     });
 }
 
+function setupFilters() {
+    const buttons = document.querySelectorAll(".filter-chip");
+
+    if (!buttons.length) return;
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const tag = button.textContent.trim();
+
+            if (tag === "All") {
+                renderEvents(sampleEvents);
+                return;
+            }
+
+            const filtered = sampleEvents.filter(event => event.tag === tag);
+            renderEvents(filtered);
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderEvents(sampleEvents);
+    setupFilters();
 });
