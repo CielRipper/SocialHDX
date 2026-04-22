@@ -91,7 +91,49 @@ function setupFilters() {
     });
 }
 
+function setupPrescriptionForm() {
+    const submitBtn = document.querySelector(".btn-submit-prescription");
+
+    if (!submitBtn) return;
+
+    submitBtn.addEventListener("click", () => {
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const studentId = document.getElementById("studentId").value.trim();
+        const notes = document.getElementById("notes").value.trim();
+
+        if (!firstName || !lastName || !email || !studentId || !notes) {
+            alert("Fill in all fields");
+            return;
+        }
+
+        const prescription = {
+            id: Date.now(),
+            firstName,
+            lastName,
+            email,
+            studentId,
+            notes
+        };
+
+        let stored = JSON.parse(localStorage.getItem("prescriptions")) || [];
+        stored.push(prescription);
+
+        localStorage.setItem("prescriptions", JSON.stringify(stored));
+
+        alert("Prescription saved");
+
+        document.getElementById("firstName").value = "";
+        document.getElementById("lastName").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("studentId").value = "";
+        document.getElementById("notes").value = "";
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderEvents(sampleEvents);
     setupFilters();
+    setupPrescriptionForm();
 });
