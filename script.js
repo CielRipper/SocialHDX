@@ -132,8 +132,35 @@ function setupPrescriptionForm() {
     });
 }
 
+function loadDashboardPrescriptions() {
+    const container = document.getElementById("recentPrescriptions");
+
+    if (!container) return;
+
+    const prescriptions = JSON.parse(localStorage.getItem("prescriptions")) || [];
+
+    container.innerHTML = "";
+
+    if (prescriptions.length === 0) {
+        container.innerHTML = "<p>No prescriptions submitted yet.</p>";
+        return;
+    }
+
+    prescriptions.slice().reverse().forEach(item => {
+        container.innerHTML += `
+            <div class="border rounded p-3 mb-3">
+                <h5>${item.firstName} ${item.lastName}</h5>
+                <p><strong>Email:</strong> ${item.email}</p>
+                <p><strong>Student ID:</strong> ${item.studentId}</p>
+                <p><strong>Notes:</strong> ${item.notes}</p>
+            </div>
+        `;
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderEvents(sampleEvents);
     setupFilters();
     setupPrescriptionForm();
+    loadDashboardPrescriptions();
 });
