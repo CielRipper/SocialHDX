@@ -172,10 +172,23 @@ function loadDashboardStats() {
     `;
 }
 
+function loadNotifications() {
+    const box = document.getElementById("notificationsBox");
+
+    if (!box) return;
+
+    box.innerHTML = `
+        <p>Reminder: Check upcoming campus events.</p>
+        <p>New social prescription options are available.</p>
+        <p>Dashboard now tracks submitted prescriptions and completed events.</p>
+    `;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderEvents(sampleEvents);
     setupFilters();
     setupPrescriptionForm();
     loadDashboardPrescriptions();
     loadDashboardStats();
+    loadNotifications();
 });
