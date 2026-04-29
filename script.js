@@ -184,6 +184,20 @@ function loadNotifications() {
     `;
 }
 
+function loadStudentChecker() {
+    const checker = document.getElementById("studentChecker");
+
+    if (!checker) return;
+
+    checker.innerHTML = `
+        <ul class="mb-0">
+            <li><strong>Wellness:</strong> Yoga Class</li>
+            <li><strong>Social:</strong> Club Fair</li>
+            <li><strong>Academic:</strong> Study Skills Seminar</li>
+        </ul>
+    `;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderEvents(sampleEvents);
     setupFilters();
@@ -191,4 +205,5 @@ document.addEventListener("DOMContentLoaded", () => {
     loadDashboardPrescriptions();
     loadDashboardStats();
     loadNotifications();
+    loadStudentChecker();
 });
