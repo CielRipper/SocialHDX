@@ -158,9 +158,24 @@ function loadDashboardPrescriptions() {
     });
 }
 
+function loadDashboardStats() {
+    const statsContainer = document.getElementById("engagementStats");
+
+    if (!statsContainer) return;
+
+    const prescriptions = JSON.parse(localStorage.getItem("prescriptions")) || [];
+
+    statsContainer.innerHTML = `
+        <p><strong>Total Prescriptions:</strong> ${prescriptions.length}</p>
+        <p><strong>Total Events Available:</strong> ${sampleEvents.length}</p>
+        <p><strong>Prototype Status:</strong> Active</p>
+    `;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     renderEvents(sampleEvents);
     setupFilters();
     setupPrescriptionForm();
     loadDashboardPrescriptions();
+    loadDashboardStats();
 });
