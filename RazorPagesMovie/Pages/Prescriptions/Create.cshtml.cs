@@ -30,9 +30,6 @@ namespace RazorPagesMovie.Pages.Prescriptions
         {
             if (!ModelState.IsValid)
             {
-                ViewData["StudentId"] = new SelectList(_context.Student, "StudentId", "FirstName");
-                ViewData["PrescriberId"] = new SelectList(_context.Prescriber, "PrescriberId", "FirstName");
-                ViewData["CampusEventId"] = new SelectList(_context.CampusEvent, "CampusEventId", "Title");
                 return Page();
             }
 

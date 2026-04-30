@@ -15,33 +15,38 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="StudentCase.StudentId" class="control-label"></label>
+                <label asp-for="StudentCase.StudentId" class="control-label">Student</label>
                 <select asp-for="StudentCase.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
                 <span asp-validation-for="StudentCase.StudentId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="StudentCase.PrescriberId" class="control-label"></label>
+                <label asp-for="StudentCase.PrescriberId" class="control-label">Prescriber</label>
                 <select asp-for="StudentCase.PrescriberId" class="form-control" asp-items="ViewBag.PrescriberId"></select>
                 <span asp-validation-for="StudentCase.PrescriberId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="StudentCase.OpenedDate" class="control-label"></label>
+                <label asp-for="StudentCase.OpenedDate" class="control-label">Open Date</label>
                 <input asp-for="StudentCase.OpenedDate" class="form-control" />
                 <span asp-validation-for="StudentCase.OpenedDate" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="StudentCase.CaseReason" class="control-label"></label>
+                <label asp-for="StudentCase.CaseReason" class="control-label">Case Reason</label>
                 <input asp-for="StudentCase.CaseReason" class="form-control" />
                 <span asp-validation-for="StudentCase.CaseReason" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="StudentCase.CaseStatus" class="control-label"></label>
-                <input asp-for="StudentCase.CaseStatus" class="form-control" />
-                <span asp-validation-for="StudentCase.CaseStatus" class="text-danger"></span>
+            <label asp-for="StudentCase.CaseStatus" class="control-label">Case Status</label>
+            <select asp-for="StudentCase.CaseStatus" class="form-control">
+                <option value="Open">Open</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Closed">Closed</option>
+                <option value="Follow-up Needed">Follow-up Needed</option>
+            </select>
+            <span asp-validation-for="StudentCase.CaseStatus" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-2">

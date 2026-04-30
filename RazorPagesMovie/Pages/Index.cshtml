@@ -4,7 +4,53 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-4">
+    <h1 class="display-4">SocialHDX Dashboard</h1>
+    <p class="lead">
+        Manage students, campus events, and social prescriptions in one place.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 p-3">
+            <h3>Students</h3>
+            <p>Search and manage student records.</p>
+            <a asp-page="/Students/Index" class="btn btn-primary">View Students</a>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 p-3">
+            <h3>Campus Events</h3>
+            <p>Browse events by title, date, location, or category.</p>
+            <a asp-page="/CampusEvents/Index" class="btn btn-primary">View Events</a>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 p-3">
+            <h3>Prescriptions</h3>
+            <p>Assign events to students and track attendance.</p>
+            <a asp-page="/Prescriptions/Create" class="btn btn-primary">Create Prescription</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-6 mb-3">
+        <div class="card h-100 p-3">
+            <h3>Student Cases</h3>
+            <p>Track support cases connected to students and prescribers.</p>
+            <a asp-page="/StudentCases/Index" class="btn btn-secondary">View Cases</a>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card h-100 p-3">
+            <h3>Case Notes</h3>
+            <p>Add follow-up notes for student support cases.</p>
+            <a asp-page="/StudentCaseNotes/Index" class="btn btn-secondary">View Notes</a>
+        </div>
+    </div>
 </div>

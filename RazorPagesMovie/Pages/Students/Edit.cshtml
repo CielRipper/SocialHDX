@@ -16,32 +16,37 @@
             <input type="hidden" asp-for="Student.StudentId" />
             <div class="form-group">
 <span class="text-danger">*</span>
-                <label asp-for="Student.FirstName" class="control-label"></label>
+                <label asp-for="Student.FirstName" class="control-label">First Name</label>
                 <input asp-for="Student.FirstName" class="form-control" aria-required="true"/>
                 <span asp-validation-for="Student.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
 <span class="text-danger">*</span>
-                <label asp-for="Student.LastName" class="control-label"></label>
+                <label asp-for="Student.LastName" class="control-label">Last Name</label>
                 <input asp-for="Student.LastName" class="form-control" aria-required="true"/>
                 <span asp-validation-for="Student.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
 <span class="text-danger">*</span>
-                <label asp-for="Student.Email" class="control-label"></label>
+                <label asp-for="Student.Email" class="control-label">Email</label>
                 <input asp-for="Student.Email" class="form-control" aria-required="true"/>
                 <span asp-validation-for="Student.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
 <span class="text-danger">*</span>
-                <label asp-for="Student.StudentNumber" class="control-label"></label>
+                <label asp-for="Student.StudentNumber" class="control-label">Student Number</label>
                 <input asp-for="Student.StudentNumber" class="form-control" aria-required="true"/>
                 <span asp-validation-for="Student.StudentNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.Status" class="control-label"></label>
-                <input asp-for="Student.Status" class="form-control" />
-                <span asp-validation-for="Student.Status" class="text-danger"></span>
+            <label asp-for="Student.Status" class="control-label">Status</label>
+            <select asp-for="Student.Status" class="form-control">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Needs Support">Needs Support</option>
+                <option value="Graduated">Graduated</option>
+            </select>
+            <span asp-validation-for="Student.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
