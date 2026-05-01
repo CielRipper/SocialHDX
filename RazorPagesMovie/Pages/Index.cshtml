@@ -1,56 +1,72 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "SocialHDX Dashboard";
 }
 
 <div class="text-center mb-4">
     <h1 class="display-4">SocialHDX Dashboard</h1>
-    <p class="lead">
-        Manage students, campus events, and social prescriptions in one place.
-    </p>
+    <p class="lead">Quick access to the main backend tools for prescribers.</p>
 </div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 p-3 text-center">
+            <h4>Students</h4>
+            <p>Find or add students.</p>
+            <a asp-page="/Students/Index" class="btn btn-primary">Manage Students</a>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 p-3 text-center">
+            <h4>Events</h4>
+            <p>Browse, filter, or add events.</p>
+            <a asp-page="/CampusEvents/Index" class="btn btn-warning">View Events</a>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 p-3 text-center">
+            <h4>Prescriptions</h4>
+            <p>Assign events to students.</p>
+            <a asp-page="/Prescriptions/Create" class="btn btn-danger">Create Prescription</a>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 p-3 text-center">
+            <h4>Cases</h4>
+            <p>Track ongoing support cases.</p>
+            <a asp-page="/StudentCases/Index" class="btn btn-info">Manage Cases</a>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-3">Common Prescriber Actions</h2>
 
 <div class="row">
     <div class="col-md-4 mb-3">
         <div class="card h-100 p-3">
-            <h3>Students</h3>
-            <p>Search and manage student records.</p>
-            <a asp-page="/Students/Index" class="btn btn-primary">View Students</a>
+            <h5>Create New Student</h5>
+            <p>Add a student before assigning events or opening cases.</p>
+            <a asp-page="/Students/Create" class="btn btn-outline-primary">Add Student</a>
         </div>
     </div>
 
     <div class="col-md-4 mb-3">
         <div class="card h-100 p-3">
-            <h3>Campus Events</h3>
-            <p>Browse events by title, date, location, or category.</p>
-            <a asp-page="/CampusEvents/Index" class="btn btn-primary">View Events</a>
+            <h5>Create New Event</h5>
+            <p>Add an event that can be prescribed to students.</p>
+            <a asp-page="/CampusEvents/Create" class="btn btn-outline-warning">Add Event</a>
         </div>
     </div>
 
     <div class="col-md-4 mb-3">
         <div class="card h-100 p-3">
-            <h3>Prescriptions</h3>
-            <p>Assign events to students and track attendance.</p>
-            <a asp-page="/Prescriptions/Create" class="btn btn-primary">Create Prescription</a>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-md-6 mb-3">
-        <div class="card h-100 p-3">
-            <h3>Student Cases</h3>
-            <p>Track support cases connected to students and prescribers.</p>
-            <a asp-page="/StudentCases/Index" class="btn btn-secondary">View Cases</a>
-        </div>
-    </div>
-
-    <div class="col-md-6 mb-3">
-        <div class="card h-100 p-3">
-            <h3>Case Notes</h3>
-            <p>Add follow-up notes for student support cases.</p>
-            <a asp-page="/StudentCaseNotes/Index" class="btn btn-secondary">View Notes</a>
+            <h5>Add Case Note</h5>
+            <p>Record a follow-up note for a student case.</p>
+            <a asp-page="/StudentCaseNotes/Create" class="btn btn-outline-secondary">Add Note</a>
         </div>
     </div>
 </div>
