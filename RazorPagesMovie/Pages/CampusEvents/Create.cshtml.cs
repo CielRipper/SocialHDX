@@ -19,8 +19,27 @@ namespace RazorPagesMovie.Pages.CampusEvents
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int? eventId)
         {
+            ViewData["CampusEventId"] = new SelectList(
+                _context.CampusEvent,
+                "CampusEventId",
+                "Title",
+                eventId
+            );
+
+            ViewData["PrescriberId"] = new SelectList(
+                _context.Prescriber,
+                "PrescriberId",
+                "FirstName"
+            );
+
+            ViewData["StudentId"] = new SelectList(
+                _context.Student,
+                "StudentId",
+                "FirstName"
+            );
+
             return Page();
         }
 

@@ -8,7 +8,7 @@
 <h1>Campus Events</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Create New Event</a>
 </p>
 
 <form method="get" class="mb-3">
@@ -51,6 +51,7 @@
             <td>@Html.DisplayFor(modelItem => item.Category)</td>
             <td>@Html.DisplayFor(modelItem => item.SourceLink)</td>
             <td>
+                <a asp-page="/Prescriptions/Create" asp-route-eventId="@item.CampusEventId">Assign</a> |
                 <a asp-page="./Edit" asp-route-id="@item.CampusEventId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.CampusEventId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.CampusEventId">Delete</a>
