@@ -5,30 +5,20 @@
     ViewData["Title"] = "Prescribers";
 }
 
-<h1>Index</h1>
+<h1>Prescribers</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Create New Prescriber</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Prescriber[0].FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prescriber[0].LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prescriber[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prescriber[0].Department)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prescriber[0].TrainedStatus)
-            </th>
-            <th></th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Training Completed</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
