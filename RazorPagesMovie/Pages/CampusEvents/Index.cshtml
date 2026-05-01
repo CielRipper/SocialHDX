@@ -11,17 +11,18 @@
     <a asp-page="Create">Create New</a>
 </p>
 
-<form method="get">
+<form method="get" class="mb-3">
     <p>
-        Category:
+        <label>Category:</label>
         <select asp-for="EventCategory" asp-items="Model.Categories">
             <option value="">All</option>
         </select>
 
-        Title:
+        <label>Title:</label>
         <input type="text" asp-for="SearchString" />
 
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
+
         <a asp-page="./Index">Back to full list</a>
     </p>
 </form>
@@ -29,14 +30,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].Title)</th>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].Description)</th>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].EventDate)</th>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].EventTime)</th>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].Location)</th>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].Category)</th>
-            <th>@Html.DisplayNameFor(model => model.CampusEvent[0].SourceLink)</th>
-            <th></th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Source Link</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>

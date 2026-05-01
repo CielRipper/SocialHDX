@@ -18,35 +18,40 @@ namespace RazorPagesMovie.Pages.CampusEvents
 
         public IList<CampusEvent> CampusEvent { get; set; } = default!;
 
-        [BindProperty(SupportsGet = true)]
-        public string? SearchString { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string? EventCategory { get; set; }
-
         public SelectList? Categories { get; set; }
 
-        public async Task OnGetAsync()
+        public string? EventCategory { get; set; }
+
+        public string? SearchString { get; set; }
+
+        public async Task OnGetAsync(string eventCategory, string searchString)
         {
+            EventCategory = eventCategory;
+            SearchString = searchString;
+
             IQueryable<string> categoryQuery = from e in _context.CampusEvent
                                                orderby e.Category
                                                select e.Category;
 
-            IQueryable<CampusEvent> eventsIQ = from e in _context.CampusEvent
-                                               select e;
+            var events = from e in _context.CampusEvent
+                         select e;
 
-            if (!string.IsNullOrEmpty(SearchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
-                eventsIQ = eventsIQ.Where(e => e.Title.Contains(SearchString));
+                events = events.Where(e =>
+                    e.Title.Contains(searchString) ||
+                    e.Description.Contains(searchString) ||
+                    e.Location.Contains(searchString)
+                );
             }
-
-            if (!string.IsNullOrEmpty(EventCategory))
+            if (!string.IsNullOrEmpty(eventCategory))
             {
-                eventsIQ = eventsIQ.Where(e => e.Category == EventCategory);
+                events = events.Where(e => e.Category == eventCategory);
             }
 
             Categories = new SelectList(await categoryQuery.Distinct().ToListAsync());
-            CampusEvent = await eventsIQ.ToListAsync();
+
+            CampusEvent = await events.ToListAsync();
         }
     }
 }
