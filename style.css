@@ -1,16 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 
 :root {
-    --hendrix-orange: #f47c20;
+    --hendrix-orange: rgb(245, 130, 42);
+    --hendrix-black: #000000;
     --hendrix-dark: #222222;
     --hendrix-light: #f8f8f8;
+    --hendrix-white: #ffffff;
+    --hendrix-gray: #e5e5e5;
+
+    --font-sans: "Trebuchet MS", Arial, sans-serif;
+    --font-serif: "Adobe Garamond Pro", Garamond, Georgia, serif;
 }
 
 /* Base */
 body {
+    margin: 0;
     background-color: var(--hendrix-light);
     color: var(--hendrix-dark);
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-sans);
 }
 
 /* Typography (shared across pages) */
