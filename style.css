@@ -193,3 +193,183 @@ textarea.form-control {
         font-size: 1.5rem;
     }
 }
+
+
+/* Login Page Section */
+
+/* Standalone Login Page */
+.login-body {
+    background-color: var(--hendrix-light);
+    min-height: 100vh;
+}
+
+/* Removes normal page spacing behavior for login */
+.login-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Left login side */
+.login-panel {
+    background-color: var(--hendrix-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 5rem;
+}
+
+/* Brand area */
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.brand-mark {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--hendrix-orange);
+    color: var(--hendrix-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 14px rgba(245, 130, 42, 0.25);
+}
+
+.login-brand h1 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    margin: 0;
+    color: var(--hendrix-dark);
+}
+
+.login-brand p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Login card */
+.standalone-login-card {
+    max-width: 520px;
+    width: 100%;
+    background-color: var(--hendrix-white);
+    border: 2px solid var(--hendrix-dark);
+    border-top: 8px solid var(--hendrix-orange);
+    border-radius: 18px;
+    padding: 2rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+}
+
+.login-header {
+    margin-bottom: 2rem;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.login-options a {
+    color: var(--hendrix-orange);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.login-options a:hover {
+    text-decoration: underline;
+}
+
+.login-note {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--hendrix-gray);
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Right visual side */
+.login-visual {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 4rem;
+    background-color: #999;
+}
+
+/* Each background image */
+.login-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* Dark overlay on top of each image */
+.login-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Visible slide */
+.login-slide.active {
+    opacity: 1;
+}
+
+/* Text stays above images */
+.login-visual-overlay {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    color: var(--hendrix-white);
+}
+
+/* Text over image */
+.login-visual-overlay {
+    max-width: 520px;
+    color: var(--hendrix-white);
+}
+
+.login-visual-overlay h2 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.login-visual-overlay p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Responsive login layout */
+@media (max-width: 991px) {
+    .login-page {
+        grid-template-columns: 1fr;
+    }
+
+    .login-panel {
+        padding: 2rem;
+    }
+
+    .login-visual {
+        display: none;
+    }
+
+    .standalone-login-card {
+        max-width: 100%;
+    }
+}
