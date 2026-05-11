@@ -14,18 +14,47 @@
 
 <body class="login-body">
 
-    <div class="login-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-3">
+    <div class="container-fluid">
 
-        <!-- Left side: login card -->
-        <section class="login-panel">
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold" href="index.html">
+            Social Hx
+        </a>
 
-            <div class="login-brand">
-                <div class="brand-mark">Hx</div>
-                <div>
-                    <h1>Social Hx</h1>
-                    <p>Hendrix College Social Prescribing Portal</p>
-                </div>
-            </div>
+        <!-- Navigation Links -->
+        <div class="d-flex align-items-center gap-3">
+
+            <a class="nav-link text-white" href="index.html">
+                Home
+            </a>
+
+            <a class="nav-link text-white" href="events.html">
+                Events
+            </a>
+
+            <a class="nav-link text-white" href="prescriber.html">
+                Prescriptions
+            </a>
+
+            <a class="nav-link text-white" href="dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+        <!-- Right Side Button -->
+        <div class="ms-auto active">
+            <a href="login.html" class="btn btn-primary">
+                Sign In
+            </a>
+
+            <button onclick="logout()" class="btn btn-warning">Logout</button>
+        </div>
+
+    </div>
+</nav>
 
             <div class="login-card standalone-login-card">
 
@@ -113,8 +142,32 @@
 
             currentSlide = (currentSlide + 1) % slides.length;
 
-            slides[currentSlide].classList.add("active");
-        }, 6000);
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const loginForm = document.querySelector("form");
+
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
+        }
+
+        localStorage.setItem("loggedInPrescriber", email);
+        window.location.href = "prescriber.html";
+    });
+    </script> 
+
+    <script>
+    function logout() {
+        localStorage.removeItem("loggedInPrescriber");
+        window.location.href = "index.html";
+    }
     </script>
 
 </body>
