@@ -7,106 +7,128 @@
 
 <h1>Create Prescription</h1>
 
-<p>
-    Assign a campus event to a student and save it to the SocialHDX database.
-</p>
+<div class="container mt-4">
 
-<hr />
-
-<div class="row">
-    <div class="col-md-5">
-        <div class="card p-4 mb-4">
-            <h2>Student and Prescriber</h2>
-
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group mb-3">
-                    <label asp-for="Prescription.StudentId" class="control-label">Student</label>
-                    <select asp-for="Prescription.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
-                    <span asp-validation-for="Prescription.StudentId" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label asp-for="Prescription.PrescriberId" class="control-label">Prescriber</label>
-                    <select asp-for="Prescription.PrescriberId" class="form-control" asp-items="ViewBag.PrescriberId"></select>
-                    <span asp-validation-for="Prescription.PrescriberId" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label asp-for="Prescription.CampusEventId" class="control-label">Campus Event</label>
-                    <select asp-for="Prescription.CampusEventId" class="form-control" asp-items="ViewBag.CampusEventId"></select>
-                    <span asp-validation-for="Prescription.CampusEventId" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label asp-for="Prescription.DateAssigned" class="control-label">Date Assigned</label>
-                    <input asp-for="Prescription.DateAssigned" class="form-control" />
-                    <span asp-validation-for="Prescription.DateAssigned" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label asp-for="Prescription.Reason" class="control-label">Reason for Prescription</label>
-                    <textarea asp-for="Prescription.Reason" class="form-control" rows="4"></textarea>
-                    <span asp-validation-for="Prescription.Reason" class="text-danger"></span>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label asp-for="Prescription.Status" class="control-label">Prescription Status</label>
-                    <select asp-for="Prescription.Status" class="form-control">
-                        <option value="Assigned">Assigned</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Cancelled">Cancelled</option>
-                        <option value="Follow-up Needed">Follow-up Needed</option>
-                    </select>
-                    <span asp-validation-for="Prescription.Status" class="text-danger"></span>
-                </div>
-
-                <div class="form-group form-check mb-2">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Prescription.AttendanceConfirmed" />
-                        Attendance Confirmed
-                    </label>
-                </div>
-
-                <div class="form-group form-check mb-3">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Prescription.ReminderSent" />
-                        Reminder Sent
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Create Prescription" class="btn btn-primary" />
-                    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
-                </div>
-            </form>
-        </div>
+    <div class="p-5 mb-4 bg-light rounded-3 border">
+        <h1 class="display-5 fw-bold">Prescriber Portal</h1>
+        <p class="fs-5">
+            Assign a campus event to a student and save it to the SocialHDX database.
+        </p>
     </div>
 
-    <div class="col-md-7">
-        <div class="card p-4 mb-4">
-            <h2>Prescription Workflow</h2>
-            <p>
-                This page connects a student, prescriber, and campus event into one saved prescription record.
-            </p>
+    <div class="row">
+        <div class="col-lg-7 mb-4">
+            <div class="card h-100 shadow-sm border-dark">
+                <div class="card-body">
+                    <h2 class="mb-3">Create Prescription</h2>
 
-            <ul>
-                <li>Select the student receiving the recommendation.</li>
-                <li>Select the prescriber assigning the event.</li>
-                <li>Select the campus event being recommended.</li>
-                <li>Add the reason and current status.</li>
-            </ul>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Prescription.StudentId" class="form-label">Student</label>
+                            <select asp-for="Prescription.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+                            <span asp-validation-for="Prescription.StudentId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Prescription.PrescriberId" class="form-label">Prescriber</label>
+                            <select asp-for="Prescription.PrescriberId" class="form-control" asp-items="ViewBag.PrescriberId"></select>
+                            <span asp-validation-for="Prescription.PrescriberId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Prescription.CampusEventId" class="form-label">Campus Event</label>
+                            <select asp-for="Prescription.CampusEventId" class="form-control" asp-items="ViewBag.CampusEventId"></select>
+                            <span asp-validation-for="Prescription.CampusEventId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Prescription.DateAssigned" class="form-label">Date Assigned</label>
+                            <input asp-for="Prescription.DateAssigned" class="form-control" />
+                            <span asp-validation-for="Prescription.DateAssigned" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Prescription.Reason" class="form-label">Reason for Prescription</label>
+                            <textarea asp-for="Prescription.Reason" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Prescription.Reason" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Prescription.Status" class="form-label">Prescription Status</label>
+                            <select asp-for="Prescription.Status" class="form-control">
+                                <option value="Assigned">Assigned</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                                <option value="Follow-up Needed">Follow-up Needed</option>
+                            </select>
+                            <span asp-validation-for="Prescription.Status" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" asp-for="Prescription.AttendanceConfirmed" />
+                            <label class="form-check-label" asp-for="Prescription.AttendanceConfirmed">
+                                Attendance Confirmed
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" asp-for="Prescription.ReminderSent" />
+                            <label class="form-check-label" asp-for="Prescription.ReminderSent">
+                                Reminder Sent
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Create Prescription
+                        </button>
+
+                        <a asp-page="Index" class="btn btn-secondary">
+                            Back to List
+                        </a>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div class="card p-4">
-            <h2>Next Steps</h2>
-            <p>
-                After creating a prescription, use the prescriptions list to review, edit, or confirm attendance.
-            </p>
+        <div class="col-lg-5 mb-4">
+            <div class="card shadow-sm border-dark mb-4">
+                <div class="card-header">
+                    Workflow
+                </div>
+                <div class="card-body">
+                    <p>
+                        This page connects a student, prescriber, and campus event into one saved prescription record.
+                    </p>
 
-            <a asp-page="/Prescriptions/Index" class="btn btn-outline-primary">View Prescriptions</a>
-            <a asp-page="/CampusEvents/Index" class="btn btn-outline-warning">Browse Events</a>
+                    <ul>
+                        <li>Select the student receiving the recommendation.</li>
+                        <li>Select the prescriber assigning the event.</li>
+                        <li>Select the campus event being prescribed.</li>
+                        <li>Add the reason and current status.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-dark">
+                <div class="card-header">
+                    Quick Links
+                </div>
+                <div class="card-body">
+                    <a asp-page="/CampusEvents/Index" class="btn btn-outline-warning w-100 mb-2">
+                        Browse Events
+                    </a>
+
+                    <a asp-page="/Prescriptions/Index" class="btn btn-outline-primary w-100 mb-2">
+                        View Prescriptions
+                    </a>
+
+                    <a asp-page="/Students/Index" class="btn btn-outline-success w-100">
+                        View Students
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

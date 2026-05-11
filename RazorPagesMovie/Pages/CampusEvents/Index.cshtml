@@ -5,58 +5,94 @@
     ViewData["Title"] = "Campus Events";
 }
 
-<h1>Campus Events</h1>
+<div class="container mt-4">
 
-<p>
-    <a asp-page="Create">Create New Event</a>
-</p>
+    <div class="p-5 mb-4 bg-light rounded-3 border">
+        <h1 class="display-5 fw-bold">Events</h1>
+        <p class="fs-5">
+            Browse and explore campus events available for social prescribing.
+        </p>
+    </div>
 
-<form method="get" class="mb-3">
+    <div class="card mb-4">
+        <div class="card-header">
+            Filters
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Category</label>
+                    <select asp-for="EventCategory" asp-items="Model.Categories" class="form-control">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="col-md-5">
+                    <label class="form-label">Search</label>
+                    <input type="text" asp-for="SearchString" class="form-control" placeholder="Search by title, description, or location" />
+                </div>
+
+                <div class="col-md-3">
+                    <input type="submit" value="Filter" class="btn btn-primary" />
+                    <a asp-page="./Index" class="btn btn-secondary">Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <p>
-        <label>Category:</label>
-        <select asp-for="EventCategory" asp-items="Model.Categories">
-            <option value="">All</option>
-        </select>
-
-        <label>Title:</label>
-        <input type="text" asp-for="SearchString" />
-
-        <input type="submit" value="Filter" class="btn btn-primary btn-sm" />
-
-        <a asp-page="./Index">Back to full list</a>
+        <a asp-page="Create" class="btn btn-success">Create New Event</a>
     </p>
-</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Location</th>
-            <th>Category</th>
-            <th>Source Link</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.CampusEvent) {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.Title)</td>
-            <td>@Html.DisplayFor(modelItem => item.Description)</td>
-            <td>@Html.DisplayFor(modelItem => item.EventDate)</td>
-            <td>@Html.DisplayFor(modelItem => item.EventTime)</td>
-            <td>@Html.DisplayFor(modelItem => item.Location)</td>
-            <td>@Html.DisplayFor(modelItem => item.Category)</td>
-            <td>@Html.DisplayFor(modelItem => item.SourceLink)</td>
-            <td>
-                <a asp-page="/Prescriptions/Create" asp-route-eventId="@item.CampusEventId">Assign</a> |
-                <a asp-page="./Edit" asp-route-id="@item.CampusEventId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CampusEventId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CampusEventId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row">
+        @foreach (var item in Model.CampusEvent)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-dark">
+                    <div class="card-body">
+                        <h4 class="card-title">@item.Title</h4>
+
+                        <p>
+                            <strong>Tag:</strong> @item.Category
+                        </p>
+
+                        <p>
+                            <strong>Date:</strong> @item.EventDate.ToShortDateString()
+                        </p>
+
+                        <p>
+                            <strong>Time:</strong> @item.EventTime.ToShortTimeString()
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong> @item.Location
+                        </p>
+
+                        <p>
+                            @item.Description
+                        </p>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-page="/Prescriptions/Create" asp-route-eventId="@item.CampusEventId" class="btn btn-primary btn-sm">
+                            Assign
+                        </a>
+
+                        <a asp-page="./Edit" asp-route-id="@item.CampusEventId" class="btn btn-outline-secondary btn-sm">
+                            Edit
+                        </a>
+
+                        <a asp-page="./Details" asp-route-id="@item.CampusEventId" class="btn btn-outline-info btn-sm">
+                            Details
+                        </a>
+
+                        <a asp-page="./Delete" asp-route-id="@item.CampusEventId" class="btn btn-outline-danger btn-sm">
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
