@@ -1,31 +1,374 @@
-html {
-  font-size: 14px;
+:root {
+    --hendrix-orange: rgb(245, 130, 42);
+    --hendrix-black: #000000;
+    --hendrix-dark: #222222;
+    --hendrix-light: #f8f8f8;
+    --hendrix-white: #ffffff;
+    --hendrix-gray: #e5e5e5;
+
+    --font-sans: "Trebuchet MS", Arial, sans-serif;
+    --font-serif: "Adobe Garamond Pro", Garamond, Georgia, serif;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+html,
 body {
-  margin-bottom: 60px;
+    min-height: 100%;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Base */
+body {
+    margin: 0;
+    background-color: var(--hendrix-light);
+    color: var(--hendrix-dark);
+    font-family: var(--font-sans);
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+
+/* Typography (shared across pages) */
+.portal-heading,
+.section-label,
+.calendar-title,
+.filter-title,
+.form-label {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    color: #111;
+}
+
+.portal-heading {
+    font-size: 2.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.portal-subtext {
+    max-width: 800px;
+    margin-bottom: 0;
+}
+
+.section-label,
+.calendar-title,
+.filter-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-size: 1.6rem;
+    margin-bottom: 0.35rem;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #d96a1a;
+}
+
+.navbar .nav-link,
+.navbar-brand {
+    color: white !important;
+}
+
+/* Navbar, Highlights selected screen*/
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: var(--hendrix-black) !important;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+}
+
+
+.site-footer {
+    background-color: var(--hendrix-dark);
+    color: var(--hendrix-white);
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+    font-size: 0.95rem;
+}
+
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--hendrix-orange);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #d96a1a;
+}
+
+.btn-submit-prescription {
+    background-color: var(--hendrix-orange);
+    border: none;
+    color: white;
+    font-weight: 700;
+    width: 100%;
+    padding: 0.95rem 1.2rem;
+    border-radius: 12px;
+}
+
+.btn-submit-prescription:hover {
+    opacity: 0.92;
+}
+
+/* Cards (Bootstrap + custom panels unified look) */
+.card,
+.prescriber-card,
+.calendar-panel,
+.filter-panel,
+.submit-panel {
+    border-radius: 14px;
+    border: 2px solid #1a1a1a;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+}
+
+.prescriber-card,
+.calendar-panel {
+    padding: 1.5rem;
+}
+
+.filter-panel,
+.submit-panel {
+    padding: 1.25rem 1.5rem;
+    min-height: 120px;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+    border: 2px solid #222;
+    border-radius: 12px;
+    padding: 0.75rem 0.95rem;
+}
+
+textarea.form-control {
+    min-height: 240px;
+    resize: vertical;
+}
+
+/* Calendar placeholder */
+.calendar-box {
+    min-height: 500px;
+    border: 2px dashed #666;
+    border-radius: 12px;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.calendar-box p {
+    font-family: var(--font-sans);
+    font-size: 2rem;
+    line-height: 1.4;
+    margin-bottom: 0;
+    color: #111;
+}
+
+
+/* Filter chips */
+.filter-chip {
+    border: 2px solid #111;
+    background-color: #fff;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    margin: 0.25rem 0.4rem 0.25rem 0;
+}
+
+.filter-chip:hover {
+    opacity: 0.92;
+}
+
+/* Responsive tweaks */
+@media (max-width: 991px) {
+    .calendar-box p {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* Login Page Section */
+
+/* Standalone Login Page */
+.login-body {
+    background-color: var(--hendrix-light);
+    min-height: 100vh;
+}
+
+/* Removes normal page spacing behavior for login */
+.login-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Left login side */
+.login-panel {
+    background-color: var(--hendrix-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 5rem;
+}
+
+/* Brand area */
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.brand-mark {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background-color: var(--hendrix-orange);
+    color: var(--hendrix-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 14px rgba(245, 130, 42, 0.25);
+}
+
+.login-brand h1 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    margin: 0;
+    color: var(--hendrix-dark);
+}
+
+.login-brand p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Login card */
+.standalone-login-card {
+    max-width: 520px;
+    width: 100%;
+    background-color: var(--hendrix-white);
+    border: 2px solid var(--hendrix-dark);
+    border-top: 8px solid var(--hendrix-orange);
+    border-radius: 18px;
+    padding: 2rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+}
+
+.login-header {
+    margin-bottom: 2rem;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.login-options a {
+    color: var(--hendrix-orange);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.login-options a:hover {
+    text-decoration: underline;
+}
+
+.login-note {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--hendrix-gray);
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Right visual side */
+.login-visual {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 4rem;
+    background-color: #999;
+}
+
+/* Each background image */
+.login-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+/* Dark overlay on top of each image */
+.login-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Visible slide */
+.login-slide.active {
+    opacity: 1;
+}
+
+/* Text stays above images */
+.login-visual-overlay {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    color: var(--hendrix-white);
+}
+
+/* Text over image */
+.login-visual-overlay {
+    max-width: 520px;
+    color: var(--hendrix-white);
+}
+
+.login-visual-overlay h2 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.login-visual-overlay p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Responsive login layout */
+@media (max-width: 991px) {
+    .login-page {
+        grid-template-columns: 1fr;
+    }
+
+    .login-panel {
+        padding: 2rem;
+    }
+
+    .login-visual {
+        display: none;
+    }
+
+    .standalone-login-card {
+        max-width: 100%;
+    }
 }
