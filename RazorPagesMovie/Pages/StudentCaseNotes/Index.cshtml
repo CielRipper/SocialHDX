@@ -5,35 +5,53 @@
     ViewData["Title"] = "Student Case Notes";
 }
 
-<h1>Student Case Notes</h1>
+<div class="container mt-4">
 
-<p>
-    <a asp-page="Create">Create New Student Case Note</a>
-</p>
+    <div class="p-5 mb-4 bg-light rounded-3 border">
+        <h1 class="display-5 fw-bold">Student Case Notes</h1>
+        <p class="fs-5">
+            Review notes connected to student cases and prescriber follow-up.
+        </p>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Case</th>
-            <th>Prescriber</th>
-            <th>Note Text</th>
-            <th>Created At</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.StudentCaseNote) {
-        <tr>
-            <td>@item.StudentCase?.CaseReason</td>
-            <td>@item.Prescriber?.FirstName @item.Prescriber?.LastName</td>
-            <td>@item.NoteText</td>
-            <td>@item.CreatedAt</td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.StudentCaseNoteId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.StudentCaseNoteId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.StudentCaseNoteId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-page="Create" class="btn btn-primary">Create New Case Note</a>
+    </p>
+
+    <div class="row">
+        @foreach (var item in Model.StudentCaseNote)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-dark">
+                    <div class="card-header">
+                        <strong>@item.StudentCase.CaseReason</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <p>
+                            <strong>Prescriber:</strong>
+                            @item.Prescriber.FirstName @item.Prescriber.LastName
+                        </p>
+
+                        <p>
+                            <strong>Created At:</strong>
+                            @item.CreatedAt
+                        </p>
+
+                        <p>
+                            <strong>Note:</strong>
+                            @item.NoteText
+                        </p>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-page="./Edit" asp-route-id="@item.StudentCaseNoteId" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.StudentCaseNoteId" class="btn btn-outline-info btn-sm">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.StudentCaseNoteId" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

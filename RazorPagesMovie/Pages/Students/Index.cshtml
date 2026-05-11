@@ -5,46 +5,42 @@
     ViewData["Title"] = "Students";
 }
 
-<h1>Students</h1>
+<div class="container mt-4">
 
-<p>
-    <a asp-page="Create">Create New Student</a>
-</p>
+    <div class="p-5 mb-4 bg-light rounded-3 border">
+        <h1 class="display-5 fw-bold">Students</h1>
+        <p class="fs-5">
+            View student records used in prescriptions and support cases.
+        </p>
+    </div>
 
-<form method="get">
     <p>
-        Search by name or student number:
-        <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Search" />
-        <a asp-page="./Index">Back to full list</a>
+        <a asp-page="Create" class="btn btn-primary">Create New Student</a>
     </p>
-</form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Student Number</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Student) {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-            <td>@Html.DisplayFor(modelItem => item.Email)</td>
-            <td>@Html.DisplayFor(modelItem => item.StudentNumber)</td>
-            <td>@Html.DisplayFor(modelItem => item.Status)</td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.StudentId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.StudentId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.StudentId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <div class="row">
+        @foreach (var item in Model.Student)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-dark">
+                    <div class="card-header">
+                        <strong>@item.FirstName @item.LastName</strong>
+                    </div>
+
+                    <div class="card-body">
+                        <p><strong>Email:</strong> @item.Email</p>
+                        <p><strong>Student Number:</strong> @item.StudentNumber</p>
+                        <p><strong>Status:</strong> @item.Status</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <a asp-page="./Edit" asp-route-id="@item.StudentId" class="btn btn-outline-secondary btn-sm">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@item.StudentId" class="btn btn-outline-info btn-sm">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@item.StudentId" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
